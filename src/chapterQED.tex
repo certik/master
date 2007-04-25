@@ -1,0 +1,132 @@
+\chapter{Derivation from QED}
+
+\section{Introduction}
+
+The correct theory for electrons is the quantum electrodynamics (QED). Thus all
+the equations which we are going to use, follow from the QED and this chapter
+is devoted for their derivation. The standard nonrelativistic quantum
+mechanics (QM)
+contains a lot of ad-hoc assumptions (Schr\"odinger equation, electromagnetic
+coupling, spin, etc.), that cannot be satisfactorily explained. It is true that
+the whole nonrelativistic QM can be derived from a small set of
+assumptions (mostly commutation relations and some particular form of QM
+operators like spin), but it is not at all clear why these assumptions look the
+way they look. The QM is a set of rules which are known to work quite
+well, but obviously, we are not interested in postulating correct forms of
+operators or commutation relations, we want a better explanation, if there is
+one. And fortunately, there is.
+
+The correct theory so far is the Standard Model and in our case of electron
+structure calculations, all phenomena are explained by the QED. There are still
+some problems in the Standard Model, but for much higher energies than
+we deal with in the electron structure. Thus what we do is that we take
+the most complete theory so far (QED) and derive everything from it. Of course,
+because we are dealing with low energies and to ease calculations, we make a
+lot of approximations on our way, but this is the only correct way to
+proceed, because it will be clear that we make each approximation because of
+this and that. If it turns out our results are not in agreement with experiment
+(for example the Schr\"odinger equation is imprecise), we need to neglect
+less things. 
+
+As you will see, this chapter is not long, so there really is no excuse of
+doing things differently (maybe in 1940s, but certainly not now when we have
+the Standard Model). 
+
+
+
+\def\L{L}
+
+\section{QED}
+
+The QED Lagrangian density is
+$$\L=\bar\psi(ic\gamma^\mu D_\mu-mc^2)\psi-{1\over4}F_{\mu\nu}F^{\mu\nu}$$
+where
+$$D_\mu=\partial_\mu+ieA_\mu$$
+is the gauge covariant derivative and ($e$ is the elementary charge, which is
+$1$ in atomic units)
+$$F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu$$
+is the electromagnetic field tensor. It's astonishing, that this simple
+Lagrangian can account for all phenomena from macroscopic scales down to
+something like $10^{-13}\rm\,cm$. So of course Feynman, Schwinger and Tomonaga
+received the 1965 Nobel Prize in Physics for such a fantastic achievement.
+
+Plugging this Lagrangian into the Euler-Lagrange equation of motion for a
+field, we get:
+$$(ic\gamma^\mu D_\mu-mc^2)\psi=0$$
+$$\partial_\nu F^{\nu\mu}=-ec\bar\psi\gamma^\mu\psi$$
+The first equation is the Dirac equation in the electromagnetic field and
+the second equation is a set of Maxwell equations ($\partial_\nu
+F^{\nu\mu}=-ej^\mu$) with a source $j^\mu=c\bar\psi\gamma^\mu\psi$, which is a
+4-current comming from the Dirac equation.
+
+The fields $\psi$ and $A^\mu$ are quantized. The first approximation is that we
+take $\psi$ as a wavefunction, that is, it is a classical 4-component field. It
+can be shown that this corresponds to taking three orders in the perturbation
+theory.
+
+$$A_\mu=\left({V\over ec},A_1,A_2,A_3\right)$$
+$$0=\gamma^0(ic\gamma^\mu D_\mu-mc^2)\psi=
+\gamma^0(ic\gamma^0(\partial_0+i{V\over c})+ic\gamma^i
+(\partial_i+ieA_i)-mc^2)\psi=$$
+$$=
+(ic\partial_0+ic\gamma^0\gamma^i\partial_i-\gamma^0mc^2-V
+-ce\gamma^0\gamma^iA_i)\psi
+$$
+$\beta=\gamma^0$, $\alpha^i=\gamma^0\gamma^i$, $p_j=-i\partial_j$,
+$\partial_0={1\over c}{\partial\over\partial t}$
+$$ (ic\partial_0-c\alpha^i p_i-\beta mc^2-V-ce\alpha^iA_i)\psi=0 $$
+$$ i{\partial\psi\over\partial t}=(c\alpha^i(p_i+eA_i)+\beta mc^2+V)\psi $$
+
+$$j^\mu=c\bar\psi\gamma^\mu\psi$$
+
+$\psi=e^{-imt}\varphi$, ${\partial\over\partial t}e^{-imt}(\cdots)=
+e^{-imt}(-im+{\partial\over\partial t})(\cdots)$
+$$j^0=c\psi^\dagger\psi=c\varphi^\dagger\varphi$$
+$$j^i=c\psi^\dagger\alpha^i\psi=c\varphi^\dagger\alpha^i\varphi$$
+
+$$(-ic\gamma^\mu D_\mu-mc^2)(ic\gamma^\nu D_\nu-mc^2)\psi=
+(c^2D^\mu D_\mu+m^2c^4)\psi=0$$
+$$D^\mu D_\mu=\partial^\mu\partial_\mu+ie(\partial^\mu
+A_\mu+2A^\mu\partial_\mu) -e^2A^\mu A_\mu$$
+$$D^\mu D_\mu=\partial^\mu\partial_\mu
++ie\left({1\over c^2}{\partial V\over\partial t}+
+2{V\over c^2}{\partial\over\partial t}\right) -{e^2\over c^2}V^2$$
+
+$$L=c^2\partial^\mu\psi^*\partial_\mu\psi-m^2c^4\psi^*\psi=
+{\partial\over\partial t}\psi^*{\partial\over\partial t}\psi
+-c^2\partial^i\psi^*\partial_i\psi-m^2c^4\psi^*\psi=$$
+$$=(imc^2+{\partial\over\partial t})\varphi^*
+(-imc^2+{\partial\over\partial t})\varphi
+-c^2\partial^i\varphi^*\partial_i\varphi-m^2c^4\varphi^*\varphi=$$
+$$=2mc^2\left[{1\over2}i(\varphi^*{\partial\varphi\over\partial t}-
+\varphi{\partial\varphi^*\over\partial t})-
+{1\over2m}\partial^i\varphi^*\partial_i\varphi
++{1\over2mc^2}{\partial\varphi^*\over\partial t}
+{\partial\varphi\over\partial t}\right]$$
+Neglecting the last term we get
+$$L={1\over2}i(\varphi^*{\partial\varphi\over\partial t}-
+\varphi{\partial\varphi^*\over\partial t})-
+{1\over2m}\partial^i\varphi^*\partial_i\varphi
+$$
+After integration by parts we arrive at
+$$L=i\varphi^*{\partial\varphi\over\partial t}
+-{1\over 2m}\partial^i\varphi^*\partial_i
+\varphi$$
+The nonrelativistic limit can also be applied directly to the Klein-Gordon equation:
+$$0=(c^2D^\mu D_\mu+m^2c^4)\psi=
+(c^2\partial^0\partial_0-c^2\partial^i\partial_i+iec^2(\partial^\mu
+A_\mu+2A^\mu\partial_\mu) -e^2c^2A^\mu A_\mu+m^2c^4)e^{-imc^2t}\varphi=$$
+$$=e^{-imc^2t}((-imc^2+{\partial\over\partial t})^2-c^2\nabla^2
++iec^2\partial^\mu A_\mu+2emcA^0+2iec A^0{\partial\over\partial
+t}+2iec^2A^i\partial_i-e^2c^2 A^\mu A_\mu
++m^2c^4)\varphi=$$
+$$=
+-2mc^2e^{-imc^2t}\left(i{\partial\over\partial
+t}-{1\over2mc^2}{\partial^2\over\partial t^2}+{\nabla^2\over2m}
+-eA^0+{e^2\over2mc^2}A^\mu A_\mu
+-{ie\over2m}(\partial^\mu A\mu+2A^\mu\partial_\mu)
+\right)\varphi$$
+Neglecting the second time derivative, we again get the Schr\"odinger equation:
+$$i{\partial\over\partial t}\varphi=-{\nabla^2\over2 m}\varphi$$
+
+Zkontrolovat predposledni radek, jsou tam blbe ccka.

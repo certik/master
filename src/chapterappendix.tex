@@ -1,0 +1,312 @@
+\chapter{Appendix}
+
+\section{Polar and Spherical Coordinates}
+
+Polar coordinates (radial, azimuth) $(r,\phi)$ are defined by
+$$\eqalign{
+x&=r\cos\phi\cr
+y&=r\sin\phi\cr
+}$$
+Spherical coordinates (radial, zenith, azimuth) $(\rho,\theta,\phi)$:
+$$\eqalign{
+x&=\rho\cos\phi\sin\theta\cr
+y&=\rho\sin\phi\sin\theta\cr
+z&=\rho\cos\theta\cr
+}$$
+
+\section{Delta Function}
+
+${\bf\hat r}$ is the unit vector in 3D and we can label it using
+spherical coordinates ${\bf\hat r}={\bf\hat r}(\theta,\phi)$. We can also
+express it in cartesian coordinates as 
+${\bf\hat r}(\theta,\phi)=(\cos\phi\sin\theta,\sin\phi\sin\theta,\cos\theta)$.
+
+$$f({\bf\hat r'})=\int\delta({\bf\hat r}-{\bf\hat r'})f({\bf\hat r})\,\d
+{\bf\hat r}\no{deltar}$$
+Expressing $f({\bf\hat r})=f(\theta,\phi)$ as a function of $\theta$ and $\phi$
+we have
+$$f(\theta',\phi')=\int\delta(\theta-\theta')\delta(\phi-\phi')
+f(\theta,\phi)\,\d\theta\d\phi\no{deltaangles}$$
+Expressing \rno{deltar} in spherical coordinates we get
+$$f(\theta',\phi')=\int\delta({\bf\hat r}-{\bf\hat r'})
+f(\theta,\phi)\sin\theta\,\d\theta\d\phi$$
+and comparing to \rno{deltaangles} we finally get
+$$\delta({\bf\hat r}-{\bf\hat r'})={1\over\sin\theta}
+\delta(\theta-\theta')\delta(\phi-\phi')$$
+In exactly the same manner we get
+$$\delta({\bf r}-{\bf r'})=\delta({\bf\hat r}-{\bf\hat r'})
+{\delta(\rho-\rho')\over\rho^2}$$
+
+\section{Variations and functional derivatives}
+
+Functional derivatives are a common source of confusion and especially the
+notation. The reason is similar to the delta function --- it's due to rigid
+mathematicians, who refuse to use a clear and exact notation and unfortunately
+they are allowed to teach the basic calculus to physics students.
+
+\def\h{{\rm h}}
+\def\a{{\rm a}}
+Let's have $\x=(x_1,x_2,\dots,x_N)$. The function $f(\x)$ assigns a number
+to each $\x$. We define a differential of $f$ as
+$$\d f\equiv \left.{\d\over\d\varepsilon}f(\x+\varepsilon\h)
+\right|_{\varepsilon=0}
+=\lim_{\varepsilon\to0}
+{f(\x+\varepsilon\h)-f(\x)\over\varepsilon}=\a\cdot\h$$
+The last equality follows from the fact, that
+$\left.{\d\over\d\varepsilon}f(\x+\varepsilon\h) \right|_{\varepsilon=0}$ is a
+linear function of $\h$.
+We define ${\partial f\over\partial x_i}$ as
+$$\a\equiv\left({\partial f\over\partial x_1},{\partial f\over\partial x_2},
+\dots,{\partial f\over\partial x_N}\right)$$
+This also gives a formula for computing ${\partial f\over\partial x_i}$: we
+set $h_j=\delta_{ij}h_i$ and
+$${\partial f\over\partial x_i}=a_i=\a\cdot\h=\left.{\d\over\d\varepsilon}
+f(\x+\varepsilon(0,0,\dots,1,\dots,0))\right|_{\varepsilon=0}=$$
+$$=\lim_{\varepsilon\to0}
+{f(x_1,x_2,\dots,x_i+\varepsilon,\dots,x_N)-f(x_1,x_2,\dots,x_i,\dots,x_N)
+\over\varepsilon}$$
+But this is just the way the partial derivative is usually defined.
+Every variable can be treated as a function (very simple one):
+$$x_i=g(x_1,\dots,x_N)=\delta_{ij}x_j$$
+and so we define
+$$\d x_i\equiv\d g=\d(\delta_{ij}x_j)=h_i$$
+and thus we write $h_i=\d x_i$ and $\h=\d\x$ and 
+$$\d f={\d f\over\d x_i}\d x_i$$
+So $\d\x$ have two meanings --- it's either $\h=\x-\x_0$ (a finite change in
+the independent variable $\x$) or a differential,
+depending on the context. Even mathematicians use this notation.
+
+Functional $F[f]$ assigns a number to each function $f(x)$. The variation is
+defined as 
+$$\delta F[f]\equiv\left.{\d\over\d\varepsilon}F[f+\varepsilon h]
+\right|_{\varepsilon=0}=\lim_{\epsilon\to0}{F[f+\epsilon h]-F[f]\over\epsilon}=
+\int a(x)h(x)\d x$$
+We define ${\delta F\over\delta f(x)}$ as
+$$a(x)\equiv{\delta F\over\delta f(x)}$$
+This also gives a formula for computing ${\delta F\over\delta f(x)}$: we
+set $h(y)=\delta(x-y)$ and
+$${\delta F\over\delta f(x)}=a(x)=\int a(y)\delta(x-y)\d y=
+\left.{\d\over\d\varepsilon}F[f(y)+\varepsilon\delta(x-y)]
+\right|_{\varepsilon=0}=$$
+$$=\lim_{\varepsilon\to0}
+{F[f(y)+\varepsilon\delta(x-y)]-F[f(y)]\over\varepsilon}$$
+Every function can be treated as a functional (although a very simple one):
+$$f(x)=G[f]=\int f(y)\delta(x-y)\d y$$
+and so we define
+$$\delta f\equiv\delta G[f]=
+\left.{\d\over\d\varepsilon}G[f(x)+\varepsilon h(x)]
+\right|_{\varepsilon=0}=
+\left.{\d\over\d\varepsilon}(f(x)+\varepsilon h(x))
+\right|_{\varepsilon=0}=
+h(x)$$
+thus we write $h=\delta f$ and
+$$\delta F[f]=\int {\delta F\over\delta f(x)}\delta f(x)\d x$$
+so $\delta f$ have two meanings --- it's either 
+$h(x)=\left.{\d\over\d\varepsilon}(f(x)+\varepsilon h(x))
+\right|_{\varepsilon=0}$
+(a finite change in the
+function $f$) or a variation of a functional, depending on the context.
+Mathematicians never write $\delta f$ in the meaning of $h(x)$, they always
+write the latter, but it's ridiculous, because it is completely analogous to
+$\d\x$.
+
+The correspondence between the finite and infinite dimensional case can be
+summarized as:
+$$\eqalign{
+f(x_i) &\quad\Longleftrightarrow\quad F[f]\cr
+\d f=0 &\quad\Longleftrightarrow\quad \delta F=0\cr
+{\partial f\over\partial x_i}=0 &\quad\Longleftrightarrow\quad 
+{\delta F\over\delta f(x)}=0\cr
+f &\quad\Longleftrightarrow\quad F\cr
+x_i &\quad\Longleftrightarrow\quad f(x)\cr
+x &\quad\Longleftrightarrow\quad f\cr
+i &\quad\Longleftrightarrow\quad x\cr
+}$$
+
+More generally, $\delta$-variation can by applied to any function $g$ which contains
+the function $f(x)$ being varied, you just need to replace $f$ by
+$f+\epsilon h$ and apply ${\d\over\d\epsilon}$ to the whole $g$, for
+example (here $g=\partial_\mu\phi$ and $f=\phi$):
+$$\delta\partial_\mu\phi=\left.{\d\over\d\varepsilon}\partial_\mu(\phi+\varepsilon h) \right|_{\varepsilon=0}=
+\partial_\mu\left.{\d\over\d\varepsilon}(\phi+\varepsilon h)
+\right|_{\varepsilon=0}=\partial_\mu\delta\phi$$
+
+This notation allows us a very convinient computation, as shown in the
+following examples. First, when computing a variation of some integral, when
+can interchange $\delta$ and $\int$:
+$$F[f]=\int K(x) f(x) \d x$$
+$$\delta F=\delta \int K(x) f(x) \d x 
+= \left.{\d\over\d\varepsilon}\int K(x) (f+\varepsilon h)\d
+x\right|_{\varepsilon=0}=
+\left.\int{\d\over\d\varepsilon} (K(x) (f+\varepsilon h))\d
+x\right|_{\varepsilon=0}=$$
+$$=\int\delta(K(x) f(x))\d x $$
+In the expression $\delta(K(x) f(x))$ we must understand from the context if we
+are treating it as a functional of $f$ or $K$. In our case it's a functional of
+$f$, so we have $\delta(K f)=K\delta f$.
+
+A few more examples:
+$${\delta\over\delta f(t)}\int\d t'f(t')g(t')=
+\left.{\d\over\d\varepsilon}\int\d t'(f(t')+\varepsilon\delta(t-t'))g(t')
+\right|_{\varepsilon=0}=g(t)$$
+$${\delta f(t')\over\delta f(t)}=
+\left.{\d\over\d\varepsilon}(f(t')+\varepsilon\delta(t-t'))
+\right|_{\varepsilon=0}=\delta(t-t')$$
+$${\delta f(t_1)f(t_2)\over\delta f(t)}=
+\left.{\d\over\d\varepsilon}(f(t_1)+\varepsilon\delta(t-t_1))
+(f(t_2)+\varepsilon\delta(t-t_2))
+\right|_{\varepsilon=0}=\delta(t-t_1)f(t_2)+f(t_1)\delta(t-t_2)$$
+$${\delta\over\delta f(t)}\half\int\d t_1\d t_2K(t_1,t_2)f(t_1)f(t_2)=
+\half\int\d t_1\d t_2K(t_1,t_2){\delta f(t_1)f(t_2)\over\delta f(t)}=$$
+$$=\half\left(\int\d t_1 K(t_1,t)f(t_1)+\int\d t_2 K(t,t_2)f(t_2)\right)
+=\int\d t_2 K(t,t_2)f(t_2)$$
+The last equality follows from $K(t_1,t_2)=K(t_2,t_1)$ (any antisymmetrical
+part of a $K$ would not contribute to the symmetrical integration).
+
+\section{Spherical Harmonics}
+
+Are defined by
+$$Y_{lm}(\theta,\phi)=\sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}}\,P_l^m(\cos\theta)\,e^{im\phi}$$
+where $P_l^m$ are associated Legendre polynomials defined by
+$$P_l^m(x)=(-1)^m (1-x^2)^{m/2}{\d^m\over\d x^m} P_l(x)$$
+and $P_l$ are Legendre polynomials defined by the formula
+$$P_l(x)={1\over2^l l!}{\d^l\over\d x^l}[(x^2-1)^l]$$
+They are ortonormal:
+$$\int Y_{lm}\,Y^*_{l'm'}\,\d\Omega = 
+\int_0^{2\pi}\int_0^{\pi}
+Y_{lm}(\theta,\phi)\,Y^*_{l'm'}(\theta,\phi)\sin\theta\,\d\theta\,\d\phi = 
+\delta_{mm'}\delta_{ll'}\no{Yorto}$$
+and complete (both in the $l$-subspace and the whole space):
+$$\sum_{m=-l}^l|Y_{lm}(\theta,\phi)|^2={2l+1\over4\pi}\no{lcomplete}$$
+$$\sum_{l=0}^\infty\sum_{m=-l}^lY_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')
+={1\over\sin\theta}\delta(\theta-\theta')\delta(\phi-\phi')=
+\delta({\bf\hat r}-{\bf\hat r'})\no{Ycomplete}$$
+The relation \rno{lcomplete} is a special case of an addition theorem for
+spherical harmonics
+$$\sum_{m=-l}^lY_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')=
+{4\pi\over 2l+1}P_l(\cos\gamma) \no{lsum}
+$$
+where $\gamma$ is the angle between the unit vectors given by $(\theta,\phi)$
+and $(\theta',\phi')$:
+$$\cos\gamma=\cos\theta\cos\theta'+\sin\theta\sin\theta'\cos(\phi-\phi')$$
+
+\section{Dirac Notation}
+
+$$f(x')=\int\delta(x'-x)f(x)\d x$$
+we define
+$$\eqalign{
+f(x)&\equiv\braket{x|f}\cr
+f(x')&\equiv\braket{x'|f}\cr
+\delta(x'-x)&\equiv\braket{x'|x}\cr
+}$$
+so we have
+$$\braket{x'|f}=\int\braket{x'|x}\braket{x|f}\d x$$
+we also define
+$$\int\ket{x}\bra{x}\d x\equiv\one$$
+and thus we can interpret $\ket{f}$ as a vector, $\ket{x}$ as a basis and
+$\braket{x|f}$ as the coefficients in the basis expansion:
+$$\ket{f}=\one\ket{f}=\int\ket{x}\bra{x}\d x\ket{f}=
+\int\ket{x}\braket{x|f}\d x$$
+
+Now, let's look at the spherical harmonics:
+$$Y_{lm}({\bf\hat r})\equiv\braket{{\bf\hat r}|lm}$$
+on the unit sphere, we have
+$$\int\ket{\bf\hat r}\bra{\bf\hat r}\d{\bf\hat r}=
+\int\ket{\bf\hat r}\bra{\bf\hat r}\d\Omega=\one$$
+$$\delta({\bf\hat r}-{\bf\hat r'})=\braket{{\bf\hat r}|{\bf\hat r'}}$$
+thus
+$$\int_0^{2\pi}\int_0^{\pi}
+Y_{lm}(\theta,\phi)\,Y^*_{l'm'}(\theta,\phi)\sin\theta\,\d\theta\,\d\phi = 
+\int\braket{l'm'|{\bf\hat r}}\braket{{\bf\hat r}|lm}\d\Omega=
+\braket{l'm'|lm}
+$$
+and from \rno{Yorto} we get
+$$\braket{l'm'|lm}=\delta_{mm'}\delta_{ll'}$$
+now
+$$\sum_{lm}Y_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')=
+\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}
+$$
+from \rno{Ycomplete} we get
+$$\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}=
+\braket{{\bf\hat r}|{\bf\hat r'}}$$
+so we have
+$$\sum_{lm}\ket{lm}\bra{lm}=\one$$
+so $\ket{lm}$ forms an ortonormal basis. Any function defined on the sphere
+$f({\bf\hat r})$ can be written using this basis:
+$$f({\bf\hat r})
+=\braket{{\bf\hat r}|f}
+=\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|f}
+=\sum_{lm}Y_{lm}({\bf\hat r})f_{lm}
+$$
+where
+$$
+f_{lm}=\braket{lm|f}=\int\braket{lm|{\bf\hat r}}\braket{{\bf\hat r}|f}\d\Omega
+=\int Y_{lm}^*({\bf\hat r}) f({\bf\hat r})\d\Omega
+$$
+If we have a function $f({\bf r})$ in 3D, we can write it as a function of
+$\rho$ and ${\bf\hat r}$ and expand only with respect to the variable
+${\bf\hat r}$: 
+$$f({\bf r})=f(\rho{\bf\hat r})\equiv g(\rho,{\bf\hat r})=
+\sum_{lm}Y_{lm}({\bf\hat r})g_{lm}(\rho)
+$$
+In Dirac notation we are doing the following: we decompose the space 
+into the angular and radial part
+$$\ket{{\bf r}}=\ket{{\bf\hat r}}\otimes\ket{\rho}
+\equiv\ket{{\bf\hat r}}\ket{\rho}
+$$
+and write
+$$f({\bf r})=\braket{{\bf r}|f}=\bra{{\bf\hat r}}\braket{\rho|f}=
+\sum_{lm}Y_{lm}({\bf\hat r})\bra{lm}\braket{\rho|f}
+$$
+where
+$$\bra{lm}\braket{\rho|f}=
+\int\braket{lm|{\bf\hat r}}\bra{{\bf\hat r}}\braket{\rho|f}\d\Omega
+=\int Y_{lm}^*({\bf\hat r}) f({\bf r})\d\Omega
+$$
+Let's calculate $\braket{\rho|\rho'}$
+$$
+\braket{{\bf r}|{\bf r'}}=\bra{\bf\hat r}\braket{\rho|\rho'}\ket{{\bf\hat r'}}
+=\braket{{\bf\hat r}|{\bf\hat r'}}\braket{\rho|\rho'}
+$$
+so
+$$\braket{\rho|\rho'}
+={\braket{{\bf r}|{\bf r'}}\over\braket{{\bf\hat r}|{\bf\hat r'}}}
+={\delta(\rho-\rho')\over\rho^2}$$
+We must stress that $\ket{lm}$ only acts in the $\ket{{\bf\hat r}}$ space (not
+the $\ket\rho$ space) which means that
+$$\braket{{\bf r}|lm}
+=\bra{\bf\hat r}\braket{\rho|lm}
+=\braket{{\bf\hat r}|lm}\bra{\rho}
+=Y_{lm}({\bf\hat r})\bra{\rho}
+$$
+and $V\ket{lm}$ leaves $V\ket\rho$ intact. Similarly,
+$$\sum_{lm} \ket{lm}\bra{lm}=\one$$
+is a unity in the $\ket{\bf\hat r}$ space only (i.e. on the unit sphere).
+
+Let's rewrite the equation \rno{lsum}:
+$$\sum_m\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}=
+{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})$$
+from which it follows the completeness relation for $P_l/(2l+1)$ (actually,
+this is not a completeness relation\dots)
+$$\sum_l{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})=
+\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}=
+\braket{{\bf\hat r}|{\bf\hat r'}}=\delta({\bf\hat r}-{\bf\hat r'})
+$$
+this is the completeness relation
+$$\sum_{l=0}^\infty {2l+1\over2}P_l(x')P_l(x)=\delta(x-x')$$
+$$\sum_l {2l+1\over2}\braket{x'|P_l}\braket{P_l|x}=\braket{x'|x}$$
+$$\sum_l \ket{P_l}{2l+1\over2}\bra{P_l}=\one$$
+and
+$$f(x)=\braket{x|f}=\sum_l\braket{x|P_l}{2l+1\over2}\braket{P_l|f}=
+\sum_{l=0}^\infty f_l P_l(x)$$
+where
+$$f_l={2l+1\over2}\int_{-1}^1 P_l(x)f(x)\d x$$
+which means that every function $f({\bf\hat r}\cdot{\bf\hat r'})$ 
+can be expanded in terms of $P_l$:
+$$f({\bf\hat r}\cdot{\bf\hat r'})=\sum_{l=0}^\infty f_l 
+{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})$$
+and using \rno{lsum}
+$$f({\bf\hat r}\cdot{\bf\hat r'})=
+\sum_{l=0}^\infty\sum_{m=-l}^l Y_{lm}({\bf\hat r}) f_l Y_{lm}^*({\bf\hat r'})
+\no{fylm}
+$$
