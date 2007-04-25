@@ -2,8 +2,7 @@
 
 name=dft
 
-tex=tex
-#tex=pdftex
+tex=pdftex
 
 dir=$(pwd)
 export TEXINPUTS="$dir/macros:$dir/src:$dir/images:"
