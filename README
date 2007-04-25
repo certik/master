@@ -1,17 +1,8 @@
 Compilation
 ===========
 
-apt-get install tetex-bin tetex-extra
+wajig install texlive
 
 ./make
 
-this will create "groups.ps" and "groups.pdf" in the "tmp" directory.
-
-
-Note:
------
-
-You can also install texlive instead of tetex, but the 
-font generation doesn't work:
-
-apt-get install texlive texlive-formats-extra texlive-generic-recommended
+this will create a "dft.ps" in this directory.
