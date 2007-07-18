@@ -46,29 +46,43 @@ density that the $N$th electron is at the position ${\bf r}_N$.  Thus the
 probability density $n({\bf r})$ that any of the N electrons (i.e the first, or
 the second, or the third, \dots, or the $N$th) is at the position $\bf r$ is
 called the particle (or charge or electron) density and is therefore given by:
-$$n({\bf r})= \int\int\cdots\int
-\Psi^*({\bf r},{\bf r_2},\cdots,{\bf r}_N)
-\Psi  ({\bf r},{\bf r_2},\cdots,{\bf r}_N)
+$$n({\bf r})= \int
+\Psi^*({\bf r},{\bf r}_2,\cdots,{\bf r}_N)
+\Psi  ({\bf r},{\bf r}_2,\cdots,{\bf r}_N)
 \,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_N+ $$
-$$+\int\int\cdots\int
-\Psi^*({\bf r_1},{\bf r},\cdots,{\bf r}_N)
-\Psi  ({\bf r_1},{\bf r},\cdots,{\bf r}_N)
+$$+\int
+\Psi^*({\bf r}_1,{\bf r},\cdots,{\bf r}_N)
+\Psi  ({\bf r}_1,{\bf r},\cdots,{\bf r}_N)
 \,\d^3 r_1\,\d^3 r_3\cdots\d^3 r_N+\cdots$$
-$$+\int\int\cdots\int
-\Psi^*({\bf r_1},{\bf r_2},\cdots,{\bf r})
-\Psi  ({\bf r_1},{\bf r_2},\cdots,{\bf r})
+$$+\int
+\Psi^*({\bf r}_1,{\bf r}_2,\cdots,{\bf r})
+\Psi  ({\bf r}_1,{\bf r}_2,\cdots,{\bf r})
 \,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N-1}=$$
-$$=N\int\int\cdots\int
-\Psi^*({\bf r},{\bf r_2},\cdots,{\bf r}_N)
-\Psi  ({\bf r},{\bf r_2},\cdots,{\bf r}_N)
+$$=\int(\delta({\bf r}-{\bf r}_1)+\delta({\bf r}-{\bf
+r}_2)+\cdots+\delta({\bf r}-{\bf r}_N))$$
+$$
+\Psi^*({\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N)
+\Psi  ({\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N)
+\,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=$$
+$$=\sum_{i=1}^N\int
+\braket{\Psi|{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N}\delta({\bf r}-{\bf r}_i)
+\braket{{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N|\Psi}
+\,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=$$
+$$=N\int
+\braket{\Psi|{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N}\delta({\bf r}-{\bf r}_1)
+\braket{{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N|\Psi}
+\,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=$$
+$$=N\int
+\Psi^*({\bf r},{\bf r}_2,\cdots,{\bf r}_N)
+\Psi  ({\bf r},{\bf r}_2,\cdots,{\bf r}_N)
 \,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_N\no{chargedensity}$$
 Thus $\int_\Omega n({\bf r})\,\d^3r$ gives the number of particles (and also the
 amount of charge) in the region of integration $\Omega$. Obviously 
 $\int n({\bf r})\,\d^3r=N$.
 
-The Pauli principle ensures that the density $n({\bf r})$ at any point $\bf r$
-is smaller than the number of spin states, in our case where we don't take the
-spin into account we get $n({\bf r})<1$.
+%The Pauli principle ensures that the density $n({\bf r})$ at any point $\bf r$
+%is smaller than the number of spin states, in our case where we don't take the
+%spin into account we get $n({\bf r})<1$.
 
 The energy of the system is given by
 $$E=\braket{\Psi|\hat H|\Psi}=
