@@ -19,7 +19,27 @@ $(\phi,\theta)$, $(\vartheta,\varphi)$ and others.
 
 \section{Delta Function}
 
-${\bf\hat r}$ is the unit vector in 3D and we can label it using
+Delta function $\delta(x)$ is defined such that this relation holds:
+$$\int f(x)\delta(x-t)\d x=f(t)\no{deltadef}$$
+No such function exists, but one can find many sequences "converging" to a delta
+function:
+$$\lim_{\alpha\to\infty}\delta_\alpha(x) = \delta(x)\no{deltalim}$$
+more precisely:
+$$\lim_{\alpha\to\infty}\int f(x)\delta_\alpha(x)\d x = 
+\int f(x)\lim_{\alpha\to\infty}\delta_\alpha(x)\d x = f(t)\no{deltaprec}$$ 
+one example of such a sequence is:
+$$\delta_\alpha(x) = {1\over\pi x}\sin(\alpha x)$$
+It's clear that \rno{deltaprec} holds for any well behaved function $f(x)$.
+Mathematicians like to say it's incorrect to use such a notation when in fact
+the integral \rno{deltadef} doesn't "exist", but they are wrong, because it is
+not important if something "exist" or not, but rather if it is clear what we
+mean by our notation: \rno{deltadef} is a shorthand for \rno{deltaprec} and
+\rno{deltalim} gets a mathematically rigorous meaning when you integrate both
+sides and use \rno{deltadef} to arrive at \rno{deltaprec}. Thus one uses the
+relations \rno{deltadef}, \rno{deltalim}, \rno{deltaprec} to derive all
+properties of the delta function. 
+
+Let's give an example. Let ${\bf\hat r}$ be the unit vector in 3D and we can label it using
 spherical coordinates ${\bf\hat r}={\bf\hat r}(\theta,\phi)$. We can also
 express it in cartesian coordinates as 
 ${\bf\hat r}(\theta,\phi)=(\cos\phi\sin\theta,\sin\phi\sin\theta,\cos\theta)$.
@@ -39,6 +59,8 @@ $$\delta({\bf\hat r}-{\bf\hat r'})={1\over\sin\theta}
 In exactly the same manner we get
 $$\delta({\bf r}-{\bf r'})=\delta({\bf\hat r}-{\bf\hat r'})
 {\delta(\rho-\rho')\over\rho^2}$$
+See also \rno{functionalderdel} for an example of how to deal with more complex
+expressions involving the delta function like $\delta^2(x)$.
 
 \section{Variations and functional derivatives}
 
@@ -75,7 +97,7 @@ and so we define
 $$\d x_i\equiv\d g=\d(\delta_{ij}x_j)=h_i$$
 and thus we write $h_i=\d x_i$ and $\h=\d\x$ and 
 $$\d f={\d f\over\d x_i}\d x_i$$
-So $\d\x$ have two meanings --- it's either $\h=\x-\x_0$ (a finite change in
+So $\d\x$ has two meanings --- it's either $\h=\x-\x_0$ (a finite change in
 the independent variable $\x$) or a differential,
 depending on the context. Even mathematicians use this notation.
 
@@ -165,6 +187,27 @@ $$=\half\left(\int\d t_1 K(t_1,t)f(t_1)+\int\d t_2 K(t,t_2)f(t_2)\right)
 =\int\d t_2 K(t,t_2)f(t_2)$$
 The last equality follows from $K(t_1,t_2)=K(t_2,t_1)$ (any antisymmetrical
 part of a $K$ would not contribute to the symmetrical integration).
+$${\delta\over\delta f(t)}\int f^3(x)\d x=
+\left.{\d\over\d\varepsilon}\int(f(x)+\varepsilon\delta(x-t))^3\d x
+\right|_{\varepsilon=0}=$$
+$$=\left.\int3(f(x)+\varepsilon\delta(x-t))^2\delta(x-t)\d x
+\right|_{\varepsilon=0}=\int3f^2(x)\delta(x-t)\d x=3f^2(t)$$
+Some mathematicians would say the above calculation is incorrect, because
+$\delta^2(x-t)$ is undefined. But that's not true, because in case of such
+problems the above notation
+automatically implies working with some series $\delta_\alpha(x) \to \delta(x)$
+(for example $\delta_\alpha(x) = {1\over\pi x}\sin(\alpha x)$)
+and taking the limit $\alpha\to\infty$:
+$${\delta\over\delta f(t)}\int f^3(x)\d x=
+\left.\lim_{\alpha\to\infty}{\d\over\d\varepsilon}\int(f(x)+\varepsilon\delta_\alpha(x-t))^3\d x
+\right|_{\varepsilon=0}=$$
+$$=\left.\lim_{\alpha\to\infty}\int3(f(x)+\varepsilon\delta_\alpha(x-t))^2\delta_\alpha(x-t)\d x
+\right|_{\varepsilon=0}=\lim_{\alpha\to\infty}\int3f^2(x)\delta_\alpha(x-t)\d x=$$
+$$=\int3f^2(x)\lim_{\alpha\to\infty}\delta_\alpha(x-t)\d x=
+\int3f^2(x)\delta(x-t)\d x=3f^2(t)\no{functionalderdel}$$
+As you can see, we got the same result, with the same rigor, but using an
+obfuscating notation. That's why such obvious manipulations with $\delta_\alpha$
+are tacitly implied.
 
 \section{Spherical Harmonics}
 
