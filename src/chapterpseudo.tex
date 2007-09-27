@@ -31,14 +31,17 @@ $$
 =\int\braket{R{\bf r}|\hat V|R{\bf r'}}\braket{{\bf r'}|\varphi}\d^3r'
 =\int V(R{\bf r},R{\bf r'})\varphi({\bf r'})\d^3r'
 $$
-where $R$ is the rotation operator (it's unitary). We have derived 
-$V(R{\bf r},R{\bf r'})=V({\bf r},{\bf r'})$, which means that the
+where $R$ is the rotation operator (it's unitary). We have thus derived
+$V(R{\bf r},R{\bf r'})=V({\bf r},{\bf r'})$ true for any $R$, which means that
+the
 the kernel only depends on $\rho$, $\rho'$ and 
 ${\bf\hat r}\cdot{\bf\hat r'}$, where ${\bf r}=\rho{\bf\hat r}$ and
 ${\bf r'}=\rho'{\bf\hat r'}$. So we obtain using \rno{fylm}
 $$V({\bf r}, {\bf r'})=V(\rho,\rho',{\bf\hat r}\cdot{\bf\hat r'})=
 \sum_{lm}  Y_{lm}({\bf\hat r}) V_l(\rho,\rho')
 Y_{lm}^*({\bf\hat r'})$$
+where
+$$V_l(\rho,\rho')={(2l+1)^2\over8\pi}\int_{-1}^1 P_l(x)V_l(\rho,\rho',x)\d x$$
 In Dirac notation:
 $$V({\bf r}, {\bf r'})=\braket{{\bf r}|\hat V|{\bf r'}}
 =\bra{\bf\hat r}\braket{\rho|\hat V|\rho'}\ket{\bf\hat r'}
