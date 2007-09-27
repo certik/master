@@ -217,7 +217,9 @@ where $P_l^m$ are associated Legendre polynomials defined by
 $$P_l^m(x)=(-1)^m (1-x^2)^{m/2}{\d^m\over\d x^m} P_l(x)$$
 and $P_l$ are Legendre polynomials defined by the formula
 $$P_l(x)={1\over2^l l!}{\d^l\over\d x^l}[(x^2-1)^l]$$
-They are ortonormal:
+they also obey the completeness relation
+$$\sum_{l=0}^\infty {2l+1\over2}P_l(x')P_l(x)=\delta(x-x')\no{Lorto}$$
+The spherical harmonics are ortonormal:
 $$\int Y_{lm}\,Y^*_{l'm'}\,\d\Omega = 
 \int_0^{2\pi}\int_0^{\pi}
 Y_{lm}(\theta,\phi)\,Y^*_{l'm'}(\theta,\phi)\sin\theta\,\d\theta\,\d\phi = 
@@ -232,27 +234,47 @@ spherical harmonics
 $$\sum_{m=-l}^lY_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')=
 {4\pi\over 2l+1}P_l(\cos\gamma) \no{lsum}
 $$
-where $\gamma$ is the angle between the unit vectors given by $(\theta,\phi)$
-and $(\theta',\phi')$:
-$$\cos\gamma=\cos\theta\cos\theta'+\sin\theta\sin\theta'\cos(\phi-\phi')$$
+where $\gamma$ is the angle between the unit vectors given by ${\bf\hat
+r}=(\theta,\phi)$
+and ${\bf\hat r'}=(\theta',\phi')$:
+$$\cos\gamma=\cos\theta\cos\theta'+\sin\theta\sin\theta'\cos(\phi-\phi')
+={\bf\hat r}\cdot{\bf\hat r'}$$
 
 \section{Dirac Notation}
 
-$$f(x')=\int\delta(x'-x)f(x)\d x$$
-we define
+The Dirac notation allows a very compact and powerful way of writing equations
+that describe a function expansion into a basis, both discrete (e.g. a fourier
+series expansion) and continuous (e.g. a fourier transform) and related
+things. The notation is designed so that it is very easy to remember and it
+just guides you to write the correct equation.
+
+Let's have a function $f(x)$. We define
 $$\eqalign{
-f(x)&\equiv\braket{x|f}\cr
-f(x')&\equiv\braket{x'|f}\cr
-\delta(x'-x)&\equiv\braket{x'|x}\cr
+\braket{x|f}&\equiv f(x)\cr
+\braket{x'|f}&\equiv f(x')\cr
+\braket{x'|x}&\equiv\delta(x'-x)\cr
+\int\ket{x}\bra{x}\d x&\equiv\one\cr
 }$$
-so we have
+The following equation
+$$f(x')=\int\delta(x'-x)f(x)\d x$$
+then becomes
 $$\braket{x'|f}=\int\braket{x'|x}\braket{x|f}\d x$$
-we also define
-$$\int\ket{x}\bra{x}\d x\equiv\one$$
 and thus we can interpret $\ket{f}$ as a vector, $\ket{x}$ as a basis and
 $\braket{x|f}$ as the coefficients in the basis expansion:
 $$\ket{f}=\one\ket{f}=\int\ket{x}\bra{x}\d x\ket{f}=
 \int\ket{x}\braket{x|f}\d x$$
+That's all there is to it. Take the above rules as the operational definition
+of the Dirac notation. It's like with the delta function - written alone it
+doesn't have any meaning, but there are clear and nonambiguous rules to convert
+any expression with $\delta$ to an expression which even mathematicians
+understand (i.e. integrating, applying test functions and using other relations
+to get rid of all $\delta$ symbols in the expression -- but the result is
+usually much more complicated than the original formula). It's the same with
+the ket $\ket{f}$: written alone it doesn't have any meaning, but you can
+always use the above rules to get an expression that make sense to everyone
+(i.e. attaching any bra to the left and rewritting all brackets $\braket{a|b}$
+with their equivalent expressions) -- but it will be more complex and harder to
+remember and -- that is important -- less general.  
 
 Now, let's look at the spherical harmonics:
 $$Y_{lm}({\bf\hat r})\equiv\braket{{\bf\hat r}|lm}$$
@@ -331,27 +353,27 @@ is a unity in the $\ket{\bf\hat r}$ space only (i.e. on the unit sphere).
 
 Let's rewrite the equation \rno{lsum}:
 $$\sum_m\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}=
-{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})$$
-from which it follows the completeness relation for $P_l/(2l+1)$ (actually,
-this is not a completeness relation\dots)
-$$\sum_l{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})=
-\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}=
-\braket{{\bf\hat r}|{\bf\hat r'}}=\delta({\bf\hat r}-{\bf\hat r'})
-$$
-this is the completeness relation
-$$\sum_{l=0}^\infty {2l+1\over2}P_l(x')P_l(x)=\delta(x-x')$$
+{4\pi\over 2l+1} \braket{{\bf\hat r}\cdot{\bf\hat r'}|P_l}$$
+Using the completeness relation \rno{Lorto}:
 $$\sum_l {2l+1\over2}\braket{x'|P_l}\braket{P_l|x}=\braket{x'|x}$$
 $$\sum_l \ket{P_l}{2l+1\over2}\bra{P_l}=\one$$
-and
-$$f(x)=\braket{x|f}=\sum_l\braket{x|P_l}{2l+1\over2}\braket{P_l|f}=
-\sum_{l=0}^\infty f_l P_l(x)$$
+we can now derive a very important formula true for every function 
+$f({\bf\hat r}\cdot{\bf\hat r'})$:
+
+%$$f(x)=\braket{x|f}=\sum_l\braket{x|P_l}{2l+1\over2}\braket{P_l|f}=
+$$f({\bf\hat r}\cdot{\bf\hat r'})=\braket{{\bf\hat r}\cdot{\bf\hat r'}|f}=
+\sum_l \braket{{\bf\hat r}\cdot{\bf\hat r'}|P_l}{2l+1\over2}\braket{P_l|f}=
+\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}{(2l+1)^2\over8\pi}
+\braket{P_l|f}=
+$$
+$$=\sum_{lm}\braket{{\bf\hat r}|lm}f_l
+\braket{lm|{\bf\hat r'}}
+$$
 where
-$$f_l={2l+1\over2}\int_{-1}^1 P_l(x)f(x)\d x$$
-which means that every function $f({\bf\hat r}\cdot{\bf\hat r'})$ 
-can be expanded in terms of $P_l$:
-$$f({\bf\hat r}\cdot{\bf\hat r'})=\sum_{l=0}^\infty f_l 
-{4\pi\over 2l+1} P_l({\bf\hat r}\cdot{\bf\hat r'})$$
-and using \rno{lsum}
+$$f_l={(2l+1)^2\over8\pi}\braket{P_l|f}
+={(2l+1)^2\over8\pi}\int_{-1}^1 \braket{P_l|x}\braket{x|f}\d x
+={(2l+1)^2\over8\pi}\int_{-1}^1 P_l(x)f(x)\d x$$
+or written explicitly 
 $$f({\bf\hat r}\cdot{\bf\hat r'})=
 \sum_{l=0}^\infty\sum_{m=-l}^l Y_{lm}({\bf\hat r}) f_l Y_{lm}^*({\bf\hat r'})
 \no{fylm}
