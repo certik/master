@@ -1,0 +1,175 @@
+    <section>
+        <title>FEM</title>
+
+        <section>
+            <title>Introduction</title>
+            <p>
+
+This chapter explains FEM and gives concrete formulas which are needed in the
+calculation.
+</p>
+</section>
+<section>
+    <title>Weak Formulation of the Schr&ouml;dinger Equation</title>
+<p>
+One particle Schr&ouml;dinger equation is
+<e>\left(-{\hbar^2\over2m}\nabla^2 + V\right)\psi=E\psi\,.</e>
+We multiply both sides by a test function <m>v</m>
+<e>-\left({\hbar^2\over2m}\nabla^2\psi\right)v=(E-V)\psi v\,,</e>
+and integrate over the whole volume we are interested in
+<e id="1">\int-\left({\hbar^2\over2m}\nabla^2\psi\right)v\,\d V=\int(E-V)\psi v\,\d
+V\,,</e>
+and using the vector identity
+<e>-\left(\nabla^2\psi)\right)v=\nabla \psi\cdot
+\nabla v - \nabla\cdot\left((\nabla \psi)v\right),</e>
+we rewrite the left hand side of <a ref="1"/>
+<e>\int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d
+V+\int{\hbar^2\over2m}\nabla\cdot\left((\nabla \psi)v\right)\,\d V\,,</e>
+now we apply Gauss Theorem
+<e>\int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d
+V+\oint{\hbar^2\over2m}(\nabla \psi)v\cdot{\bf n}\,\d S\,,</e>
+and rewriting <m>\nabla\psi\cdot{\bf n}\equiv{\d\psi\over\d n}</m>
+<e id="w">\int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V+ \int vV\psi\,\d V
+=
+\int E\psi v\,\d V + \oint{\hbar^2\over2m}{\d\psi\over\d n}v\,\d S\,,</e>
+which is the weak formulation. The problem reads: find a function <m>\psi</m> such
+that <a ref="w"/> holds for every <m>v</m>.
+</p>
+</section>
+<section>
+    <title>Finite Elements</title>
+<p>
+We choose a basis <m>\phi_i</m> and substitute <m>\phi_i</m> for <m>v</m> and expand
+<m>\psi=\sum q_j\phi_j</m>
+<e id="fem">\left(\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V+
+\int\phi_iV\phi_j\,\d V\right)q_j
+=
+\left(\int E\phi_j\phi_i\,\d V\right)q_j
++\oint{\hbar^2\over2m}{\d\psi\over\d n}\phi_i\,\d S\,,</e>
+which can be written in a matrix form
+<e>\left(K_{ij}+V_{ij}\right)q_j=EM_{ij}q_j+F_i\,,</e>
+where
+<align>
+<e> V_{ij}=\int\phi_iV\phi_j\,\d V\,,</e>
+<e> M_{ij}=\int\phi_i\phi_j\,\d V\,,</e>
+<e> K_{ij}={\hbar^2\over2m}\int\nabla\phi_i\cdot\nabla\phi_j\,\d V\,,</e>
+<e> F_i={\hbar^2\over2m}\oint{\d\psi\over\d n}\phi_i\,\d S\,.</e>
+</align>
+Usually we set <m>F_i=0</m>.
+</p>
+<p>
+We decompose the domain into elements and compute the integrals as the sum over
+elements. For example:
+<e>K_{ij}=\sum_{E\in elements} K_{ij}^E</e>
+where <m>K_{ij}^E</m> is the integral over one element only
+<e>
+K_{ij}^{E}=\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V^{E}\approx
+\sum_{q=0}^{N_q-1}{\hbar^2\over2m}\,\nabla\phi_i(x_q)\cdot\nabla\phi_j(x_q)\,
+w_q|\det J(\hat x_q)|\,.
+</e>
+The integral is computed numerically using a Gauss integration: <m>x_q</m> are Gauss
+points (there are <m>N_q</m> of them), <m>w_q</m> is the weight of each point, and the
+Jacobian <m>|\det J(\hat x_q)|</m> is there because we are actually computing the
+integral on the reference element instead in the real space.
+</p>
+<p>
+The surface integrals are computed similarly.
+</p>
+</section>
+<section>
+    <title>Pseudopotentials Formulation</title>
+<p>
+    There are no problems with other matrix elements in <a ref="fem"/> except 
+<e>V_{ij}
+=\int\phi_i({\bf r}) V \phi_j({\bf r}) \d^3 r
+=\int\braket{i|{\bf r}} \braket{{\bf r}|\hat V|j} \d^3 r
+=\braket{i|\hat V|j}
+</e>
+where 
+<e>\hat V=V_{loc}(\rho)+\sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm}
+\bra{lm}\bra{\bar R_{nl}}V_l(\rho)</e>
+so
+<e>
+V_{ij}=\braket{i|V_{loc}(\rho)|j}+
+\bra{i}\sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm}
+\bra{lm}\bra{\bar R_{nl}}V_l(\rho) \ket{j}
+=V_{ij}^{loc}+\sum_{nlm}p_ip_j^*
+</e>
+where the complex vector <m>p_i</m> is given by
+<e>p_i^{(nlm)}=\braket{i|lm}V_l(\rho)\ket{\bar R_{nl}}=
+\int\braket{i|{\bf r}}\braket{{\bf\hat r}|lm}
+\braket{\rho|V_l(\rho)|\bar R_{nl}}\d^3 r=
+\int \phi_i({\bf r})Y_{lm}({\bf\hat r})V_l(\rho)\bar R_{nl}(\rho)\d^3 r
+</e>
+and
+<e>V_{ij}^{loc}=\int\phi_i({\bf r}) V_{loc}(\rho) \phi_j({\bf r}) \d^3 r </e>
+and
+<m>Y_{lm}({\bf\hat r})</m>, <m>\bar R_{nl}(\rho)</m> and <m>V_l(\rho)</m> are given functions.
+Noticing that
+<e>\sum_m p_ip_j^*=
+\int \phi_i({\bf r})Y_{lm}({\bf\hat r})V_l(\rho)\bar R_{nl}(\rho)\d^3 r
+\int \phi_j({\bf r'})Y_{lm}^*({\bf\hat r'})V_l(\rho')\bar R_{nl}(\rho')\d^3 r'=
+</e>
+<e>
+=\int\int Y_{lm}({\bf\hat r})Y_{lm}^*({\bf\hat r'})V_l(\rho)\bar R_{nl}(\rho)
+\phi_i({\bf r}) \phi_j({\bf r'})V_l(\rho')\bar R_{nl}(\rho')\d^3 r\d^3 r'=
+</e>
+and using <a ref="lsum"/> we get
+<e>\sum_m p_ip_j^*=
+\int\int {4\pi\over 2l+1}P_l({\bf\hat r}\cdot{\bf\hat r'})V_l(\rho)\bar
+R_{nl}(\rho) \phi_i({\bf r}) \phi_j({\bf r'})V_l(\rho')\bar R_{nl}(\rho')\d^3
+r\d^3 r'
+</e>
+which is a real number, thus <m>\sum_{nlm}p_ip_j^*</m> is also a real number, which
+means that we can calculate with only the real parts of the matrix <m>p_ip_j^*</m>,
+because the imaginary parts cancels out in the result:
+<e>\sum_{nlm}p_ip_j^*=\Re\left(\sum_{nlm}p_ip_j^*\right)=
+\sum_{nlm}\Re(p_ip_j^*)</e>
+let <m>p_i=a_i+ib_i</m> then 
+<e>\Re(p_ip_j^*)=\Re((a_i+ib_i)(a_j-ib_j))=a_ia_j+b_ib_j</e>
+and
+<e>V_{ij}=V_{ij}^{loc}+\sum_{nlm}(a_ia_j+b_ib_j)</e>
+where
+<e>a_i=
+\sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}}
+\int \phi_i({\bf r})P_l^m(\cos\theta)\cos(m\phi)V_l(\rho)\bar
+R_{nl}(\rho)\d^3 r
+</e>
+<e>b_i=
+\sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}}
+\int \phi_i({\bf r})P_l^m(\cos\theta)\sin(m\phi)V_l(\rho)\bar
+R_{nl}(\rho)\d^3 r
+</e>
+just don't confuse the basis function <m>\phi_i({\bf r})</m> with the spherical
+integration variable <m>\phi</m>.
+</p>
+</section>
+<section>
+    <title>Example on Si</title>
+<p>
+There are only two valence electrons to take into account, thus we have only 2
+<m>n</m> in the summation <m>(nlm)</m>. The potentials in the Schr&ouml;dinger equation are
+<e>V=V_{local}+V_{nonlocal}</e>
+<e>V_{local}=V_H+V_{XC}+V_{loc}</e>
+<e>\hat V_{nonlocal}=
+\sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm}
+\bra{lm}\bra{\bar R_{nl}}V_l(\rho)</e>
+There are just <m>V_0</m>, <m>V_1</m> and <m>V_2</m>.
+</p>
+<p>
+We probably need to calculate
+<m>\bar R_{10}</m>,
+<m>\bar R_{20}</m>,
+<m>\bar R_{21}</m>,
+<m>\bar R_{30}</m>,
+<m>\bar R_{31}</m>,
+<m>\bar R_{32}</m>,
+but I am not completely sure. We get maybe around 
+18 complex matrices, which means 36 real matrices of the form
+<m>a_ia_j</m>. The input for the solver is 36 real vectors <m>a</m>, <m>b</m>, <m>c</m>, <m>d</m>,
+<m>e</m>,\dots and sparse matrices <m>V^{loc}</m>, <m>M</m>, and <m>K</m>. The solver needs to
+solve
+<e>(K+V^{loc}+a^Ta+b^Tb+c^Tc+d^Td+e^Te+\cdots)q=EMq</e>
+            </p>
+        </section>
+    </section>
