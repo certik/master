@@ -496,8 +496,7 @@ updates the <m>\J</m> successively at every iteration. The <em>first Broyden
 |\Delta\x_M|^2}</e>
 which has the disadvantage that we need to compute the inverse Jacobian in
 <a ref="Jaciter"/> at every iteration, which is impossible in our case. The
-<em>it
-    second Broyden method</em> updates the inverse Jacobian directly using this
+<em>second Broyden method</em> updates the inverse Jacobian directly using this
 formula
 <e id="Bupdate">\J_{M+1}^{-1}=\J_M^{-1}+{(\Delta\x_M-\J_M^{-1}\cdot\Delta\R(\x_M))
 \Delta\R(\x_M)^T\over |\Delta\R(\x_M)|^2}</e>
