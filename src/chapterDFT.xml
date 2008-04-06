@@ -112,7 +112,7 @@ where
 </e>
 <e id="V[n]">=\int v({\bf r}) n({\bf r})\d^3 r=V[n]</e>
 
-It needs to be stressed, that <m>E</m> generally is {\it not\/} a functional of <m>n</m>
+It needs to be stressed, that <m>E</m> generally is <em>not</em> a functional of <m>n</m>
 alone, only the <m>V[n]</m> is. In the next section we show however, that if 
 the <m>\ket{\Psi}</m> is a ground state (of any system), then <m>E</m> becomes a
 functional of <m>n</m>.
@@ -183,8 +183,8 @@ It can be proven \cite{DFT}, that <m>F[n]</m> is a functional of <m>n</m> for de
 ground states too, so <a ref="Emin"/> stays true as well.
 </p>
 <p>
-The ground state densities in <a ref="Efunct"/> and <a ref="Emin"/> are called {\it
-pure-state v-representable\/} because they are the densities of (possible
+The ground state densities in <a ref="Efunct"/> and <a ref="Emin"/> are called
+<em>pure-state v-representable</em> because they are the densities of (possible
 degenerate) ground state of the Hamiltonian with some local potential 
 <m>v({\bf r})</m>. One may ask a question if all possible functions are
 v-representable (this is called the v-representability problem). The question
@@ -306,7 +306,7 @@ where the <m>\epsilon_{xc}({\bf r}';n)</m> is called the xc energy density.
 </p>
 <p>
 Unfortunately, no one knows <m>\epsilon_{xc}({\bf r}';n)</m> exactly (yet).  The
-most simple approximation is the {\it local density approximation \/} (LDA),
+most simple approximation is the <em>local density approximation</em> (LDA),
 for which the xc energy density <m>\epsilon_{xc}</m> at <m>\bf r</m> is taken as that of
 a homogeneous electron gas (the nuclei are replaced by a uniform positively
 charged background, density <m>n=\rm const</m>) with the same local density:
@@ -465,7 +465,7 @@ sequence of <m>\J_0</m>, <m>\J_1</m>, <m>\J_2</m>, \dots:
 and the rate of convergence is determined by the quality of the Jacobian. These type of methods are called quasi-Newton-Raphson methods. 
 </p>
 <p>
-The simplest approach is to use the {\it linear mixing\/} scheme for which
+    The simplest approach is to use the <em>linear mixing</em> scheme for which
 <e>\J_M^{-1}=-\alpha\one</e>
 so
 <e>\x_{M+1}=\x_M+\alpha\R(\x_M)=\x_M+\alpha(\F(\x_M)-\x_M)</e>
@@ -490,13 +490,14 @@ method.
 </p>
 <p>
 More sophisticated approach is the Broyden update, which 
-updates the <m>\J</m> successively at every iteration. The {\it first Broyden
-method\/} is using this formula: 
+updates the <m>\J</m> successively at every iteration. The <em>first Broyden
+    method</em> is using this formula: 
 <e>\J_{M+1}=\J_M-{(\Delta\R(\x_M)+\J_M\cdot\Delta\x_M)\Delta\x_M^T\over 
 |\Delta\x_M|^2}</e>
 which has the disadvantage that we need to compute the inverse Jacobian in
-<a ref="Jaciter"/> at every iteration, which is impossible in our case. The {\it
-second Broyden method\/} updates the inverse Jacobian directly using this
+<a ref="Jaciter"/> at every iteration, which is impossible in our case. The
+<em>it
+    second Broyden method</em> updates the inverse Jacobian directly using this
 formula
 <e id="Bupdate">\J_{M+1}^{-1}=\J_M^{-1}+{(\Delta\x_M-\J_M^{-1}\cdot\Delta\R(\x_M))
 \Delta\R(\x_M)^T\over |\Delta\R(\x_M)|^2}</e>
@@ -520,12 +521,12 @@ Thus instead of the whole dense matrix, we only need to save the vectors <m>{\bf
 u}</m> and <m>{\bf v}</m> from every iteration.
 </p>
 <p>
-Vanderbilt and Louie \cite{vanderbiltlouie} suggested a {\it modified Broyden
-method}, which incorporates weights, but Eyert \cite{eyert} showed that if all
+    Vanderbilt and Louie \cite{vanderbiltlouie} suggested a <em>modified Broyden
+        method</em>, which incorporates weights, but Eyert \cite{eyert} showed that if all
 the weights are used to tune the iteration process to its fastest convergence,
 they, in fact, cancel out and the result of the scheme is called by Eyert the
-{\it generalized Broyden method}, whose scheme shown by Eyert is exactly the
-same as for the {\it Anderson mixing}:
+<em>generalized Broyden method</em>, whose scheme shown by Eyert is exactly the
+same as for the <em>Anderson mixing</em>:
 <e>\sum_{p=M-k}^{M-1}(1+\omega_0^2\delta_{pn})\Delta\R(\x_n)^T\Delta\R(\x_p)
 \gamma_p =\Delta\R(\x_n)^T\R(\x_M) </e>
 <e>\x_{M+1}=\x_M+\beta_M\R(\x_M)-\sum_{p=M-k}^{M-1}\gamma_p
