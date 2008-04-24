@@ -7,6 +7,7 @@ master.pdf: master.tex macros.tex
 	cp tmp/master.pdf .
 
 master.tex:
+	mkdir -p tmp
 	./convert_doc.py src/main.xml tmp/master.xml
 	./convert_doc.py tmp/master.xml tmp/master.tex
 
