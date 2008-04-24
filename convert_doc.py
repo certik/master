@@ -184,6 +184,8 @@ class LaTeXConverter(Converter):
             return self.convert_xref(node)
         elif node.tag == "align":
             return self.convert_align(node)
+        elif node.tag == "center":
+            return self.convert_center(node)
         elif node.tag == "table":
             return self.convert_table(node)
         elif node.tag == "indexterm":
@@ -379,6 +381,20 @@ class LaTeXConverter(Converter):
             r += self.convert_node(x)
         self.align = False
         r += "\n\\end{eqnarray*}"
+        if node.tail:
+            r += "\n" + self.escape(node.tail)
+        return r
+
+    def convert_center(self, node):
+        assert node.tag == "center"
+        r = ""
+        if node.text:
+            r += self.escape(node.text)
+        r += "\\begin{center}\n"
+        for x in node: 
+            r += self.convert_node(x)
+        self.align = False
+        r += "\\end{center}\n"
         if node.tail:
             r += "\n" + self.escape(node.tail)
         return r
@@ -1027,6 +1043,12 @@ Converts "filename" DocBook to other formats.
             mod_class_name = None
         if mod_name.endswith(".py"):
             mod_name = mod_name[:-3]
+
+        if sys.version < '2.5':
+            # This is needed for python2.4 on Gentoo. It works on python2.4 on
+            # Debian. Weird.
+            mod_path, mod_name = os.path.split( mod_name )
+            sys.path.append( mod_path )
         mod = __import__(mod_name)
         mod_class = getattr(mod, mod_class_name)
         converter = mod_class
