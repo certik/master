@@ -1,4 +1,4 @@
-all: master.pdf
-
-master.pdf: master.tex macros.tex
+all:
+	pdflatex master.tex
+	pdflatex master.tex
 	pdflatex master.tex
