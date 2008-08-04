@@ -1,4 +1,5 @@
 all:
-	pdflatex master.tex
-	pdflatex master.tex
-	pdflatex master.tex
+	latex master.tex
+	latex master.tex
+	latex master.tex
+	dvips master.dvi
