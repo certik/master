@@ -1,0 +1,1644 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\def\mybackslash{$\backslash$}
+\title{Master Thesis}
+\usepackage{braket} \input macros.tex
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{Introduction}
+
+These are our notes on DFT and pseudopotentials calculations using a finite element method. We tried to include all the necessary theory starting from the many body Schrödinger equation. There are numerous books and articles on this topic, but the problem is first that the information is scattered among many publications and second that the theory in other sources is many times very lenghty and sometimes not very clear, sometimes it suppresses several important details, which are needed in order to write a computer program. So the reader should be able to understand every single detail just from this text.
+
+We have added the appendix with all the necessary information one has to know about a delta function, variations and functional derivatives, spherical harmonics and the dirac notation in order to be able to use it in calculations and understand formulas.
+
+\section{Derivation from QED}
+
+\subsection{Introduction}
+
+The correct theory for electrons is the quantum electrodynamics (QED). Thus all the equations which we are going to use, follow from the QED and this chapter is devoted for their derivation. The standard nonrelativistic quantum mechanics (QM) contains a lot of ad-hoc assumptions (Schrödinger equation, electromagnetic coupling, spin, etc.), that cannot be satisfactorily explained. It is true that the whole nonrelativistic QM can be derived from a small set of assumptions (mostly commutation relations and some particular form of QM operators like spin), but it is not at all clear why these assumptions look the way they look. The QM is a set of rules which are known to work quite well, but obviously, we are not interested in postulating correct forms of operators or commutation relations, we want a better explanation, if there is one. And fortunately, there is.
+
+The correct theory so far is the Standard Model and in our case of electron structure calculations, all phenomena are explained by the QED. There are still some problems in the Standard Model, but for much higher energies than we deal with in the electron structure. Thus what we do is that we take the most complete theory so far (QED) and derive everything from it. Of course, because we are dealing with low energies and to ease calculations, we make a lot of approximations on our way, but this is the only correct way to proceed, because it will be clear that we make each approximation because of this and that. If it turns out our results are not in agreement with experiment (for example the Schrödinger equation is imprecise), we need to neglect less things.
+
+As you will see, this chapter is not long, so there really is no excuse of doing things differently (maybe in 1940s, but certainly not now when we have the QED).
+
+There is one argument to be made though. As you will see, we will not get any new equations by deriving everything from firt principles from QED. We sometimes get a deeper understanding, however, from the practical point of view, it is not necessary to do that. There are logical problems even in QED or the Standard Model and noone really knows what are the correct equations, because we simply don't have enough experiments. The higher the energy we go, let's say up to the QED, the more fundamental theory we get, however, also the less experiments we have and thus some logical steps are just plain hand waving, because there is a whole bunch of ways how to continue, so we chose the one which we like, or which is the mathematically simplest. Contrary, in the low energy regime, like the classic quantum mechanics, the equations are very well known and there is really no other option. On the other hand, the theory doesn't explain us "why". So deriving everything from QED answers the "why", but creates some more fundamental questions, but those needn't concern us, because for our energy scale, everything works very nice.
+
+\subsection{QED}
+
+The QED Lagrangian density is 
+\begin{equation*}
+  \L=\bar\psi(ic\gamma^\mu D_\mu-mc^2)\psi-{1\over4}F_{\mu\nu}F^{\mu\nu}
+\end{equation*}
+where 
+\begin{equation*}
+  \psi=\left(\matrix{\psi_1\psi_2\psi_3\psi_4}\right)
+\end{equation*}
+and 
+\begin{equation*}
+  D_\mu=\partial_\mu+ieA_\mu
+\end{equation*}
+is the gauge covariant derivative and ($e$ is the elementary charge, which is $1$ in atomic units) 
+\begin{equation*}
+  F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu
+\end{equation*}
+is the electromagnetic field tensor. It's astonishing, that this simple Lagrangian can account for all phenomena from macroscopic scales down to something like $10^{-13}\rm\,cm$. So of course Feynman, Schwinger and Tomonaga received the 1965 Nobel Prize in Physics for such a fantastic achievement.
+
+Plugging this Lagrangian into the Euler-Lagrange equation of motion for a field, we get: 
+\begin{equation*}
+  (ic\gamma^\mu D_\mu-mc^2)\psi=0
+\end{equation*}
+\begin{equation*}
+  \partial_\nu F^{\nu\mu}=-ec\bar\psi\gamma^\mu\psi
+\end{equation*}
+The first equation is the Dirac equation in the electromagnetic field and the second equation is a set of Maxwell equations ($\partial_\nu F^{\nu\mu}=-ej^\mu$) with a source $j^\mu=c\bar\psi\gamma^\mu\psi$, which is a 4-current comming from the Dirac equation.
+
+The fields $\psi$ and $A^\mu$ are quantized. The first approximation is that we take $\psi$ as a wavefunction, that is, it is a classical 4-component field. It can be shown that this corresponds to taking three orders in the perturbation theory.
+
+The first component $A_0$ of the 4-potential is the electric potential, and because this is the potential that (as we show in a moment) is in the Schrödinger equation, we denote it by $V$: 
+\begin{equation*}
+  A_\mu=\left({V\over ec},A_1,A_2,A_3\right)
+\end{equation*}
+So in the non-relativistic limit, the $V\over e$ corresponds to the electric potential. We multiply the Dirac equation by $\gamma^0$ from left to get: 
+\begin{equation*}
+  0=\gamma^0(ic\gamma^\mu D_\mu-mc^2)\psi= \gamma^0(ic\gamma^0(\partial_0+i{V\over c})+ic\gamma^i (\partial_i+ieA_i)-mc^2)\psi=
+\end{equation*}
+\begin{equation*}
+  = (ic\partial_0+ic\gamma^0\gamma^i\partial_i-\gamma^0mc^2-V -ce\gamma^0\gamma^iA_i)\psi
+\end{equation*}
+and we make the following substitutions (it's just a formalism, nothing more): $\beta=\gamma^0$, $\alpha^i=\gamma^0\gamma^i$, $p_j=-i\partial_j$, $\partial_0={1\over c}{\partial\over\partial t}$ to get 
+\begin{equation*}
+  (i{\partial\over\partial t}-c\alpha^i p_i-\beta mc^2-V-ce\alpha^iA_i)\psi=0\,.
+\end{equation*}
+This, in most solid state physics texts, is usually written as 
+\begin{equation*}
+  i{\partial\psi\over\partial t}=H\psi\,,
+\end{equation*}
+where the Hamiltonian is given by 
+\begin{equation*}
+  H=c\alpha^i(p_i+eA_i)+\beta mc^2+V\,.
+\end{equation*}
+
+The right hand side of the Maxwell equations is the 4-current, so it's given by: 
+\begin{equation*}
+  j^\mu=c\bar\psi\gamma^\mu\psi
+\end{equation*}
+Now we make the substitution $\psi=e^{-imc^2t}\varphi$, which states, that we separate the largest oscillations of the wavefunction and we get 
+\begin{equation*}
+  j^0=c\bar\psi\gamma^0\psi=c\psi^\dagger\psi=c\varphi^\dagger\varphi
+\end{equation*}
+\begin{equation*}
+  j^i=c\bar\psi\gamma^i\psi=c\psi^\dagger\alpha^i\psi=c\varphi^\dagger\alpha^i\varphi
+\end{equation*}
+The Dirac equation implies the Klein-Gordon equation: 
+\begin{equation*}
+  (-ic\gamma^\mu D_\mu-mc^2)(ic\gamma^\nu D_\nu-mc^2)\psi= (c^2\gamma^\mu\gamma^\nu D_\mu D_\mu+m^2c^4)\psi=
+\end{equation*}
+\begin{equation*}
+  =(c^2D^\mu D_\mu-ic^2[\gamma^\mu,\gamma^\nu]D_\mu D_\nu+m^2c^4)\psi=0
+\end{equation*}
+Note however, the $\psi$ in the true Klein-Gordon equation is just a scalar, but here we get a 4-component spinor. Now: 
+\begin{equation*}
+  D_\mu D_\nu = (\partial_\mu+ieA_\mu)(\partial_\nu+ieA_\nu)= \partial_\mu\partial_\nu+ie(A_\mu\partial_\nu+A_\nu\partial_\mu+ (\partial_\mu A_\nu))-e^2A_\mu A_\nu
+\end{equation*}
+\begin{equation*}
+  [D_\mu, D_\nu] = D_\mu D_\nu-D_\nu D_\mu=ie(\partial_\mu A_\nu)- ie(\partial_\nu A_\mu)
+\end{equation*}
+We rewrite $D^\mu D_\mu$: 
+\begin{equation*}
+  D^\mu D_\mu=g^{\mu\nu}D_\mu D_\nu= \partial^\mu\partial_\mu+ie((\partial^\mu A_\mu)+2A^\mu\partial_\mu) -e^2A^\mu A_\mu=
+\end{equation*}
+\begin{equation*}
+  =\partial^\mu\partial_\mu+ ie((\partial^0 A_0)+2A^0\partial_0+(\partial^i A_i)+2A^i\partial_i) -e^2(A^0A_0+A^i A_i)=
+\end{equation*}
+\begin{equation*}
+  =\partial^\mu\partial_\mu +i{1\over c^2}{\partial V\over\partial t}+ 2i{V\over c^2}{\partial\over\partial t} +ie(\partial^i A_i)+2ieA^i\partial_i -{V^2\over c^2}-e^2A^iA_i
+\end{equation*}
+
+We use the identity ${\partial\over\partial t}\left(e^{-imc^2t}f(t)\right)= e^{-imc^2t}(-imc^2+{\partial\over\partial t})f(t)$ to get:
+
+
+\begin{equation*}
+  L=c^2\partial^\mu\psi^*\partial_\mu\psi-m^2c^4\psi^*\psi= {\partial\over\partial t}\psi^*{\partial\over\partial t}\psi -c^2\partial^i\psi^*\partial_i\psi-m^2c^4\psi^*\psi=
+\end{equation*}
+\begin{equation*}
+  =(imc^2+{\partial\over\partial t})\varphi^* (-imc^2+{\partial\over\partial t})\varphi -c^2\partial^i\varphi^*\partial_i\varphi-m^2c^4\varphi^*\varphi=
+\end{equation*}
+\begin{equation*}
+  =2mc^2\left[{1\over2}i(\varphi^*{\partial\varphi\over\partial t}- \varphi{\partial\varphi^*\over\partial t})- {1\over2m}\partial^i\varphi^*\partial_i\varphi +{1\over2mc^2}{\partial\varphi^*\over\partial t} {\partial\varphi\over\partial t}\right]
+\end{equation*}
+The constant factor $2mc^2$ in front of the Lagrangian is of course irrelevant, so we drop it and then we take the limit $c\to\infty$ (neglecting the last term) and we get 
+\begin{equation*}
+  L={1\over2}i(\varphi^*{\partial\varphi\over\partial t}- \varphi{\partial\varphi^*\over\partial t})- {1\over2m}\partial^i\varphi^*\partial_i\varphi
+\end{equation*}
+After integration by parts we arrive at 
+\begin{equation*}
+  L=i\varphi^*{\partial\varphi\over\partial t} -{1\over 2m}\partial^i\varphi^*\partial_i \varphi
+\end{equation*}
+The nonrelativistic limit can also be applied directly to the Klein-Gordon equation: 
+\begin{equation*}
+  0=(c^2D^\mu D_\mu+m^2c^4)\psi=
+\end{equation*}
+\begin{equation*}
+  =\left( c^2\partial^\mu\partial_\mu +i{\partial V\over\partial t} +2iV{\partial\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2 -e^2c^2A^iA_i +m^2c^4 \right)e^{-imc^2t}\varphi=
+\end{equation*}
+\begin{equation*}
+  =\left( {\partial^2\over\partial t^2} -c^2\nabla^2 +2iV{\partial\over\partial t} +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2 -e^2c^2A^iA_i +m^2c^4 \right)e^{-imc^2t}\varphi=
+\end{equation*}
+\begin{equation*}
+  =e^{-imc^2t}\left( (-imc^2+{\partial\over\partial t})^2 -c^2\nabla^2 +2iV(-imc^2+{\partial\over\partial t}) +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -e^2c^2A^iA_i +m^2c^4 \right)\varphi=
+\end{equation*}
+\begin{equation*}
+  =e^{-imc^2t}\left( -2imc^2{\partial\over\partial t}+{\partial^2\over\partial t^2} -c^2\nabla^2 +2Vmc^2 +2iV{\partial\over\partial t} +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -e^2c^2A^iA_i \right)\varphi=
+\end{equation*}
+\begin{equation*}
+  = -2mc^2 e^{-imc^2 t} \left(i{\partial\over\partial t}+{\nabla^2\over2m}-V -{1\over2mc^2}{\partial^2\over\partial t^2}-{i\over2mc^2}{\partial V\over\partial t}+{V^2\over2mc^2}-{iV\over mc^2}{\partial\over\partial t}+\right.
+\end{equation*}
+\begin{equation*}
+  \left.-{ie\over2m}\partial^i A_i-{ie\over m}A^i\partial_i+{e^2\over2m}A^iA_i\right)\varphi
+\end{equation*}
+Taking the limit $c\to\infty$ we again recover the Schrödinger equation: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left(-{\nabla^2\over2 m}+V +{ie\over2m}\partial^i A_i +{ie\over m}A^i\partial_i -{e^2\over2m}A^iA_i \right)\varphi\,,
+\end{equation*}
+we rewrite the right hand side a little bit: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left({1\over2 m} (\partial^i\partial_i +ie\partial^i A_i +2ieA^i\partial_i -e^2A^iA_i ) +V \right)\varphi\,,
+\end{equation*}
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left({1\over2 m} (\partial^i+ieA^i)(\partial_i+ieA_i) +V \right)\varphi\,,
+\end{equation*}
+And we get the usual form of the Schrödinger equation for the vector potential ${\bf A}=(A_1, A_2, A_3)$: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left(-{(\nabla+ie{\bf A})^2\over2 m} +V \right)\varphi\,.
+\end{equation*}
+
+\subsection{Radial Schrödinger and Dirac Equations}
+
+For general treatment, together with derivation of all the different forms of radial Dirac equations used in the literature, see \mybackslash{}cite{bachelor-thesis}. Here we just summarize the results.
+
+\subsection{Radial Schrödinger Equation}
+
+We have a spherically symmetric potential energy 
+\begin{equation*}
+  V({\bf x})=V(r)\,.
+\end{equation*}
+State with a given square of an angular momentum (eigenvalue $l(l+1)$) and its $z$ component (eigenvalue $m$) is described by the wave function 
+\begin{equation}
+  \psi_{nlm}({\bf x})=R_{nl}(r)\,Y_{lm}\left({\bf x}\over r\right)\,,  \label{psi}
+\end{equation}
+where $R_{nl}(r)$ obeys the equation \mybackslash{}cite{formanek} (eq. 2.400) 
+\begin{equation}
+  R_{nl}''+{2\over r}R_{nl}'+{2M\over\hbar^2}(E-V)R_{nl}- {l(l+1)\over r^2}R_{nl}=0\,.  \label{radial}
+\end{equation}
+This is called the radial Schrödinger equation which we want to solve numerically.
+
+\subsection{Numerical integration for a given }
+
+Equation (\ref{radial}) is the linear ordinary differential equation of the second order, so the general solution is a linear combination of two independent solutions. Normally, the $2$ constants are determined from initial and/or boundary conditions. In our case, however, we don't have any other condition besides being interested in solutions that we can integrate on the interval $(0,\infty)$ (and which are normalizable), more exactly we want $R\in L^2$ and $\int_0^\infty r^2R^2\,\d r=1$.
+
+It can be easily shown by a direct substitution, that there are only two asymptotic behaviors near the origin: $r^l$ and $r^{-l-1}$. We are interested in quadratic integrable solutions only, so we are left with $r^l$ and only one integration constant, which we calculate from a normalization. This determines the solution uniquely.
+
+All the integration algorithms needs to evaluate $R''$, which is a problem at the origin, where all the terms in the equation are infinite, although their sum is finite. We thus start to integrate the equation at some small $r_0$ (for example $r_0=10^{-10}\rm\,a.u.$), where all the terms in the equation are finite. If we find the initial conditions $R(r_0)$ and $R'(r_0)$, the solution is then fully determined.
+
+If $r_0$ is sufficiently small, we can set $R(r_0)=r_0^l$ and $R'(r_0)=lr_0^{l-1}$. In the case $l=0$ we need to set $R(r_0)=1$ and $R'(r_0)=-{1\over a}$, where $a$ is the Bohr radius, see the next section for more details.
+
+So when somebody gives us $l$ and $E$, we are now able to compute the solution up to the the multiplicative constant that is later determined from a normalization. As was already mentioned, we used the fourth-order Runge-Kutta method that proved very suitable for this problem.
+
+\subsection{Asymptotic behavior}
+
+The asymptotic behavior is important for the integration routine to find the correct solution for a given $E$. It is well known, that the first term of the Taylor series of the solution is $r^l$, independent of the potential \mybackslash{}cite{formanek} (eq. 2.408). This is enough information to find the correct solution for $l>0$ because the only thing we need to know is the value of the wave function and its derivative near the origin, which is effectively $r_0^l$ and $lr_0^{l-1}$ for some small $r_0$. The problem is with $l=0$, where the derivative cannot be calculated just from $l$ and $r_0$.
+
+The asymptotic behavior for $l=0$ depends on the potential $V$, so we need to take into account it's properties. We assume $V$ to be of a form: 
+\begin{equation*}
+  V=-{Z\over r}+v_0 + v_1r + O(r^2)\,,
+\end{equation*}
+It can be shown, that the solution is then 
+\begin{equation*}
+  R=a_0(1-{r\over a}+O(r^2))\,,
+\end{equation*}
+where $a={\hbar^2\over ZM}$ is the Bohr radius and $a_0$ is a normalization constant. So the initial condition for the integration for $l=0$ is $R(r_0)=1$ and $R'(r_0)=-{1\over a}$.
+
+\subsection{Dirac Equation}
+
+The Dirac equation for one particle is \mybackslash{}cite{strange,zabloudil}: 
+\begin{equation}
+  H\psi=W\psi\,,  \label{diraceq}
+\end{equation}
+\begin{equation*}
+  H=c\balpha\cdot{\bf p}+\beta mc^2+V(r)\hbox{\dsrom1}\,,
+\end{equation*}
+where $\psi$ is a four component vector: 
+\begin{equation*}
+  \psi=\left(\matrix{\psi_1\psi_2\psi_3\psi_4}\right) =\col{\psi_A}{\psi_B}\,,\qquad \psi_A=\col{\psi_1}{\psi_2}\!,\,\psi_B=\col{\psi_3}{\psi_4}
+\end{equation*}
+and $\balpha$, $\beta$ are $4\times4$ matrices: 
+\begin{equation*}
+  \balpha=\mat{0}{\bsigma}{\bsigma}{0}\,,
+\end{equation*}
+\begin{equation*}
+  \beta=\mat{\hbox{\dsrom1}}{0}{0}{-\hbox{\dsrom1}}\,,
+\end{equation*}
+where the Pauli matrices $\bsigma=(\sigma_x,\sigma_y,\sigma_z)$ and $\hbox{\dsrom1}$ form a basis of all $2\times2$ Hermitian matrices. To derive a continuity equation, we multiply (\ref{diraceq}) by $\psi^*$ and subtract the conjugate transpose of (\ref{diraceq}) multiplied by $\psi$: 
+\begin{equation*}
+  \p{}{t}(\psi^*\psi)=-\nabla\cdot(c\psi^*\balpha\psi)\,,
+\end{equation*}
+so we identify the probability and current densities as 
+\begin{equation*}
+  \rho=\psi^*\psi=\psi_1^*\psi_1+\psi_2^*\psi_2+\psi_3^*\psi_3+\psi_4^*\psi_4\,, \qquad {\bf j}=c\psi^*\balpha\psi\,.
+\end{equation*}
+The normalization of a four-component wave function is then 
+\begin{equation}
+  \int \rho \,\d^3x= \int \psi^*\psi \,\d^3x= \int \psi_1^*\psi_1+\psi_2^*\psi_2+\psi_3^*\psi_3+\psi_4^*\psi_4 \,\d^3x= 1\,.  \label{norm}
+\end{equation}
+The probability density $\rho(x,y,z)$ is the physical quantity we are interested in, and all the four-component wavefunctions and other formalism is just a way of calculating it. This $\rho$ is also the thing we should compare with the Schrödinger equation.
+
+\subsection{Radial Dirac equation}
+
+We and search for a basis in the form of spin angular functions: 
+\begin{equation}
+  \psi_A=g\chi^{j_3}_{\kappa}\,,  \label{psia}
+\end{equation}
+\begin{equation}
+  \psi_B=if\chi^{j_3}_{-\kappa}\,.  \label{psib}
+\end{equation}
+Substituting all of these into (\ref{diraceq}) and some more well-known manipulations one gets: 
+\begin{equation}
+  \hbar c \col{-\p{f}{r}+{\kappa-1\over r}f} {\p{g}{r}+{\kappa+1\over r}g}= \col{(W-V-mc^2)g}{(W-V+mc^2)f}\,.  \label{radialdirac}
+\end{equation}
+This is the radial Dirac equation. As we shall see in the next section, the equation for $g$ is (with the exception of a few relativistic corrections) identical to the radial Schrödinger equation. And $f$ vanishes in the limit $c\to\infty$. For this reason $f$ is called the small (fein, minor) component and $g$ the large (groß, major) component.
+
+The probability density is 
+\begin{equation*}
+  \rho=\psi^*\psi=\psi^*_A\psi_A+\psi^*_B\psi_B= f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa}\,,
+\end{equation*}
+so from the normalization condition (\ref{norm}) we get 
+\begin{equation*}
+  \int \rho \,\d^3x= \int f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa} \,\d^3x= \int (f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa})\,r^2\,\d r\d\Omega=
+\end{equation*}
+\begin{equation*}
+  =\int_0^\infty f^2r^2\,\d r\int\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa} \,\d\Omega+ \int_0^\infty g^2r^2\,\d r\int\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa} \,\d\Omega= \int_0^\infty r^2(f^2+g^2)\,\d r=1\,,
+\end{equation*}
+where we used the normalization of spin-angular functions. Also it can be seen, that the radial probability density is 
+\begin{equation}
+  \rho(r)=r^2(f^2+g^2)  \label{radialrho}
+\end{equation}
+(i.e., the probability to find the electron between $r_1$ and $r_2$ is $\int_{r_1}^{r_2}r^2(f^2+g^2)\,\d r$). The result of integrating the radial Dirac equation are the two functions $f$ and $g$, but the physically relevant quantity is the radial probability density (\ref{radialrho}). In the nonrelativistic case, the density is given by 
+\begin{equation*}
+  \rho(r)=r^2R^2\,,
+\end{equation*}
+so the correspondence between the Schrödinger and Dirac equation is $R^2=f^2+g^2$.
+
+For numerical stability and robustness, we are not solving the equations in the form (\ref{radialdirac}), but a sligthly rearranged ones. Let's use Hartree atomic units ($m=\hbar=1$) and define $E=W-mc^2=W-c^2$, so that $E$ doesn't contain the electron rest mass energy. Let's make the substitution \mybackslash{}cite{donald:apw} 
+\begin{equation*}
+  P_\kappa=rg_\kappa\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa=rf_\kappa
+\end{equation*}
+and plug all of this into (\ref{radialdirac}). After a little manipulation we get: 
+\begin{equation*}
+  {\d P_\kappa\over\d r}=-{\kappa\over r}P_\kappa+\left[{E-V\over c}+2c\right]Q_k\,,
+\end{equation*}
+\begin{equation}
+  {\d Q_\kappa\over\d r}={\kappa\over r}Q_\kappa-{1\over c}(E-V)P_k\,,  \label{radialdirac2}
+\end{equation}
+which can be found in \mybackslash{}cite{zabloudil} (eq. 8.12 and 8.13), where they have one $c$ hidden in $Q_\kappa=crf_\kappa$ and use Rydberg atomic units, so they have $1$ instead of $2$ in the square bracket. It can be found in \mybackslash{}cite{bachelet} as well, they use Hartree atomic units, but have a different notation $G_\kappa\equiv P_\kappa$ and $F_\kappa\equiv Q_\kappa$, also they made a substitution $c={1\over\alpha}$.
+
+\subsection{Asymptotic behavior}
+
+We calculate the functions $f_\kappa$ and $g_\kappa$ in a similar way as we calculated $R$ for the Schrödinger equation, thus we need the asymptotic behavior at the origin. The potential can always be treated as $V=1/r+\cdots$ and in this case it can be shown \mybackslash{}cite{zabloudil}, that the asymptotic is 
+\begin{equation*}
+  P_\kappa = r g_\kappa=r^{\beta}\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa = r f_\kappa=r^{\beta-1}{\beta+\kappa\over{E-V\over c}+2c}\,,
+\end{equation*}
+where 
+\begin{equation}
+  \beta=\sqrt{\kappa^2-\left(Z\over c\right)^2}\,,  \label{diracasymptotic}
+\end{equation}
+or, if we write it explicitly, for $j=l+\half$
+\begin{equation*}
+  \beta^+=\sqrt{(-l-1)^2-\left(Z\over c\right)^2}
+\end{equation*}
+and $j=l-\half$
+\begin{equation*}
+  \beta^-=\sqrt{l^2-\left(Z\over c\right)^2}\,.
+\end{equation*}
+In the semirelativistic case (which is an approximation --- we neglect the spin-orbit coupling term) we choose 
+\begin{equation*}
+  \beta=\sqrt{\half(|\beta^+|^2+|\beta^-|^2)}= \sqrt{l^2+l+\half-\left(Z\over c\right)^2}\,.
+\end{equation*}
+It should be noted that in the literature we can find other types of aymptotic behaviour for the semirelativistic case, its just a question of the used approximation. One can hardly say that some of them are correct and another is not since the semirelativistic (sometimes denoted as scalar-relativstic) approximation itself is not correct, it's just an approximation.
+
+It follows from (\ref{diracasymptotic}) that for $j=l+\half$ the radial Dirac equation completely becomes the radial Schrödinger equation in the limit $c\to\infty$ (and gives exactly the same solutions): 
+\begin{equation*}
+  P_\kappa = r g_\kappa \to r^{l+1}\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa = r f_\kappa \to 0\,.
+\end{equation*}
+For $j=l-\half$ however, we get a wrong asymptotic: we get a radial Schrödinger equation for $l$, but the asymptotic for $l-1$.
+
+\subsection{Eigenproblem}
+
+In the previous sections, we learned how to calculate the solution of both the radial Schrödinger and Dirac equations for a given $E$. For most of the energies, however, the solution for $r\to\infty$ exponentially diverges to $\pm\infty$. Only for the energies equal to eigenvalues, the solution tends exponentially to zero for $r\to\infty$. The spectrum for bounded states is discrete, so we label the energies by $n$, starting from $1$.
+
+We want to find the eigenvalue and eigenfunction for a given $n$ and $l$ (and a spin in the relativistic case). The algorithm is the same for both nonrelativistic and relativistic case and is based on two facts, first that the number of nodes (ie. the number of intersections with the $x$ axis, not counting the one at the origin and in the infinity) of $R_{nl}$ and $g_\kappa$ is $n-l-1$ and second that the solution must tend to zero at infinity.
+
+We calculate the solution for some (random) energy $E_0$, using the procedure described above. Then we count the number of nodes (for diverging solutions, we don't count the last one) and check, if the solution is approaching the zero from top or bottom in the infinity. From the number of nodes and the direction it is approaching the zero it can be determined whether the energy $E_0$ is below or above the eigenvalue $E$ belonging to a given $n$ and $l$. The rest is simple, we find two energies, one below $E$, one above $E$ and by bisecting the interval we calculate $E$ with any precision we want.
+
+There are a few technical numerical problems that are unimportant from the theoretical point of view, but that need to be solved if one attempts to actually implement this algorithm. One of them is that when the algorithm (described in the previous paragraph) finishes, because the energy interval is sufficiently small, it doesn't mean the solution is near zero for the biggest $r$ of our grid. Remember, the solution goes exponentially to $\pm\infty$ for every $E$ except the eigenvalues and because we never find the exact eigenvalue, the solution will (at some point) diverge from zero.
+
+Possible solution that we have employed is as follows: when the algorithm finishes we find the last minimum (which is always near zero) and trim the solution behind it (set it to zero).
+
+The second rather technical problem is how to choose the initial interval of energies so that the eigenvalue lies inside the interval. We use some default values that work for atomic calculations, while allowing the user to override it if needed.
+
+\section{DFT}
+
+\subsection{Introduction}
+
+Good books about DFT are \mybackslash{}cite{DFT} and \mybackslash{}cite{martin}, but they both contain much more topics which we don't need and some topics are missing in each of them, so this chapter gives a self-contained explanation of all one has to know about a many body quantum mechanics and the DFT in order to be able to do DFT calculations.
+
+\subsection{Many Body Schrödinger Equation}
+
+We use the Born-Oppenheimer approximation, which says that the nuclei of the treated atoms are seen as fixed. A stationary electronic state (for $N$ electrons) is then described by a wave function $\Psi({\bf r_1},{\bf r_2},\cdots,{\bf r}_N)$ fulfilling the many-body Schrödinger equation 
+\begin{equation*}
+  \hat H\ket\Psi=(\hat T+\hat U+\hat V)\ket\Psi=E\ket\Psi
+\end{equation*}
+where 
+\begin{equation*}
+  \hat T = \sum_i^N -{1\over2}\nabla_i^2
+\end{equation*}
+is the kinetic term, 
+\begin{equation*}
+  \hat U = \sum_{i<j}U({\bf r_i},{\bf r_j})= {1\over2}\sum_{i,j}U({\bf r_i},{\bf r_j})
+\end{equation*}
+\begin{equation*}
+  U({\bf r_i},{\bf r_j})=U({\bf r_j},{\bf r_i})={1\over|{\bf r_i}-{\bf r_j}|}
+\end{equation*}
+is the electron-electron interaction term and 
+\begin{equation*}
+  \hat V = \sum_i^N v({\bf r_i})
+\end{equation*}
+\begin{equation*}
+  v({\bf r_i})=\sum_k -{Z_k\over|{\bf r_i}-{\bf R_k}|}
+\end{equation*}
+is the interaction term between electrons and nuclei, where $R_k$ are positions of nuclei and $Z_k$ the number of nucleons in each nucleus (we are using atomic units). So for one atomic calculation with the atom nucleus in the origin, we have just $v({\bf r_i})=-{Z\over|{\bf r_i}|}$.
+
+$|\Psi|^2=\Psi^*\Psi$ gives the probability density of measuring the first electron at the position $\bf r_1$, the second at $\bf r_2$, \mybackslash{}dots and the Nth electron at the position ${\bf r}_N$. The normalization is such that $\int |\Phi|^2\d^3 r_1\d^3 r_2\dots\d^3 r_N=1$. The $\Psi$ is antisymmetric, i.e. $\Psi({\bf r_1},{\bf r_2},\cdots,{\bf r}_N)= -\Psi({\bf r_2},{\bf r_1},\cdots,{\bf r}_N)= -\Psi({\bf r_1},{\bf r}_N,\cdots,{\bf r_2})$ etc.
+
+Integrating $|\Psi|^2$ over the first $N-1$ electrons is the probability density that the $N$th electron is at the position ${\bf r}_N$. Thus the probability density $n({\bf r})$ that any of the N electrons (i.e the first, or the second, or the third, \mybackslash{}dots, or the $N$th) is at the position $\bf r$ is called the particle (or charge or electron) density and is therefore given by: 
+\begin{equation*}
+  n({\bf r})= \int \Psi^*({\bf r},{\bf r}_2,\cdots,{\bf r}_N) \Psi ({\bf r},{\bf r}_2,\cdots,{\bf r}_N) \,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_N+
+\end{equation*}
+\begin{equation*}
+  +\int \Psi^*({\bf r}_1,{\bf r},\cdots,{\bf r}_N) \Psi ({\bf r}_1,{\bf r},\cdots,{\bf r}_N) \,\d^3 r_1\,\d^3 r_3\cdots\d^3 r_N+\cdots
+\end{equation*}
+\begin{equation*}
+  +\int \Psi^*({\bf r}_1,{\bf r}_2,\cdots,{\bf r}) \Psi ({\bf r}_1,{\bf r}_2,\cdots,{\bf r}) \,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N-1}=
+\end{equation*}
+\begin{equation*}
+  =\int(\delta({\bf r}-{\bf r}_1)+\delta({\bf r}-{\bf r}_2)+\cdots+\delta({\bf r}-{\bf r}_N))
+\end{equation*}
+\begin{equation*}
+  \Psi^*({\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N) \Psi ({\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N) \,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=
+\end{equation*}
+\begin{equation*}
+  =\sum_{i=1}^N\int \braket{\Psi|{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N}\delta({\bf r}-{\bf r}_i) \braket{{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N|\Psi} \,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=
+\end{equation*}
+\begin{equation*}
+  =N\int \braket{\Psi|{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N}\delta({\bf r}-{\bf r}_1) \braket{{\bf r}_1,{\bf r}_2,\cdots,{\bf r}_N|\Psi} \,\d^3 r_1\,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_{N}=
+\end{equation*}
+\begin{equation}
+  =N\int \Psi^*({\bf r},{\bf r}_2,\cdots,{\bf r}_N) \Psi ({\bf r},{\bf r}_2,\cdots,{\bf r}_N) \,\d^3 r_2\,\d^3 r_3\cdots\d^3 r_N  \label{chargedensity}
+\end{equation}
+Thus $\int_\Omega n({\bf r})\,\d^3r$ gives the number of particles (and also the amount of charge) in the region of integration $\Omega$. Obviously $\int n({\bf r})\,\d^3r=N$.
+
+The energy of the system is given by 
+\begin{equation}
+  E=\braket{\Psi|\hat H|\Psi}= \braket{\Psi|\hat T|\Psi}+\braket{\Psi|\hat U|\Psi}+\braket{\Psi|\hat V|\Psi}= T+U+V  \label{Emanybody}
+\end{equation}
+where 
+\begin{equation*}
+  T=\braket{\Psi|\hat T|\Psi}=\sum_i^N\int \Psi^*({\bf r_1},{\bf r_2},\cdots,{\bf r_N})(-\half\nabla_i^2) \Psi({\bf r_1},{\bf r_2},\cdots,{\bf r_N})\,\d^3 r_1\,\d^3 r_2\cdots\d^3 r_N
+\end{equation*}
+\begin{equation*}
+  U=\braket{\Psi|\hat U|\Psi}
+\end{equation*}
+\begin{equation*}
+  V=\braket{\Psi|\hat V|\Psi}=\sum_i^N\int \Psi^*({\bf r_1},{\bf r_2},\cdots,{\bf r_N})v({\bf r_i}) \Psi({\bf r_1},{\bf r_2},\cdots,{\bf r_N})\,\d^3 r_1\,\d^3 r_2\cdots\d^3 r_N=
+\end{equation*}
+\begin{equation*}
+  =\sum_i^N\int \Psi^*({\bf r_1},{\bf r_2},\cdots,{\bf r_N})v({\bf r_1}) \Psi({\bf r_1},{\bf r_2},\cdots,{\bf r_N})\,\d^3 r_1\,\d^3 r_2\cdots\d^3 r_N=
+\end{equation*}
+\begin{equation*}
+  =N\int \Psi^*({\bf r_1},{\bf r_2},\cdots,{\bf r_N})v({\bf r_1}) \Psi({\bf r_1},{\bf r_2},\cdots,{\bf r_N})\,\d^3 r_1\,\d^3 r_2\cdots\d^3 r_N=
+\end{equation*}
+\begin{equation}
+  =\int v({\bf r}) n({\bf r})\d^3 r=V[n]  \label{V[n]}
+\end{equation}
+It needs to be stressed, that $E$ generally is \textbf{not} a functional of $n$ alone, only the $V[n]$ is. In the next section we show however, that if the $\ket{\Psi}$ is a ground state (of any system), then $E$ becomes a functional of $n$.
+
+\subsection{The Hohenberg-Kohn Theorem}
+
+The SE gives the map 
+\begin{equation*}
+  C: V \to \Psi
+\end{equation*}
+where $\Psi$ is the ground state. C is bijective (one-to-one correspondence), because to every $V$ we can compute the corresponding $\Psi$ from SE and two different $V$ and $V'$ (differing by more than a constant) give two different $\Psi$, because if $V$ and $V'$ gave the same $\Psi$, then by substracting 
+\begin{equation*}
+  \hat H\ket{\Psi}=E_{gs}\ket{\Psi}
+\end{equation*}
+from 
+\begin{equation*}
+  \hat H'\ket{\Psi}=(\hat H-\hat V+\hat V')\ket{\Psi}=E_{gs}'\ket{\Psi}
+\end{equation*}
+we would get $V-V'=E-E'$, which is a contradiction with the assumption that $V$ and $V'$ differ by more than a constant.
+
+Similarly, from the ground state wavefunction $\Psi$ we can compute the charge density $n$ giving rise to the map 
+\begin{equation*}
+  D: \Psi \to n
+\end{equation*}
+which is also bijective, because to every $\Psi$ we can compute $n$ from (\ref{chargedensity}) and two different $\Psi$ and $\Psi'$ give two different $n$ and $n'$, because different $\Psi$ and $\Psi'$ give 
+\begin{equation*}
+  E_{gs}=\braket{\Psi|\hat H|\Psi}<\braket{\Psi'|\hat H|\Psi'}= \braket{\Psi'|\hat H'+\hat V-\hat V'|\Psi'}=E_{gs}'+\int n'({\bf r}) (v({\bf r})-v'({\bf r}))\,\d^3 r
+\end{equation*}
+\begin{equation*}
+  E_{gs}'=\braket{\Psi'|\hat H'|\Psi'}<\braket{\Psi|\hat H'|\Psi}= \braket{\Psi|\hat H+\hat V'-\hat V|\Psi}=E_{gs}+\int n({\bf r}) (v'({\bf r})-v({\bf r}))\,\d^3 r
+\end{equation*}
+adding these two inequalities together gives 
+\begin{equation*}
+  0<\int n'({\bf r}) (v({\bf r})-v'({\bf r}))\,\d^3 r + \int n({\bf r}) (v'({\bf r})-v({\bf r}))\,\d^3 r= \int (n({\bf r})-n'({\bf r}))(v'({\bf r})-v({\bf r}))\,\d^3 r
+\end{equation*}
+which for $n=n'$ gives $0<0$, which is nonsense, so $n\neq n'$.
+
+So we have proved that for a given ground state density $n_0({\bf r})$ (generated by a potential $\hat V_0$) it is possible to calculate the corresponding ground state wavefunction $\Psi_0({\bf r_1},{\bf r_2},\cdots,{\bf r_N})$, in other words, $\Psi_0$ is a unique functional of $n_0$: 
+\begin{equation*}
+  \Psi_0=\Psi_0[n_0]
+\end{equation*}
+so the ground state energy $E_0$ is also a functional of $n_0$
+\begin{equation*}
+  E_0=\braket{\Psi_0[n_0]|\hat T+\hat U+\hat V_0|\Psi_0[n_0]}=E[n_0]
+\end{equation*}
+We define an energy functional 
+\begin{equation}
+  E_{v_0}[n]=\braket{\Psi[n]|\hat T+\hat U+\hat V_0|\Psi[n]}= \braket{\Psi[n]|\hat T+\hat U|\Psi[n]}+\int v_0({\bf r})n({\bf r})\d^3r  \label{Efunct}
+\end{equation}
+where $\ket{\Psi[n]}$ is any ground state wavefunction (generated by an arbitrary potential), that is, $n$ is a ground state density belonging to an arbitrary system. $E_0$ which is generated by the potential $V_0$ can then be expressed as 
+\begin{equation*}
+  E_0=E_{v_0}[n_0]
+\end{equation*}
+and for $n\neq n_0$ we have (from the Ritz principle) 
+\begin{equation*}
+  E_0<E_{v_0}[n]
+\end{equation*}
+and one has to minimise the functional $E_{v_0}[n]$: 
+\begin{equation}
+  E_0=\min_n E_{v_0}[n]  \label{Emin}
+\end{equation}
+The term 
+\begin{equation*}
+  \braket{\Psi[n]|\hat T+\hat U|\Psi[n]}\equiv F[n]
+\end{equation*}
+in (\ref{Efunct}) is universal in the sense that it doesn't depend on $\hat V_0$. It can be proven \mybackslash{}cite{DFT}, that $F[n]$ is a functional of $n$ for degenerated ground states too, so (\ref{Emin}) stays true as well.
+
+The ground state densities in (\ref{Efunct}) and (\ref{Emin}) are called \textbf{pure-state v-representable} because they are the densities of (possible degenerate) ground state of the Hamiltonian with some local potential $v({\bf r})$. One may ask a question if all possible functions are v-representable (this is called the v-representability problem). The question is relevant, because we need to know which functions to take into account in the minimisation proccess (\ref{Emin}). Even though not every function is v-representable \mybackslash{}cite{DFT}, every density defined on a grid (finite of infinite) which is strictly positive, normalized and consistent with the Pauli principle is ensemble v-representable. Ensemble v-representation is just a simple generalization of the above, for details see \mybackslash{}cite{DFT}. In plain words, we are fine.
+
+The functional $E_{v_0}[n]$ in (\ref{Emin}) depends on the particle number $N$, so in order to get $n$, we need to solve the variational formulation 
+\begin{equation*}
+  {\delta\over\delta n}\left(E_v[n]-\mu(N)\int n(\bf r)\d^3r\right)=0
+\end{equation*}
+so 
+\begin{equation}
+  {\delta E_v[n]\over\delta n}=\mu(N)  \label{euler}
+\end{equation}
+Let the $n_N(\bf r)$ be the solution of (\ref{euler}) with a particle number $N$ and the energy $E_N$: 
+\begin{equation*}
+  E_N=E_v[n_N]
+\end{equation*}
+The Lagrangian multiplier $\mu$ is the exact chemical potential of the system 
+\begin{equation*}
+  \mu(N)={\partial E_N\over\partial N}
+\end{equation*}
+becuase 
+\begin{equation*}
+  E_{N+\epsilon}-E_N=E_v[n_{N+\epsilon}]-E_v[n_N] =\int {\delta E_v\over\delta n} (n_{N+\epsilon}-n_N)\d^3r=
+\end{equation*}
+\begin{equation*}
+  =\int \mu(N) (n_{N+\epsilon}-n_N)\d^3r =\mu(N)(N+\epsilon-N)=\mu(N)\epsilon
+\end{equation*}
+so 
+\begin{equation*}
+  \mu(N)={E_{N+\epsilon}-E_N\over\epsilon} \ \longrightarrow \ {\partial E_N\over\partial N}
+\end{equation*}
+
+\subsection{The Kohn-Sham Equations}
+
+Consider an auxiliary system of $N$ noninteracting electrons (noninteracting gas): 
+\begin{equation*}
+  \hat H_s=\hat T+\hat V_s
+\end{equation*}
+Then the many-body ground state wavefunction can be decomposed into single particle orbitals 
+\begin{equation*}
+  \ket{\Psi ({\bf r_1},{\bf r_2},\cdots,{\bf r_N})}= \ket{\psi_1({\bf r})}\ket{\psi_2({\bf r})}\cdots\ket{\psi_N({\bf r})}
+\end{equation*}
+and 
+\begin{equation*}
+  E_s[n]=T_s[\{\psi_i[n]\}]+V_s[n]
+\end{equation*}
+where 
+\begin{equation*}
+  T_s[n]=\braket{\Psi[n]|\hat T|\Psi[n]}= \sum_i\braket{\psi_i|-\half\nabla^2|\psi_i}
+\end{equation*}
+\begin{equation*}
+  V_s[n]=\braket{\Psi[n]|\hat V|\Psi[n]}=\int v_s({\bf r})n({\bf r})\d^3r
+\end{equation*}
+From (\ref{euler}) we get 
+\begin{equation}
+  \mu={\delta E_s[n]\over\delta n({\bf r})}= {\delta T_s[n]\over\delta n({\bf r})}+{\delta V_s[n]\over\delta n({\bf r})}= {\delta T_s[n]\over\delta n({\bf r})}+v_s({\bf r})  \label{noninteract}
+\end{equation}
+Solution to this equation gives the density $n_s$.
+
+Now we want to express the energy in (\ref{Emanybody}) using $T_s$ and $E_H$ for convenience, where $E_H$ is the classical electrostatic interaction energy of the charge distribution $n({\bf r})$: 
+\begin{equation*}
+  \nabla^2 V_H=n({\bf r})
+\end{equation*}
+or uquivalently 
+\begin{equation*}
+  E_H[n]=\half\int\int {n({\bf r})n({\bf r'})\over|{\bf r}-{\bf r'}|} \d^3r\d^3r'
+\end{equation*}
+\begin{equation}
+  V_H({\bf r})={\delta E_H\over\delta n({\bf r})}=\half\int {n({\bf r'})\over|{\bf r}-{\bf r'}|} \d^3r'  \label{V_H}
+\end{equation}
+So from (\ref{Efunct}) we get 
+\begin{equation*}
+  E[n]=(T+U)[n]+V[n]=T_s[n]+E_H[n]+(T-T_s+U-E_H)[n]+V[n]=
+\end{equation*}
+\begin{equation}
+  =T_s[n]+E_H[n]+E_{xc}[n]+V[n]  \label{Efunctxc}
+\end{equation}
+The rest of the energy is denoted by $E_{xc}=U-E_H+T-T_s$ and it is called is the exchange and correlation energy functional. From (\ref{euler})
+\begin{equation*}
+  \mu={\delta E[n]\over\delta n({\bf r})}= {\delta T_s[n]\over\delta n({\bf r})}+ {\delta E_H[n]\over\delta n({\bf r})}+ {\delta E_{xc}[n]\over\delta n({\bf r})}+ {\delta V[n]\over\delta n({\bf r})}
+\end{equation*}
+From (\ref{V_H}) we have 
+\begin{equation*}
+  {\delta E_H\over\delta n({\bf r})}=V_H({\bf r})
+\end{equation*}
+from (\ref{V[n]}) we get 
+\begin{equation*}
+  {\delta V[n]\over\delta n({\bf r})}=v({\bf r})
+\end{equation*}
+we define 
+\begin{equation}
+  {\delta E_{xc}[n]\over\delta n({\bf r})}=V_{xc}({\bf r})  \label{Vxcpot}
+\end{equation}
+so we arrive at 
+\begin{equation}
+  \mu={\delta E[n]\over\delta n({\bf r})}= {\delta T_s[n]\over\delta n({\bf r})}+V_H({\bf r})+V_{xc}({\bf r})+v({\bf r})  \label{interact}
+\end{equation}
+Solution to this equation gives the density $n$. Comparing (\ref{interact}) to (\ref{noninteract}) we see that if we choose 
+\begin{equation*}
+  v_s\equiv V_H+V_{xc}+v
+\end{equation*}
+then $n_s({\bf r})\equiv n({\bf r})$. So we solve the Kohn-Sham equations of this auxiliary non-interacting system 
+\begin{equation}
+  (-\half\nabla^2+v_s({\bf r}))\psi_i({\bf r}) \equiv(-\half\nabla^2+V_H({\bf r})+V_{xc}({\bf r})+v({\bf r}))\psi_i({\bf r}) =\epsilon_i\psi({\bf r})  \label{KSeq}
+\end{equation}
+which yield the orbitals $\psi_i$ that reproduce the density $n({\bf r})$ of the original interacting system 
+\begin{equation}
+  n({\bf r})\equiv n_s({\bf r})=\sum_i^N|\psi_i({\bf r})|^2  \label{KSdensity}
+\end{equation}
+The sum is taken over the lowest $N$ energies. Some of the $\psi_i$ can be degenerated, but it doesn't matter - the index $i$ counts every eigenfunction including all the degenerated. In plain words, the trick is in realising, that the ground state energy can be found by minimising the energy functional (\ref{Efunct}) and in rewriting this functional into the form (\ref{Efunctxc}), which shows that the interacting system can be treated as a noninteracting one with a special potential.
+
+\subsection{The XC Term}
+
+The exchange and correlation functional 
+\begin{equation*}
+  E_{xc}[n]=(T+U)[n]-E_H[n]-T_S[n]
+\end{equation*}
+can always be written in the form 
+\begin{equation*}
+  E_{xc}[n]=\int n({\bf r}')\epsilon_{xc}({\bf r}';n)\d^3r'
+\end{equation*}
+where the $\epsilon_{xc}({\bf r}';n)$ is called the xc energy density.
+
+Unfortunately, no one knows $\epsilon_{xc}({\bf r}';n)$ exactly (yet). The most simple approximation is the \textbf{local density approximation} (LDA), for which the xc energy density $\epsilon_{xc}$ at $\bf r$ is taken as that of a homogeneous electron gas (the nuclei are replaced by a uniform positively charged background, density $n=\rm const$) with the same local density: 
+\begin{equation*}
+  \epsilon_{xc}({\bf r};n)\approx\epsilon_{xc}^{LD}(n({\bf r}))
+\end{equation*}
+
+The xc potential $V_{xc}$ defined by (\ref{Vxcpot}) is then 
+\begin{equation*}
+  V_{xc}({\bf r};n)={\delta E_{xc}[n]\over\delta n({\bf r})}= \epsilon_{xc}({\bf r}';n)+ \int n({\bf r}'){\delta \epsilon_{xc}({\bf r}';n)\over\delta n({\bf r})}\d^3r'
+\end{equation*}
+which in the LDA becomes 
+\begin{equation}
+  V_{xc}({\bf r};n) =\epsilon_{xc}^{LD}(n)+n{\d \epsilon_{xc}^{LD}(n)\over \d n}= {\d \over \d n}\left(n\epsilon_{xc}^{LD}(n)\right)= V_{xc}^{LD}(n)  \label{Vxcld}
+\end{equation}
+The xc energy density $\epsilon_{xc}^{LD}$ of the homogeneous gas can be computed exactly\mybackslash{}cite{martin}: 
+\begin{equation*}
+  \epsilon_{xc}^{LD}(n)=\epsilon_x^{LD}(n)+\epsilon_c^{LD}(n)
+\end{equation*}
+where the $\epsilon_x^{LD}$ is the electron gas exchange term given by\mybackslash{}cite{martin} 
+\begin{equation*}
+  \epsilon_x^{LD}(n)=-{3\over4\pi}(3\pi^2 n)^{1\over3}
+\end{equation*}
+the rest of $\epsilon_{xc}^{LD}$ is hidden in $\epsilon_c^{LD}(n)$ for which there doesn't exist an analytic formula, but the correlation energies are known exactly from quantum Monte Carlo (QMC) calculations by Ceperley and Alder\mybackslash{}cite{pickett}. The energies were fitted by Vosko, Wilkes and Nussair (VWN) with $\epsilon_c^{LD}(n)$ and they got accurate results with errors less than $0.05\rm\,mRy$ in $\epsilon_c^{LD}$, which means that $\epsilon_c^{LD}(n)$ is virtually known exactly. VWN result: 
+\begin{equation*}
+  \epsilon_c^{LD}(n)\approx {A\over2}\left\{ \ln\left(y^2\over Y(y)\right)+{2b\over Q}\arctan\left(Q\over 2y+b\right)+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -{by_0\over Y(y_0)}\left[\ln\left((y-y_0)^2\over Y(y)\right) +{2(b+2y_0)\over Q}\arctan\left(Q\over 2y+b\right) \right] \right\}
+\end{equation*}
+where $y=\sqrt{r_s}$, $Y(y)=y^2+by+c$, $Q=\sqrt{4c-b^2}$, $y_0=-0.10498$, $b=3.72744$, $c=12.93532$, $A=0.0621814$ and $r_s$ is the electron gas parameter, which gives the mean distance between electrons (in atomic units): 
+\begin{equation*}
+  r_s=\left(3\over4\pi n\right)^{1\over3}
+\end{equation*}
+
+The xc potential is then computed from (\ref{Vxcld}): 
+\begin{equation*}
+  V_{xc}^{LD}=V_x^{LD}+V_c^{LD}
+\end{equation*}
+\begin{equation*}
+  V_x^{LD}=-{1\over\pi}(3\pi^2 n)^{1\over3}
+\end{equation*}
+
+
+\begin{equation*}
+  V_c^{LD}={A\over2}\left\{ \ln\left(y^2\over Y(y)\right)+{2b\over Q}\arctan\left(Q\over 2y+b\right)+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -{by_0\over Y(y_0)}\left[\ln\left((y-y_0)^2\over Y(y)\right) +{2(b+2y_0)\over Q}\arctan\left(Q\over 2y+b\right) \right] \right\}+
+\end{equation*}
+\begin{equation*}
+  -{A\over6}{c(y-y_0)-by_0y\over (y-y_0)Y(y)}
+\end{equation*}
+
+Some people also use Perdew and Zunger formulas, but they give essentially the same results. The LDA, although very simple, is suprisingly successful. More sophisticated approximations exist, for example the generalized gradient approximation (GGA), which sometimes gives better results than the LDA, but is not perfect either. Other options include orbital-dependent (implicit) density functionals or a linear response type functionals, but this topic is still evolving. The conclusion is, that the LDA is a good approximation to start with, and only when we are not satisfied, we will have to try some more accurate and modern approximation.
+
+RLDA: Relativistic corrections to the energy-density functional were proposed by MacDonald and Vosko and basically are just a change in $\epsilon_x^{LD}(n)\rightarrow\epsilon_x^{LD}(n)R$: 
+\begin{equation*}
+  R = \left[1-{3\over2}\left(\beta\mu-\ln(\beta+\mu)\over\beta^2\right)^2\right]
+\end{equation*}
+where 
+\begin{equation*}
+  \mu=\sqrt{1+\beta^2}
+\end{equation*}
+and 
+\begin{equation*}
+  \beta={(3\pi^2n)^{1\over3}\over c}
+\end{equation*}
+We also need to calculate these derivatives: 
+\begin{equation*}
+  {\d R\over\d \beta}= -6{\beta\mu-\ln(\beta+\mu)\over\beta^2}\left({1\over\mu}- {\beta\mu-\ln(\beta+\mu)\over\beta^3}\right)
+\end{equation*}
+\begin{equation*}
+  {\d \beta\over\d n}={\beta\over 3n}
+\end{equation*}
+\begin{equation*}
+  {\d \epsilon_x^{LD}\over\d n}={\epsilon_x^{LD}\over 3n}
+\end{equation*}
+So 
+\begin{equation*}
+  V_x^{RLD}=\epsilon_x^{LD}R+n{\d \epsilon_x^{LD}R\over\d n}= {4\over3}\epsilon_x^{LD}R+{1\over3}\epsilon_x^{LD}{\d R\over\d\beta}\beta
+\end{equation*}
+For $c\to\infty$ we get $\beta\to0$, $R\to1$ and $V_x^{RLD}\to {4\over3}\epsilon_x^{LD}=V_x^{LD}$ as expected, because 
+\begin{equation*}
+  \lim_{\beta\to0}{\beta\sqrt{1+\beta^2}-\ln(\beta+\sqrt{1+\beta^2})\over \beta^2} = 0
+\end{equation*}
+
+\subsection{Iteration to Self-consistency}
+
+The $V_H$ and $V_{xc}$ potentials in the Kohn-Sham equations (\ref{KSeq}) depend on the solution $n$ thus the KS equations need to be iterated to obtain a self-consistent density. One can regard the KS procedure as a nonlinear operator $\hat F$ which satisfies (at the $M$th iteration) 
+\begin{equation*}
+  n_M^{\rm out}=\hat F n_M
+\end{equation*}
+and the problem is to find the self-consistent density which satisfies 
+\begin{equation*}
+  n=\hat F n
+\end{equation*}
+
+Due to the long-range nature of the Coulomb interaction, a small change in the input density $n_M$ can lead to a relatively large change in the output density $\hat F n_M$, thus it is not possible to use the output density itself as the input density for the next iteration, since large unstable charge oscillations arise. Rather it is essential to mix input and output densities in an appropriate manner to obtain a new input density.
+
+The $n(\bf r)$ is in practice defined on some grid, or using coefficients of plane waves, local orbitals or the like, which means that the precise relation 
+\begin{equation*}
+  \one=\int \ket{\bf r}\bra{\bf r}\d^3 r
+\end{equation*}
+is changed for 
+\begin{equation*}
+  \one\approx\sum_i \ket{{\bf r}_i}\bra{{\bf r}_i}
+\end{equation*}
+in the case of a grid (or some other basis like plane waves can be used instead of $\ket{{\bf r}_i}$) and $n({\bf r})=\braket{{\bf r}|n}$ is approximated by $n({\bf r}_i)=\braket{{\bf r}_i|n}$. Let 
+\begin{equation*}
+  \x=(x_1,x_2,x_3,...),\quad x_i\equiv n({\bf r}_i)=\braket{{\bf r}_i|n}
+\end{equation*}
+and 
+\begin{equation*}
+  \F(\x_M)\equiv \hat F n_M, \quad F_i= (\hat F n_M)({\bf r}_i)
+\end{equation*}
+the self-consistency is reached when $\F(\x)=\x$.
+
+So the problem is in solving the equation 
+\begin{equation*}
+  \F(\x)=\x
+\end{equation*}
+where $\x$ denotes a vector in many dimensions (the number of points in the grid). It can also be expressed in the form of the residual $\R(\x)=\F(\x)-\x$ as 
+\begin{equation*}
+  \R(\x)=0
+\end{equation*}
+Almost all of the methods start with approximating 
+\begin{equation}
+  \R(\x_{M+1})-\R(\x_M)\approx\J\cdot(\x_{M+1}-\x_M)  \label{lin}
+\end{equation}
+where the Jacobian 
+\begin{equation*}
+  J_{ij}={\partial R_i\over\partial x_j}
+\end{equation*}
+We want $\R(\x_{M+1})=0$, so substituting that into (\ref{lin}) we get 
+\begin{equation*}
+  \x_{M+1}\approx\x_M+\J^{-1}\cdot(\R(\x_{M+1})-\R(\x_M))= \x_M-\J^{-1}\cdot\R(\x_M)
+\end{equation*}
+If we knew the Jacobian exactly, this would be the multidimensional Newton-Raphson method, but we can only make approximations to $\J$ using a sequence of $\J_0$, $\J_1$, $\J_2$, \mybackslash{}dots: 
+\begin{equation}
+  \x_{M+1}=\x_M-\J_M^{-1}\cdot\R(\x_M)  \label{Jaciter}
+\end{equation}
+and the rate of convergence is determined by the quality of the Jacobian. These type of methods are called quasi-Newton-Raphson methods.
+
+The simplest approach is to use the \textbf{linear mixing} scheme for which 
+\begin{equation*}
+  \J_M^{-1}=-\alpha\one
+\end{equation*}
+so 
+\begin{equation*}
+  \x_{M+1}=\x_M+\alpha\R(\x_M)=\x_M+\alpha(\F(\x_M)-\x_M)
+\end{equation*}
+where $0<\alpha\le1$ is the mixing parameter, working value is somewhere around $\alpha=0.1$ to $\alpha=0.3$. Unfortunately, this procedure is slow and also we do not explore all the possible densities with this mixing, which means that we don't get the correct density with any accuracy, because we get stuck at a "stiff" situation for which continued iteration does not improve the distance $|\R(\x_M)|$ between input and output densities. On the other hand it's very easy to implement and it works in most cases, although slowly.
+
+Surprisingly very good method is this: 
+\begin{equation*}
+  \J_M^{-1}=-{\rm diag}(\beta_1,\beta_2,\beta_3,\dots)
+\end{equation*}
+start with $\beta_1=\beta_2=\beta_3=\cdots=\alpha$ and at every iteration adjust the parameters $\beta_i$ according to this very simple algorithm: if $R_i(\x_{M-1})R_i(\x_M)>0$ then increase $\beta_i$ by $\alpha$ (if $\beta_i>\alpha_{max}$, set $\beta_i=\alpha_{max}$) otherwise set $\beta_i=\alpha$. In my tests it behaves almost as well as the second Broyden method.
+
+More sophisticated approach is the Broyden update, which updates the $\J$ successively at every iteration. The \textbf{first Broyden method} is using this formula: 
+\begin{equation*}
+  \J_{M+1}=\J_M-{(\Delta\R(\x_M)+\J_M\cdot\Delta\x_M)\Delta\x_M^T\over |\Delta\x_M|^2}
+\end{equation*}
+which has the disadvantage that we need to compute the inverse Jacobian in (\ref{Jaciter}) at every iteration, which is impossible in our case. The \textbf{second Broyden method} updates the inverse Jacobian directly using this formula 
+\begin{equation}
+  \J_{M+1}^{-1}=\J_M^{-1}+{(\Delta\x_M-\J_M^{-1}\cdot\Delta\R(\x_M)) \Delta\R(\x_M)^T\over |\Delta\R(\x_M)|^2}  \label{Bupdate}
+\end{equation}
+starting with the linear mixing: 
+\begin{equation*}
+  \J_0^{-1}=-\alpha\one
+\end{equation*}
+It is impossible to store the whole dense matrix of the inverse Jacobian, but fortunately it is not necessary, realising that the (\ref{Bupdate}) has a very simple structure \mybackslash{}cite{srivastava}: 
+\begin{equation*}
+  \J_{M+1}^{-1}=\J_M^{-1}+{\bf u}{\bf v}^T
+\end{equation*}
+with 
+\begin{equation}
+  {\bf u}=\Delta\x_M-\J_M^{-1}\cdot\Delta\R(\x_M)  \label{vecu}
+\end{equation}
+\begin{equation*}
+  {\bf v}={\Delta\R(\x_M)\over |\Delta\R(\x_M)|^2}
+\end{equation*}
+so the whole inverse Jacobian can be written as 
+\begin{equation*}
+  \J_M^{-1}=-\alpha\one+{\bf u}_1{\bf v}_1^T+{\bf u}_2{\bf v}_2^T+ {\bf u}_3{\bf v}_3^T+\cdots
+\end{equation*}
+and we only need to know how to apply such a Jacobian to an arbitrary vector, which is needed in (\ref{vecu}) and (\ref{Jaciter}): 
+\begin{equation*}
+  \J_M^{-1}\cdot\y=-\alpha\y+{\bf u}_1({\bf v}_1^T\y) +{\bf u}_2({\bf v}_2^T\y)+ {\bf u}_3({\bf v}_3^T\y)+\cdots
+\end{equation*}
+Thus instead of the whole dense matrix, we only need to save the vectors ${\bf u}$ and ${\bf v}$ from every iteration.
+
+Vanderbilt and Louie \mybackslash{}cite{vanderbiltlouie} suggested a \textbf{modified Broyden method}, which incorporates weights, but Eyert \mybackslash{}cite{eyert} showed that if all the weights are used to tune the iteration process to its fastest convergence, they, in fact, cancel out and the result of the scheme is called by Eyert the \textbf{generalized Broyden method}, whose scheme shown by Eyert is exactly the same as for the \textbf{Anderson mixing}: 
+\begin{equation*}
+  \sum_{p=M-k}^{M-1}(1+\omega_0^2\delta_{pn})\Delta\R(\x_n)^T\Delta\R(\x_p) \gamma_p =\Delta\R(\x_n)^T\R(\x_M)
+\end{equation*}
+\begin{equation*}
+  \x_{M+1}=\x_M+\beta_M\R(\x_M)-\sum_{p=M-k}^{M-1}\gamma_p (\Delta\x_p+\beta_M\Delta\R(\x_p))
+\end{equation*}
+which according to Eyert should converge even faster than the second Broyden method, but it doesn't in my own implementation. $\omega_0$ is added just for a numerical stability, good value is $\omega=0.01$, but it can also be switched off by $\omega_0=0$. $p$ is the number of last iterations to use, good value according to Eyert is $p=5$, $\beta_M$ shouldn't influence the convergence much for $p=5$.
+
+The problem with $n$ is that there are two conditions which need to be satisfied 
+\begin{equation*}
+  n>0
+\end{equation*}
+and the normalization 
+\begin{equation*}
+  \int n({\bf r}) \d^3r=Z
+\end{equation*}
+The Newton method converges to the correct norm, but slowly. The condition $n>0$ however causes great instability. One option could be to use a logistic function like 
+\begin{equation*}
+  n(r)={C\over 1+e^{-x(r)}}
+\end{equation*}
+for sufficiently large $C$ and solve for $x$, which can be both positive and negative. But more elegant solution is to mix $V_h+V_{xc}$ instead of the densities.
+
+\subsection{Example: Pb Atom}
+
+To illustrate the explained theory, we will show how to calculate the Pb atom. We have $N=82$ and 
+\begin{equation*}
+  v({\bf r}_i)=-{82\over |{\bf r}_i|}
+\end{equation*}
+and we need to sum over the lowest 82 eigenvalues in (\ref{KSdensity}). One option (the correct one) is to automatically try different "n" and "l" until we are sure we got the lowest 82 energies. But for Pb the combination of "n" and "l" is well-known, it is (first number is $n$, the letter is $l$ and the number in superscript gives the number of times the particular eigenvalue needs to be taken into account in the sum): $1S^2$, $2S^2$, $2P^6$, $3S^2$, $3P^6$, $3D^{10}$, $4S^2$, $4P^6$, $4D^{10}$, $4F^{14}$, $5S^2$, $5P^6$, $5D^{10}$, $6S^2$, $6P^2$ (notice the 5F and 5G are missing). Together it is 82 eigenvalues. The KS energies for these eigenvalues are:
+
+-2701.6 -466.18 -471.87 -111.45 -108.24 -92.183 -24.498 -22.086 -15.119 -5.6606 -3.9570 -2.9743 -.92718 -.33665 -.14914
+
+\section{Pseudopotentials}
+
+\subsection{Introduction}
+
+Literature about pseudopotentials is unfortunately scattered among many arcticles, so this section gives a review and should save the reader from a lot of troubles.
+
+\subsection{Hermitian Operators in Spherical Symmetry}
+
+We show that every Hermitian operator $\hat V$ in the spherical symmetric problem ($\hat V=R^{-1}\hat VR$) can be written in the form 
+\begin{equation}
+  \hat V=\sum_{lm}\ket{lm}\hat V_l\bra{lm}  \label{lmexpansion}
+\end{equation}
+where the operator $\hat V_l=\braket{lm|\hat V|lm}$ has matrix elements 
+\begin{equation*}
+  \braket{\rho|\hat V_l|\rho'}=\bra{lm}\braket{\rho|\hat V|\rho'}\ket{lm}= V_l(\rho,\rho')
+\end{equation*}
+{\mybackslash{}bf Proof:} Matrix elements of a general Hermitian operator $\hat V$ are 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|\varphi}= \int\braket{{\bf r}|\hat V|{\bf r'}}\braket{{\bf r'}|\varphi}\d^3r'= \int V({\bf r},{\bf r'})\varphi({\bf r'})\d^3r'
+\end{equation*}
+where 
+\begin{equation*}
+  V({\bf r}, {\bf r'})=\braket{{\bf r}|\hat V|{\bf r'}}
+\end{equation*}
+In spherical symmetry, we have 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|\varphi} =\braket{{\bf r}|R^{-1}\hat VR|\varphi} =\braket{{\bf r}|R^{\dagger}\hat VR|\varphi} =\int\braket{{\bf r}|R^{\dagger}\hat VR|{\bf r'}}\braket{{\bf r'}|\varphi}\d^3r' =
+\end{equation*}
+\begin{equation*}
+  =\int\braket{R{\bf r}|\hat V|R{\bf r'}}\braket{{\bf r'}|\varphi}\d^3r' =\int V(R{\bf r},R{\bf r'})\varphi({\bf r'})\d^3r'
+\end{equation*}
+where $R$ is the rotation operator (it's unitary). We have thus derived $V(R{\bf r},R{\bf r'})=V({\bf r},{\bf r'})$ true for any $R$, which means that the the kernel only depends on $\rho$, $\rho'$ and ${\bf\hat r}\cdot{\bf\hat r'}$, where ${\bf r}=\rho{\bf\hat r}$ and ${\bf r'}=\rho'{\bf\hat r'}$. So we obtain using (\ref{fylm})
+\begin{equation*}
+  V({\bf r}, {\bf r'})=V(\rho,\rho',{\bf\hat r}\cdot{\bf\hat r'})= \sum_{lm} Y_{lm}({\bf\hat r}) V_l(\rho,\rho') Y_{lm}^*({\bf\hat r'})
+\end{equation*}
+where 
+\begin{equation*}
+  V_l(\rho,\rho')={(2l+1)^2\over8\pi}\int_{-1}^1 P_l(x)V_l(\rho,\rho',x)\d x
+\end{equation*}
+In Dirac notation: 
+\begin{equation*}
+  V({\bf r}, {\bf r'})=\braket{{\bf r}|\hat V|{\bf r'}} =\bra{\bf\hat r}\braket{\rho|\hat V|\rho'}\ket{\bf\hat r'} =\sum_{lml'm'}\braket{{\bf\hat r}|lm}\bra{lm}\braket{\rho|\hat V|\rho'} \ket{l'm'}\braket{l'm'|\bf\hat r'}
+\end{equation*}
+From the above derivation we see that we must have: 
+\begin{equation*}
+  \bra{lm}\braket{\rho|\hat V|\rho'}\ket{l'm'}= V_l(\rho,\rho')\delta_{ll'}\delta_{mm'}
+\end{equation*}
+in other words 
+\begin{equation}
+  V_l(\rho,\rho')=\bra{lm}\braket{\rho|\hat V|\rho'}\ket{lm}  \label{vlm2}
+\end{equation}
+so we get 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|{\bf r'}} =\sum_{lm}\braket{{\bf\hat r}|lm}V_l(\rho,\rho')\braket{lm|\bf\hat r'} =\sum_{lm}Y_{lm}(\theta,\phi) V_l(\rho,\rho') Y_{lm}^*(\theta',\phi')
+\end{equation*}
+and 
+\begin{equation*}
+  \hat V =\sum_{lm}\ket{lm}\braket{lm|\hat V|lm}\bra{lm} =\sum_{lm}\ket{lm}\hat V_l\bra{lm}
+\end{equation*}
+where the operator $\hat V_l=\braket{lm|\hat V|lm}$ only acts on the radial part of the wavefunction and according to (\ref{vlm2}) it doesn't depend on $m$. Also according to (\ref{vlm2}) its matrix elements are 
+\begin{equation*}
+  \braket{\rho|\hat V_l|\rho'}=\bra{lm}\braket{\rho|\hat V|\rho'}\ket{lm}= V_l(\rho,\rho')
+\end{equation*}
+
+\subsection{Nonlocal Pseudopotentials}
+
+A nonlocal pseudopotential $\hat V$ is just a general Hermitian operator. We only want to construct pseudopotentials in the spherical problem, so every pseudopotential can be written in the form (\ref{lmexpansion}). In practice we only use either {\mybackslash{}it local\mybackslash{}/} (the operator $\hat V$ is local) or {\mybackslash{}it semilocal\mybackslash{}/} (the operator $\hat V$ is radially local, but angularly nonlocal) pseudopotential.
+
+Local potential (radially and angularly local) is defined by: 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|{\bf r'}}=V(\rho)\braket{{\bf r}|{\bf r'}}
+\end{equation*}
+so we can simply write 
+\begin{equation}
+  \hat V=V(\rho)  \label{loc1}
+\end{equation}
+so 
+\begin{equation*}
+  V_l(\rho,\rho') =\bra{lm}\braket{\rho|\hat V|\rho'}\ket{lm} =V(\rho)\braket{\rho|\rho'} =V(\rho){\delta(\rho-\rho')\over\rho^2}
+\end{equation*}
+so it turned out that the kernel is local and doesn't depend on $l$ and we get 
+\begin{equation*}
+  V({\bf r}(\rho,\theta,\phi), {\bf r'}(\rho',\theta',\phi'))= \sum_{lm}Y_{lm}(\theta,\phi) V(\rho){\delta(\rho-\rho')\over\rho^2} Y_{lm}^*(\theta',\phi')=
+\end{equation*}
+\begin{equation*}
+  =V(\rho){1\over\rho^2\sin\theta} \delta(\rho-\rho')\delta(\theta-\theta')\delta(\phi-\phi')= V(\rho)\delta({\bf r}-{\bf r}')
+\end{equation*}
+and 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|\varphi}=\int V(\rho)\delta({\bf r}-{\bf r}') \varphi({\bf r'})\d^3r'=V(\rho)\varphi({\bf r})
+\end{equation*}
+so we recover (\ref{loc1}). But we are just fooling around, there's nothing new in these formulas.
+
+For a semilocal potential (radially local, but angularly nonlocal), the kernel cannot depend on $m$ and is radially local, so: 
+\begin{equation*}
+  \braket{\rho|\hat V_l|\rho'}=V_l(\rho,\rho') =\bra{lm}\braket{\rho|\hat V|\rho'}\ket{lm} =V_l(\rho)\braket{\rho|\rho'} =V_l(\rho){\delta(\rho-\rho')\over\rho^2}
+\end{equation*}
+so the kernel is local and does depend on $l$ and we simply write 
+\begin{equation*}
+  \hat V_l=V_l(\rho)
+\end{equation*}
+and 
+\begin{equation}
+  \hat V=\sum_{lm} \ket{lm}V_l(\rho)\bra{lm}  \label{semi}
+\end{equation}
+We can also calculate the same result explicitly in the $\bf r$ representation: 
+\begin{equation*}
+  V({\bf r}(\rho,\theta,\phi), {\bf r'}(\rho',\theta',\phi'))= \sum_{lm}Y_{lm}(\theta,\phi) V_l(\rho){\delta(\rho-\rho')\over\rho^2} Y_{lm}^*(\theta',\phi')
+\end{equation*}
+and 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|\varphi}=\int \sum_{lm}Y_{lm}(\theta,\phi) V_l(\rho){\delta(\rho-\rho')\over\rho^2} Y_{lm}^*(\theta',\phi') \varphi({\bf r'})\d^3r'=
+\end{equation*}
+\begin{equation*}
+  = \sum_{lm}Y_{lm}(\theta,\phi) V_l(\rho) \int Y_{lm}^*(\theta',\phi') \varphi(\rho{\bf\hat r'})\d\Omega'
+\end{equation*}
+or in Dirac notation 
+\begin{equation*}
+  \braket{{\bf r}|\hat V|\varphi}= \sum_{lm} \braket{{\bf\hat r}|lm}V_l(\rho) \bra{lm}\braket{\rho|\varphi}
+\end{equation*}
+and we recover (\ref{semi}).
+
+So, to sum it up: semilocal pseudopotential is a general hermitian operator in the spherically symmetric problem (i.e. $\hat V=R^{-1}\hat VR$) and radially local. All such operators can be written in the form (\ref{semi}).
+
+Now, it can be shown that if we make the assumption of radial locality, we get "correct" wavefunctions and energies in the linear approximation. We generally only take a few terms in the expansion (\ref{semi}), usually only $V_0$, $V_1$ and $V_2$, sometimes also $V_3$ and $V_4$.
+
+\subsection{Separable Potentials}
+
+The pseudopotential above (Hamman, Schlüter, Chiang) has the form 
+\begin{equation*}
+  \hat V=\sum_{lm} \ket{lm}V_l(\rho)\bra{lm} =V_{loc}(\rho)+\sum_{lm} \ket{lm}[V_l(\rho)-V_{loc}(\rho)]\bra{lm}
+\end{equation*}
+Or, equivalently, in the $\bf r$ representation: 
+\begin{equation*}
+  V({\bf r},{\bf r'})=\braket{{\bf r}|\hat V|{\bf r'}}= V_{loc}(\rho)\delta({\bf r}-{\bf r'})+{\delta(\rho-\rho')\over\rho^2} \sum_{lm}Y_{lm}({\bf\hat r})[V_l(\rho)-V_{loc}(\rho)]Y_{lm}^*({\bf\hat r'})
+\end{equation*}
+The first term doesn't cause a problem. Let's denote the second term (which is semilocal) simply by $v$: 
+\begin{equation*}
+  v=\sum_{lm} \ket{lm}[V_l(\rho)-V_{loc}(\rho)]\bra{lm}
+\end{equation*}
+Let's choose a complete but otherwise arbitrary set of functions $\ket{\phi_i}$ (they contain both a radial and an angular dependence) and define a matrix $U$ is by the equation 
+\begin{equation*}
+  \sum_j U_{ij}\braket{\phi_j|v|\phi_k}=\delta_{ik}
+\end{equation*}
+then ($\ket{\psi}=\ket{\phi_k}\alpha_k$): 
+\begin{equation*}
+  v\ket{\psi} =\sum_{ik}v\ket{\phi_i}\delta_{ik}\alpha_k =\sum_{ijk}v\ket{\phi_i}U_{ij}\braket{\phi_j|v|\phi_k}\alpha_k =\sum_{ij}v\ket{\phi_i}U_{ij}\braket{\phi_j|v|\psi}
+\end{equation*}
+So any Hermitian operator (including $v$) can be transformed exactly into the following form 
+\begin{equation*}
+  v=\sum_{ij}v\ket{\phi_i}U_{ij}\bra{\phi_j}v
+\end{equation*}
+We diagonalize the matrix $U$ by choosing such functions $\ket{\bar\phi_i}$ for which the matrix $\braket{\bar\phi_j|v|\bar\phi_k}$ (and hence the corresponding matrix $U$) is equal to \mybackslash{}one. We can find such functions for example using the Gram-Schmidt orthogonalization procedure on $\ket{\phi_i}$ with a norm $\braket{f|v|g}$ (for functions $f$ and $g$), more on that later. Then 
+\begin{equation}
+  v =\sum_{i}v\ket{\bar\phi_i}{1\over\braket{\bar\phi_i|v|\bar\phi_i}} \bra{\bar\phi_i}v =\sum_{i}v\ket{\bar\phi_i}\bra{\bar\phi_i}v  \label{vsep}
+\end{equation}
+We could take any $\ket{\phi_i}$ and orthogonalize them. But because we have $v$ in the form of (\ref{semi}), we will be using $\ket{\phi_i}$ in the form $\ket{\phi_i}=\ket{R_{nl}}\ket{lm}$, because it turns out we will only need to orthogonalize the radial parts. The first term in (\ref{vsep}) then corresponds to the KB potential. We of course take more terms and get accurate results without ghost states.
+
+Let's look at the orthogonalization. We start with the wavefunctions: 
+\begin{equation*}
+  \ket{\phi_i}=\ket{R_{nl}}\ket{lm}
+\end{equation*}
+where $R_{nl}(\rho)=\braket{\rho|R_{nl}}$ and $i$ goes over all possible triplets $(nlm)$, for example in this order (but any order is fine):
+
+FIXME FIXME %\mybackslash{}vbox{\mybackslash{}hfil\mybackslash{}vbox{ %\mybackslash{}halign{ %\mybackslash{}hfill$#$\mybackslash{}quad \& $#$\mybackslash{}quad \& $#$\mybackslash{}quad \& \mybackslash{}hfill$#$\mybackslash{}cr %i \& n \& l \& m \mybackslash{}cr %\mybackslash{}noalign{\mybackslash{}smallskip \mybackslash{}hrule \mybackslash{}smallskip} %1 \& 1 \& 0 \& 0 \mybackslash{}cr %2 \& 2 \& 0 \& 0 \mybackslash{}cr %3 \& 2 \& 1 \& -1 \mybackslash{}cr %4 \& 2 \& 1 \& 0 \mybackslash{}cr %5 \& 2 \& 1 \& 1 \mybackslash{}cr %6 \& 3 \& 0 \& 0 \mybackslash{}cr %7 \& 3 \& 1 \& -1 \mybackslash{}cr %8 \& 3 \& 1 \& 0 \mybackslash{}cr %9 \& 3 \& 1 \& 1 \mybackslash{}cr %10 \& 3 \& 2 \& -2 \mybackslash{}cr %11 \& 3 \& 2 \& -1 \mybackslash{}cr %\mybackslash{}noalign{\mybackslash{}hbox{\mybackslash{}quad\mybackslash{}quad\mybackslash{}dots}} %} %}\mybackslash{}hfil}
+
+We can also relate the $i$ and $n$, $l$, $m$ using this formula 
+\begin{equation*}
+  i_{nlm}=\sum_{k=1}^{n-1}k^2+\left(\sum_{k=0}^{l-1} (2k+1)\right) + (l+m+1)= {(n-1)n(2n-1)\over6} + l(l+1)+m+1
+\end{equation*}
+
+The operator $v$ acts on these $\ket{\phi_i}$ like this 
+\begin{equation*}
+  \braket{{\bf r}|v|\phi_i} =\braket{{\bf r}|v|R_{nl}}\ket{lm} =\bra{{\bf\hat r}}\braket{\rho|V_l(\rho)|R_{nl}}\ket{lm} =V_l(\rho)R_{nl}(\rho)Y_{lm}({\bf\hat r})
+\end{equation*}
+Now we need to construct new orthogonal set of functions $\ket{\bar\phi_i}$ satisfying 
+\begin{equation*}
+  \braket{\bar\phi_i|v|\bar\phi_j}=\delta_{ij}
+\end{equation*}
+This can be done using several methods, we chose the Gram-Schmidt orthogonalization procedure, which works according to the following scheme: 
+\begin{eqnarray*}
+\ket{\tilde\phi_1}&=&\one{1\over\sqrt{\braket{\phi_1|v|\phi_1}}}\ket{\phi_1} ;\quad\quad \quad\quad\quad\quad\quad \quad\quad\quad\quad\quad \ket{\bar\phi_1}={1\over\sqrt{\braket{\tilde\phi_1|v|\tilde\phi_1}}} \ket{\tilde\phi_1} \\
+\ket{\tilde\phi_2}&=& \left(\one -\ket{\bar\phi_1}\bra{\bar\phi_1}v \right){1\over\sqrt{\braket{\phi_2|v|\phi_2}}}\ket{\phi_2};\quad\quad \quad\quad\quad\quad\quad \ket{\bar\phi_2}={1\over\sqrt{\braket{\tilde\phi_2|v|\tilde\phi_2}}} \ket{\tilde\phi_2} \\
+\ket{\tilde\phi_3}&=& \left(\one -\ket{\bar\phi_1}\bra{\bar\phi_1}v -\ket{\bar\phi_2}\bra{\bar\phi_2}v \right){1\over\sqrt{\braket{\phi_3|v|\phi_3}}}\ket{\phi_3};\quad\quad \ket{\bar\phi_3}={1\over\sqrt{\braket{\tilde\phi_3|v|\tilde\phi_3}}} \ket{\tilde\phi_3} \\
+\dots& \\
+\end{eqnarray*}
+ We can verify by a direct calculation that this procedure ensures 
+\begin{equation*}
+  \braket{\bar\phi_i|v|\bar\phi_j}=\delta_{ij}
+\end{equation*}
+It may be useful to compute the normalization factors explicitly: 
+\begin{eqnarray*}
+\braket{\tilde\phi_1|v|\tilde\phi_1}&=&1 \\
+\braket{\tilde\phi_2|v|\tilde\phi_2}&=&1 -{\braket{\phi_2|v|\bar\phi_1}\braket{\bar\phi_1|v|\phi_2} \over\braket{\phi_2|v|\phi_2}} \\
+\braket{\tilde\phi_3|v|\tilde\phi_3}&=&1 -{\braket{\phi_3|v|\bar\phi_1}\braket{\bar\phi_1|v|\phi_3}+ \braket{\phi_3|v|\bar\phi_2}\braket{\bar\phi_2|v|\phi_3} \over\braket{\phi_3|v|\phi_3}} \\
+...& \\
+\end{eqnarray*}
+ we can also write down a first few orthogonal vectors explicitly: 
+\begin{eqnarray*}
+\ket{\bar\phi_1}&=&{\ket{\phi_1}\over\sqrt{\braket{\phi_1|v|\phi_1}}} \\
+\ket{\bar\phi_2}&=&{\ket{\phi_2}\braket{\phi_1|v|\phi_1}-\ket{\phi_1}\braket{\phi_1|v|\phi_2} \over\sqrt{(\braket{\phi_1|v|\phi_1}\braket{\phi_2|v|\phi_2}-\braket{\phi_2|v|\phi_1}\braket{\phi_1|v|\phi_2})\braket{\phi_1|v|\phi_1}\braket{\phi_2|v|\phi_2}}} \\
+\end{eqnarray*}
+ Now the crucial observation is 
+\begin{equation*}
+  \bra{lm}\braket{R_{nl}|v|R_{n'l'}}\ket{l'm'}= \braket{R_{nl}|V_l(\rho)|R_{n'l}}\delta_{ll'}\delta_{mm'}
+\end{equation*}
+which means that $\braket{\phi_i|v|\phi_j}=0$ if $\ket{\phi_i}$ and $\ket{\phi_j}$ have different $l$ or $m$. In other words $\ket{\phi_i}$ and $\ket{\phi_j}$ for different $\ket{lm}$ are already orthogonal. Thus the G-S orthogonalization procedure only makes the $R_{nl}$ orthogonal for the same $\ket{lm}$. To get explicit expressions for $\ket{\bar\phi_i}$, we simply use the formulas above and get: 
+\begin{equation*}
+  \ket{\phi_i}=\ket{R_{nl}}\ket{lm}\quad\to\quad \ket{\bar\phi_i}=\ket{\bar R_{nl}}\ket{lm}
+\end{equation*}
+where we have constructed new $\ket{\bar R_{nl}}$ from original $\ket{R_{nl}}$: 
+\begin{eqnarray*}
+\ket{\bar R_{10}}&=&{\ket{R_{10}}\over\sqrt{\braket{R_{10}|V_0|R_{10}}}} \\
+\ket{\bar R_{20}}&=&{\ket{R_{20}} -\ket{\bar R_{10}}\braket{\bar R_{10}|V_0|R_{20}}\over\sqrt{\dots}} \\
+\ket{\bar R_{21}}&=&{\ket{R_{21}}\over\sqrt{\braket{R_{21}|V_1|R_{21}}}} \\
+\ket{\bar R_{30}}&=&{\ket{R_{30}} -\ket{\bar R_{10}}\braket{\bar R_{10}|V_0|R_{30}} -\ket{\bar R_{20}}\braket{\bar R_{20}|V_0|R_{30}} \over\sqrt{\dots}} \\
+\ket{\bar R_{31}}&=&{\ket{R_{31}} -\ket{\bar R_{21}}\braket{\bar R_{21}|V_1|R_{31}} \over\sqrt{\dots}} \\
+\ket{\bar R_{32}}&=&{\ket{R_{32}}\over\sqrt{\braket{R_{32}|V_1|R_{32}}}} \\
+\ket{\bar R_{40}}&=&{\ket{R_{40}} -\ket{\bar R_{10}}\braket{\bar R_{10}|V_0|R_{40}} -\ket{\bar R_{20}}\braket{\bar R_{20}|V_0|R_{40}} -\ket{\bar R_{30}}\braket{\bar R_{30}|V_0|R_{40}} \over\sqrt{\dots}} \\
+\ket{\bar R_{41}}&=&{\ket{R_{41}} -\ket{\bar R_{21}}\braket{\bar R_{21}|V_1|R_{41}} -\ket{\bar R_{31}}\braket{\bar R_{31}|V_1|R_{41}} \over\sqrt{\dots}} \\
+&\dots& \\
+\end{eqnarray*}
+ Ok, so we have constructed new $\ket{\bar R_{nl}}$ from $\ket{R_{nl}}$ which obey 
+\begin{equation}
+  \braket{\bar R_{nl}|V_l|\bar R_{n'l}}=\delta_{nn'}  \label{orthog}
+\end{equation}
+so for every $V_l$, we construct $\ket{\bar R_{nl}}$ for $n=l+1,\,\, l+2, \cdots$. Let's continue: 
+\begin{equation*}
+  v\ket{\bar\phi_i}=V_l(\rho)\ket{\bar R_{nl}}\ket{lm}
+\end{equation*}
+and finally we arrive at the separable form of the $l$ dependent pseudopotential 
+\begin{equation}
+  v =\sum_{i}v\ket{\bar\phi_i}\bra{\bar\phi_i}v =\sum_{i}V_l(\rho)\ket{\bar R_{nl}}\ket{lm} \bra{lm}\bra{\bar R_{nl}}V_l(\rho)  \label{Vsep}
+\end{equation}
+Note: the $V_l$ is actually $V_l-V_{loc}$, but this is just a detail.
+
+To have some explicit formula, let's write how the separable potential acts on a wavefunction: 
+\begin{equation*}
+  (v\psi)({\bf r})=\braket{{\bf r}|v|\psi}= \sum_i\braket{{\bf\hat r}|lm}\braket{\rho|V_l(\rho)|\bar R_{nl}} \bra{\bar R_{nl}}V_l(\rho)\braket{lm|\psi}=
+\end{equation*}
+\begin{equation*}
+  =\sum_iY_{lm}({\bf\hat r})\bar R_{nl}(\rho)V_l(\rho) \int \bar R_{nl}(\rho')V_l(\rho')\int Y_{lm}^*({\bf\hat r'})\psi({\bf r'})\,\d \Omega'\,\rho'^2 \d\rho'=
+\end{equation*}
+\begin{equation*}
+  =\sum_iY_{lm}({\bf\hat r})\bar R_{nl}(\rho)V_l(\rho) \int \bar R_{nl}(\rho')V_l(\rho') Y_{lm}^*({\bf\hat r'})\psi({\bf r'})\,\d^3r'
+\end{equation*}
+
+To have some insight on what we are actually doing: we are making the local potential $V_l$ nonlocal using: 
+\begin{equation}
+  V_l=\sum_{n=l+1}^\infty V_l\ket{\bar R_{nl}}\bra{\bar R_{nl}}V_l  \label{Vlsep}
+\end{equation}
+where 
+\begin{equation*}
+  \braket{\bar R_{nl}|V_l|\bar R_{n'l}}=\delta_{nn'}
+\end{equation*}
+or in ${\bf r}$ representation: 
+\begin{equation*}
+  V_l(\rho)\psi(\rho {\bf\hat r})=\sum_n V_l(\rho)\bar R_{nl}(\rho) \int\bar R_{nl}(\rho')V_l(\rho')\psi(\rho'{\bf\hat r})\rho'^2\d \rho'
+\end{equation*}
+which is useful when computing integrals of this type 
+\begin{equation*}
+  V_{ij} =\int\phi_i(\rho) V_l \phi_j(\rho) \rho^2\d^3 \rho =\braket{i|V_l|j}= \sum_n \braket{i|V_l|{\bar R_{nl}}}\braket{\bar R_{nl}|V_l|j}
+\end{equation*}
+\begin{equation*}
+  \braket{i|V_l|{\bar R_{nl}}}=\int\phi_i(\rho)V_l(\rho)\bar R_{nl}(\rho) \rho^2\d\rho
+\end{equation*}
+because the integral on the left hand side actually represents $N^2$ integrals, where $N$ is the number of basis vectors $\ket{\phi_i}$. The sum on the right hand side however only represents $K\cdot N$ integrals, where $K$ is the number of terms taken into account in (\ref{Vlsep}). Of course taking only finite number of terms in (\ref{Vlsep}) is only an approximation to $\hat V_l$. In our case, we don't need these 1D integrals (which can be easily computed directly, because $V_l$ is local and the basis functions $\phi_i$ are nonzero only around a node in the mesh, which means that the matrix $V_{ij}$ is sparse), but 3D integrals, where angular parts of $V$ are nonlocal and radial part is local (so the matrix $V_{ij}$ is dense), so the above procedure is the only way how to proceed, because we decompose the matrix $V_{ij}$ into the sum of matrices in the form $p_ip_j^*$, which can easily be handled and solved.
+
+The scheme for the separation described above works for any functions $R_{nl}(\rho)$. Because of the form of the expansion (\ref{Vlsep}) however, we will use $R_{nl}$ from one atomic calculation. We need to approximate $V_l$ by as few terms as possible, so imagine how the $V_l(\rho)$ acts on the lowest radial function in the $l$ subspace, which is $\ket{R_{l+1;l}}$ and we see that all the terms in (\ref{Vlsep}) except the first one $V_l\ket{\bar R_{l+1;l}}\bra{\bar R_{l+1;l}}V_l$ give zero, because they are orthogonal to $\ket{R_{l+1;l}}$. For the function $\ket{R_{l+2;l}}$ all the terms except the first two are zero, because $\braket{\bar R_{nl}|V_0|R_{l+2;l}}\neq0$ only for $n=l+1$ or $n=l+2$ (because the vectors $\ket{R_{l+1;l}}$ and $\ket{R_{l+2;l}}$ span the same subspace as $\ket{\bar R_{l+1;l}}$ and $\ket{\bar R_{l+2;l}}$ and using (\ref{orthog})) For functions, which are a little different from all $\ket{R_{nl}}$ ($n>l$), we won't genereally get precise results taking any (finite) number of terms in (\ref{Vlsep}), but the higher terms should give smaller and smaller corrections.
+
+So, to sum it up: We take all the $V_l$ in (\ref{Vsep}) as we did in (\ref{semi}). Theoretically we should take $\bar R_{nl}$ for all $n=l+1,\,\, l+2,\,\,l+3,\dots$, but practically it suffices to only take several $\bar R_{nl}$ for a given $l$ from one atomic calculaction.
+
+Let's give an example: we are calculating 14 electrons, so we will only take into account the lowest 14 eigenvalues in the Kohn sham equations, which are $\ket{\phi_1}$ up to $\ket{\phi_{14}}$. The lowest radial functions in each $l$ subspace are $\ket{\phi_i}$ for $i=1,3,4,5,10,11,12,13,14$ and on these 9 functions we get a precise result with only one term in the expansion (\ref{Vlsep}). For the other 5 functions ($i=2,6,7,8,9$) we will have to take into account more terms. Let's look in more detail at the case $l=0$ (i.e. $i=1,2,6$). Then 
+\begin{equation*}
+  V_0= V_0\ket{\bar R_{10}}\bra{\bar R_{10}}V_0+ V_0\ket{\bar R_{20}}\bra{\bar R_{20}}V_0+ V_0\ket{\bar R_{30}}\bra{\bar R_{30}}V_0+ \dots
+\end{equation*}
+and for the case $i=1$ we see that one term in (\ref{Vlsep}) is enough: 
+\begin{equation*}
+  v\ket{\phi_1}=v\ket{R_{10}}\ket{00}=V_0\ket{R_{10}}\ket{00}= V_0\ket{\bar R_{10}}\bra{\bar R_{10}}V_0\ket{R_{10}}\ket{00}
+\end{equation*}
+because $\braket{\bar R_{n0}|V_0|R_{10}}=0$ for $n>1$. For the case $i=2$ we get the correct result with 2 terms in (\ref{Vlsep})
+\begin{equation*}
+  v\ket{\phi_2}=v\ket{R_{20}}\ket{00}=V_0\ket{R_{20}}\ket{00}=( V_0\ket{\bar R_{10}}\bra{\bar R_{10}}V_0\ket{R_{20}}+ V_0\ket{\bar R_{20}}\bra{\bar R_{20}}V_0\ket{R_{20}} )\ket{00}
+\end{equation*}
+because $\braket{\bar R_{n0}|V_0|R_{20}}=0$ for $n>2$. For the case $i=6$ we need to take into account 3 terms etc. We can see from this example, that taking $\ket{R_{nl}}$ from one atomic calculation, we get precise results (with the same atom) only taking into account a finite number of terms in (\ref{Vlsep}), for 14 electrons actually only 3 terms. For several atoms calculation, we won't get precise results, but it should be a sufficiently good approximation.
+
+The described method is general, the only drawback is that if we don't take functions $\ket{R_{nl}}$ which are similar to the solution, we need to take a lot of terms in (\ref{Vlsep}), resulting in many matrices of the form $p_ip_j^*$, which we don't want, even though, theoretically we can get a solution with any precision we want taking more and more terms in (\ref{Vlsep}).
+
+See also \mybackslash{}cite{blochl}.
+
+\section{FEM}
+
+\subsection{Introduction}
+
+This chapter explains FEM and gives concrete formulas which are needed in the calculation.
+
+\subsection{Weak Formulation of the Schrödinger Equation}
+
+One particle Schrödinger equation is 
+\begin{equation*}
+  \left(-{\hbar^2\over2m}\nabla^2 + V\right)\psi=E\psi\,.
+\end{equation*}
+We multiply both sides by a test function $v$
+\begin{equation*}
+  -\left({\hbar^2\over2m}\nabla^2\psi\right)v=(E-V)\psi v\,,
+\end{equation*}
+and integrate over the whole volume we are interested in 
+\begin{equation}
+  \int-\left({\hbar^2\over2m}\nabla^2\psi\right)v\,\d V=\int(E-V)\psi v\,\d V\,,  \label{1}
+\end{equation}
+and using the vector identity 
+\begin{equation*}
+  -\left(\nabla^2\psi)\right)v=\nabla \psi\cdot \nabla v - \nabla\cdot\left((\nabla \psi)v\right),
+\end{equation*}
+we rewrite the left hand side of (\ref{1})
+\begin{equation*}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d V+\int{\hbar^2\over2m}\nabla\cdot\left((\nabla \psi)v\right)\,\d V\,,
+\end{equation*}
+now we apply Gauss Theorem 
+\begin{equation*}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d V+\oint{\hbar^2\over2m}(\nabla \psi)v\cdot{\bf n}\,\d S\,,
+\end{equation*}
+and rewriting $\nabla\psi\cdot{\bf n}\equiv{\d\psi\over\d n}$
+\begin{equation}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V+ \int vV\psi\,\d V = \int E\psi v\,\d V + \oint{\hbar^2\over2m}{\d\psi\over\d n}v\,\d S\,,  \label{w}
+\end{equation}
+which is the weak formulation. The problem reads: find a function $\psi$ such that (\ref{w}) holds for every $v$.
+
+\subsection{Finite Elements}
+
+We choose a basis $\phi_i$ and substitute $\phi_i$ for $v$ and expand $\psi=\sum q_j\phi_j$
+\begin{equation}
+  \left(\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V+ \int\phi_iV\phi_j\,\d V\right)q_j = \left(\int E\phi_j\phi_i\,\d V\right)q_j +\oint{\hbar^2\over2m}{\d\psi\over\d n}\phi_i\,\d S\,,  \label{fem}
+\end{equation}
+which can be written in a matrix form 
+\begin{equation*}
+  \left(K_{ij}+V_{ij}\right)q_j=EM_{ij}q_j+F_i\,,
+\end{equation*}
+where 
+\begin{eqnarray*}
+V_{ij}&=&\int\phi_iV\phi_j\,\d V\,, \\
+M_{ij}&=&\int\phi_i\phi_j\,\d V\,, \\
+K_{ij}&=&{\hbar^2\over2m}\int\nabla\phi_i\cdot\nabla\phi_j\,\d V\,, \\
+F_i&=&{\hbar^2\over2m}\oint{\d\psi\over\d n}\phi_i\,\d S\,. \\
+\end{eqnarray*}
+ Usually we set $F_i=0$.
+
+We decompose the domain into elements and compute the integrals as the sum over elements. For example: 
+\begin{equation*}
+  K_{ij}=\sum_{E\in elements} K_{ij}^E
+\end{equation*}
+where $K_{ij}^E$ is the integral over one element only 
+\begin{equation*}
+  K_{ij}^{E}=\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V^{E}\approx \sum_{q=0}^{N_q-1}{\hbar^2\over2m}\,\nabla\phi_i(x_q)\cdot\nabla\phi_j(x_q)\, w_q|\det J(\hat x_q)|\,.
+\end{equation*}
+The integral is computed numerically using a Gauss integration: $x_q$ are Gauss points (there are $N_q$ of them), $w_q$ is the weight of each point, and the Jacobian $|\det J(\hat x_q)|$ is there because we are actually computing the integral on the reference element instead in the real space.
+
+The surface integrals are computed similarly.
+
+\subsection{Pseudopotentials Formulation}
+
+There are no problems with other matrix elements in (\ref{fem}) except 
+\begin{equation*}
+  V_{ij} =\int\phi_i({\bf r}) V \phi_j({\bf r}) \d^3 r =\int\braket{i|{\bf r}} \braket{{\bf r}|\hat V|j} \d^3 r =\braket{i|\hat V|j}
+\end{equation*}
+where 
+\begin{equation*}
+  \hat V=V_{loc}(\rho)+\sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm} \bra{lm}\bra{\bar R_{nl}}V_l(\rho)
+\end{equation*}
+so 
+\begin{equation*}
+  V_{ij}=\braket{i|V_{loc}(\rho)|j}+ \bra{i}\sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm} \bra{lm}\bra{\bar R_{nl}}V_l(\rho) \ket{j} =V_{ij}^{loc}+\sum_{nlm}p_ip_j^*
+\end{equation*}
+where the complex vector $p_i$ is given by 
+\begin{equation*}
+  p_i^{(nlm)}=\braket{i|lm}V_l(\rho)\ket{\bar R_{nl}}= \int\braket{i|{\bf r}}\braket{{\bf\hat r}|lm} \braket{\rho|V_l(\rho)|\bar R_{nl}}\d^3 r= \int \phi_i({\bf r})Y_{lm}({\bf\hat r})V_l(\rho)\bar R_{nl}(\rho)\d^3 r
+\end{equation*}
+and 
+\begin{equation*}
+  V_{ij}^{loc}=\int\phi_i({\bf r}) V_{loc}(\rho) \phi_j({\bf r}) \d^3 r
+\end{equation*}
+and $Y_{lm}({\bf\hat r})$, $\bar R_{nl}(\rho)$ and $V_l(\rho)$ are given functions. Noticing that 
+\begin{equation*}
+  \sum_m p_ip_j^*= \int \phi_i({\bf r})Y_{lm}({\bf\hat r})V_l(\rho)\bar R_{nl}(\rho)\d^3 r \int \phi_j({\bf r'})Y_{lm}^*({\bf\hat r'})V_l(\rho')\bar R_{nl}(\rho')\d^3 r'=
+\end{equation*}
+\begin{equation*}
+  =\int\int Y_{lm}({\bf\hat r})Y_{lm}^*({\bf\hat r'})V_l(\rho)\bar R_{nl}(\rho) \phi_i({\bf r}) \phi_j({\bf r'})V_l(\rho')\bar R_{nl}(\rho')\d^3 r\d^3 r'=
+\end{equation*}
+and using (\ref{lsum}) we get 
+\begin{equation*}
+  \sum_m p_ip_j^*= \int\int {4\pi\over 2l+1}P_l({\bf\hat r}\cdot{\bf\hat r'})V_l(\rho)\bar R_{nl}(\rho) \phi_i({\bf r}) \phi_j({\bf r'})V_l(\rho')\bar R_{nl}(\rho')\d^3 r\d^3 r'
+\end{equation*}
+which is a real number, thus $\sum_{nlm}p_ip_j^*$ is also a real number, which means that we can calculate with only the real parts of the matrix $p_ip_j^*$, because the imaginary parts cancels out in the result: 
+\begin{equation*}
+  \sum_{nlm}p_ip_j^*=\Re\left(\sum_{nlm}p_ip_j^*\right)= \sum_{nlm}\Re(p_ip_j^*)
+\end{equation*}
+let $p_i=a_i+ib_i$ then 
+\begin{equation*}
+  \Re(p_ip_j^*)=\Re((a_i+ib_i)(a_j-ib_j))=a_ia_j+b_ib_j
+\end{equation*}
+and 
+\begin{equation*}
+  V_{ij}=V_{ij}^{loc}+\sum_{nlm}(a_ia_j+b_ib_j)
+\end{equation*}
+where 
+\begin{equation*}
+  a_i= \sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}} \int \phi_i({\bf r})P_l^m(\cos\theta)\cos(m\phi)V_l(\rho)\bar R_{nl}(\rho)\d^3 r
+\end{equation*}
+\begin{equation*}
+  b_i= \sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}} \int \phi_i({\bf r})P_l^m(\cos\theta)\sin(m\phi)V_l(\rho)\bar R_{nl}(\rho)\d^3 r
+\end{equation*}
+just don't confuse the basis function $\phi_i({\bf r})$ with the spherical integration variable $\phi$.
+
+\subsection{Example on Si}
+
+There are only two valence electrons to take into account, thus we have only 2 $n$ in the summation $(nlm)$. The potentials in the Schrödinger equation are 
+\begin{equation*}
+  V=V_{local}+V_{nonlocal}
+\end{equation*}
+\begin{equation*}
+  V_{local}=V_H+V_{XC}+V_{loc}
+\end{equation*}
+\begin{equation*}
+  \hat V_{nonlocal}= \sum_{nlm}V_l(\rho)\ket{\bar R_{nl}}\ket{lm} \bra{lm}\bra{\bar R_{nl}}V_l(\rho)
+\end{equation*}
+There are just $V_0$, $V_1$ and $V_2$.
+
+We probably need to calculate $\bar R_{10}$, $\bar R_{20}$, $\bar R_{21}$, $\bar R_{30}$, $\bar R_{31}$, $\bar R_{32}$, but I am not completely sure. We get maybe around 18 complex matrices, which means 36 real matrices of the form $a_ia_j$. The input for the solver is 36 real vectors $a$, $b$, $c$, $d$, $e$,\mybackslash{}dots and sparse matrices $V^{loc}$, $M$, and $K$. The solver needs to solve 
+\begin{equation*}
+  (K+V^{loc}+a^Ta+b^Tb+c^Tc+d^Td+e^Te+\cdots)q=EMq
+\end{equation*}
+
+\section{Appendix}
+
+\subsection{Polar and Spherical Coordinates}
+
+Polar coordinates (radial, azimuth) $(r,\phi)$ are defined by 
+\begin{eqnarray*}
+x&=&r\cos\phi \\
+y&=&r\sin\phi \\
+\end{eqnarray*}
+ Spherical coordinates (radial, zenith, azimuth) $(\rho,\theta,\phi)$: 
+\begin{eqnarray*}
+x&=&\rho\sin\theta\cos\phi \\
+y&=&\rho\sin\theta\sin\phi \\
+z&=&\rho\cos\theta \\
+\end{eqnarray*}
+ Note: this meaning of $(\theta,\phi)$ is mostly used in the USA and in many books. In Europe people usualy use different symbols, like $(\phi,\theta)$, $(\vartheta,\varphi)$ and others.
+
+\subsection{Delta Function}
+
+Delta function $\delta(x)$ is defined such that this relation holds: 
+\begin{equation}
+  \int f(x)\delta(x-t)\d x=f(t)  \label{deltadef}
+\end{equation}
+No such function exists, but one can find many sequences "converging" to a delta function: 
+\begin{equation}
+  \lim_{\alpha\to\infty}\delta_\alpha(x) = \delta(x)  \label{deltalim}
+\end{equation}
+more precisely: 
+\begin{equation}
+  \lim_{\alpha\to\infty}\int f(x)\delta_\alpha(x)\d x = \int f(x)\lim_{\alpha\to\infty}\delta_\alpha(x)\d x = f(t)  \label{deltaprec}
+\end{equation}
+one example of such a sequence is: 
+\begin{equation*}
+  \delta_\alpha(x) = {1\over\pi x}\sin(\alpha x)
+\end{equation*}
+It's clear that (\ref{deltaprec}) holds for any well behaved function $f(x)$. Mathematicians like to say it's incorrect to use such a notation when in fact the integral (\ref{deltadef}) doesn't "exist", but they are wrong, because it is not important if something "exist" or not, but rather if it is clear what we mean by our notation: (\ref{deltadef}) is a shorthand for (\ref{deltaprec}) and (\ref{deltalim}) gets a mathematically rigorous meaning when you integrate both sides and use (\ref{deltadef}) to arrive at (\ref{deltaprec}). Thus one uses the relations (\ref{deltadef}), (\ref{deltalim}), (\ref{deltaprec}) to derive all properties of the delta function.
+
+Let's give an example. Let ${\bf\hat r}$ be the unit vector in 3D and we can label it using spherical coordinates ${\bf\hat r}={\bf\hat r}(\theta,\phi)$. We can also express it in cartesian coordinates as ${\bf\hat r}(\theta,\phi)=(\cos\phi\sin\theta,\sin\phi\sin\theta,\cos\theta)$.
+
+
+\begin{equation}
+  f({\bf\hat r'})=\int\delta({\bf\hat r}-{\bf\hat r'})f({\bf\hat r})\,\d {\bf\hat r}  \label{deltar}
+\end{equation}
+Expressing $f({\bf\hat r})=f(\theta,\phi)$ as a function of $\theta$ and $\phi$ we have 
+\begin{equation}
+  f(\theta',\phi')=\int\delta(\theta-\theta')\delta(\phi-\phi') f(\theta,\phi)\,\d\theta\d\phi  \label{deltaangles}
+\end{equation}
+Expressing (\ref{deltar}) in spherical coordinates we get 
+\begin{equation*}
+  f(\theta',\phi')=\int\delta({\bf\hat r}-{\bf\hat r'}) f(\theta,\phi)\sin\theta\,\d\theta\d\phi
+\end{equation*}
+and comparing to (\ref{deltaangles}) we finally get 
+\begin{equation*}
+  \delta({\bf\hat r}-{\bf\hat r'})={1\over\sin\theta} \delta(\theta-\theta')\delta(\phi-\phi')
+\end{equation*}
+In exactly the same manner we get 
+\begin{equation*}
+  \delta({\bf r}-{\bf r'})=\delta({\bf\hat r}-{\bf\hat r'}) {\delta(\rho-\rho')\over\rho^2}
+\end{equation*}
+See also (\ref{functionalderdel}) for an example of how to deal with more complex expressions involving the delta function like $\delta^2(x)$.
+
+\subsection{Variations and functional derivatives}
+
+Functional derivatives are a common source of confusion and especially the notation. The reason is similar to the delta function --- it's due to rigid mathematicians, who refuse to use a clear and exact notation and unfortunately they are allowed to teach the basic calculus to physics students.
+
+Let's have $\x=(x_1,x_2,\dots,x_N)$. The function $f(\x)$ assigns a number to each $\x$. We define a differential of $f$ as 
+\begin{equation*}
+  \d f\equiv \left.{\d\over\d\varepsilon}f(\x+\varepsilon\h) \right|_{\varepsilon=0} =\lim_{\varepsilon\to0} {f(\x+\varepsilon\h)-f(\x)\over\varepsilon}=\a\cdot\h
+\end{equation*}
+The last equality follows from the fact, that $\left.{\d\over\d\varepsilon}f(\x+\varepsilon\h) \right|_{\varepsilon=0}$ is a linear function of $\h$. We define ${\partial f\over\partial x_i}$ as 
+\begin{equation*}
+  \a\equiv\left({\partial f\over\partial x_1},{\partial f\over\partial x_2}, \dots,{\partial f\over\partial x_N}\right)
+\end{equation*}
+This also gives a formula for computing ${\partial f\over\partial x_i}$: we set $h_j=\delta_{ij}h_i$ and 
+\begin{equation*}
+  {\partial f\over\partial x_i}=a_i=\a\cdot\h=\left.{\d\over\d\varepsilon} f(\x+\varepsilon(0,0,\dots,1,\dots,0))\right|_{\varepsilon=0}=
+\end{equation*}
+\begin{equation*}
+  =\lim_{\varepsilon\to0} {f(x_1,x_2,\dots,x_i+\varepsilon,\dots,x_N)-f(x_1,x_2,\dots,x_i,\dots,x_N) \over\varepsilon}
+\end{equation*}
+But this is just the way the partial derivative is usually defined. Every variable can be treated as a function (very simple one): 
+\begin{equation*}
+  x_i=g(x_1,\dots,x_N)=\delta_{ij}x_j
+\end{equation*}
+and so we define 
+\begin{equation*}
+  \d x_i\equiv\d g=\d(\delta_{ij}x_j)=h_i
+\end{equation*}
+and thus we write $h_i=\d x_i$ and $\h=\d\x$ and 
+\begin{equation*}
+  \d f={\d f\over\d x_i}\d x_i
+\end{equation*}
+So $\d\x$ has two meanings --- it's either $\h=\x-\x_0$ (a finite change in the independent variable $\x$) or a differential, depending on the context. Even mathematicians use this notation.
+
+Functional $F[f]$ assigns a number to each function $f(x)$. The variation is defined as 
+\begin{equation*}
+  \delta F[f]\equiv\left.{\d\over\d\varepsilon}F[f+\varepsilon h] \right|_{\varepsilon=0}=\lim_{\epsilon\to0}{F[f+\epsilon h]-F[f]\over\epsilon}= \int a(x)h(x)\d x
+\end{equation*}
+We define ${\delta F\over\delta f(x)}$ as 
+\begin{equation*}
+  a(x)\equiv{\delta F\over\delta f(x)}
+\end{equation*}
+This also gives a formula for computing ${\delta F\over\delta f(x)}$: we set $h(y)=\delta(x-y)$ and 
+\begin{equation*}
+  {\delta F\over\delta f(x)}=a(x)=\int a(y)\delta(x-y)\d y= \left.{\d\over\d\varepsilon}F[f(y)+\varepsilon\delta(x-y)] \right|_{\varepsilon=0}=
+\end{equation*}
+\begin{equation*}
+  =\lim_{\varepsilon\to0} {F[f(y)+\varepsilon\delta(x-y)]-F[f(y)]\over\varepsilon}
+\end{equation*}
+Every function can be treated as a functional (although a very simple one): 
+\begin{equation*}
+  f(x)=G[f]=\int f(y)\delta(x-y)\d y
+\end{equation*}
+and so we define 
+\begin{equation*}
+  \delta f\equiv\delta G[f]= \left.{\d\over\d\varepsilon}G[f(x)+\varepsilon h(x)] \right|_{\varepsilon=0}= \left.{\d\over\d\varepsilon}(f(x)+\varepsilon h(x)) \right|_{\varepsilon=0}= h(x)
+\end{equation*}
+thus we write $h=\delta f$ and 
+\begin{equation*}
+  \delta F[f]=\int {\delta F\over\delta f(x)}\delta f(x)\d x
+\end{equation*}
+so $\delta f$ have two meanings --- it's either $h(x)=\left.{\d\over\d\varepsilon}(f(x)+\varepsilon h(x)) \right|_{\varepsilon=0}$ (a finite change in the function $f$) or a variation of a functional, depending on the context. Mathematicians never write $\delta f$ in the meaning of $h(x)$, they always write the latter, but it's ridiculous, because it is completely analogous to $\d\x$.
+
+The correspondence between the finite and infinite dimensional case can be summarized as: 
+\begin{eqnarray*}
+f(x_i) \quad&\Longleftrightarrow&\quad F[f] \\
+\d f=0 \quad&\Longleftrightarrow&\quad \delta F=0 \\
+{\partial f\over\partial x_i}=0 \quad&\Longleftrightarrow&\quad {\delta F\over\delta f(x)}=0 \\
+f \quad&\Longleftrightarrow&\quad F \\
+x_i \quad&\Longleftrightarrow&\quad f(x) \\
+x \quad&\Longleftrightarrow&\quad f \\
+i \quad&\Longleftrightarrow&\quad x \\
+\end{eqnarray*}
+
+More generally, $\delta$-variation can by applied to any function $g$ which contains the function $f(x)$ being varied, you just need to replace $f$ by $f+\epsilon h$ and apply ${\d\over\d\epsilon}$ to the whole $g$, for example (here $g=\partial_\mu\phi$ and $f=\phi$): 
+\begin{equation*}
+  \delta\partial_\mu\phi=\left.{\d\over\d\varepsilon}\partial_\mu(\phi+\varepsilon h) \right|_{\varepsilon=0}= \partial_\mu\left.{\d\over\d\varepsilon}(\phi+\varepsilon h) \right|_{\varepsilon=0}=\partial_\mu\delta\phi
+\end{equation*}
+
+This notation allows us a very convinient computation, as shown in the following examples. First, when computing a variation of some integral, when can interchange $\delta$ and $\int$: 
+\begin{equation*}
+  F[f]=\int K(x) f(x) \d x
+\end{equation*}
+\begin{equation*}
+  \delta F=\delta \int K(x) f(x) \d x = \left.{\d\over\d\varepsilon}\int K(x) (f+\varepsilon h)\d x\right|_{\varepsilon=0}= \left.\int{\d\over\d\varepsilon} (K(x) (f+\varepsilon h))\d x\right|_{\varepsilon=0}=
+\end{equation*}
+\begin{equation*}
+  =\int\delta(K(x) f(x))\d x
+\end{equation*}
+In the expression $\delta(K(x) f(x))$ we must understand from the context if we are treating it as a functional of $f$ or $K$. In our case it's a functional of $f$, so we have $\delta(K f)=K\delta f$.
+
+A few more examples: 
+\begin{equation*}
+  {\delta\over\delta f(t)}\int\d t'f(t')g(t')= \left.{\d\over\d\varepsilon}\int\d t'(f(t')+\varepsilon\delta(t-t'))g(t') \right|_{\varepsilon=0}=g(t)
+\end{equation*}
+\begin{equation*}
+  {\delta f(t')\over\delta f(t)}= \left.{\d\over\d\varepsilon}(f(t')+\varepsilon\delta(t-t')) \right|_{\varepsilon=0}=\delta(t-t')
+\end{equation*}
+\begin{equation*}
+  {\delta f(t_1)f(t_2)\over\delta f(t)}= \left.{\d\over\d\varepsilon}(f(t_1)+\varepsilon\delta(t-t_1)) (f(t_2)+\varepsilon\delta(t-t_2)) \right|_{\varepsilon=0}=\delta(t-t_1)f(t_2)+f(t_1)\delta(t-t_2)
+\end{equation*}
+\begin{equation*}
+  {\delta\over\delta f(t)}\half\int\d t_1\d t_2K(t_1,t_2)f(t_1)f(t_2)= \half\int\d t_1\d t_2K(t_1,t_2){\delta f(t_1)f(t_2)\over\delta f(t)}=
+\end{equation*}
+\begin{equation*}
+  =\half\left(\int\d t_1 K(t_1,t)f(t_1)+\int\d t_2 K(t,t_2)f(t_2)\right) =\int\d t_2 K(t,t_2)f(t_2)
+\end{equation*}
+The last equality follows from $K(t_1,t_2)=K(t_2,t_1)$ (any antisymmetrical part of a $K$ would not contribute to the symmetrical integration). 
+\begin{equation*}
+  {\delta\over\delta f(t)}\int f^3(x)\d x= \left.{\d\over\d\varepsilon}\int(f(x)+\varepsilon\delta(x-t))^3\d x \right|_{\varepsilon=0}=
+\end{equation*}
+\begin{equation*}
+  =\left.\int3(f(x)+\varepsilon\delta(x-t))^2\delta(x-t)\d x \right|_{\varepsilon=0}=\int3f^2(x)\delta(x-t)\d x=3f^2(t)
+\end{equation*}
+Some mathematicians would say the above calculation is incorrect, because $\delta^2(x-t)$ is undefined. But that's not true, because in case of such problems the above notation automatically implies working with some sequence $\delta_\alpha(x) \to \delta(x)$ (for example $\delta_\alpha(x) = {1\over\pi x}\sin(\alpha x)$) and taking the limit $\alpha\to\infty$: 
+\begin{equation*}
+  {\delta\over\delta f(t)}\int f^3(x)\d x= \left.\lim_{\alpha\to\infty}{\d\over\d\varepsilon}\int(f(x)+\varepsilon\delta_\alpha(x-t))^3\d x \right|_{\varepsilon=0}=
+\end{equation*}
+\begin{equation*}
+  =\left.\lim_{\alpha\to\infty}\int3(f(x)+\varepsilon\delta_\alpha(x-t))^2\delta_\alpha(x-t)\d x \right|_{\varepsilon=0}=\lim_{\alpha\to\infty}\int3f^2(x)\delta_\alpha(x-t)\d x=
+\end{equation*}
+\begin{equation}
+  =\int3f^2(x)\lim_{\alpha\to\infty}\delta_\alpha(x-t)\d x= \int3f^2(x)\delta(x-t)\d x=3f^2(t)  \label{functionalderdel}
+\end{equation}
+As you can see, we got the same result, with the same rigor, but using an obfuscating notation. That's why such obvious manipulations with $\delta_\alpha$ are tacitly implied.
+
+\subsection{Spherical Harmonics}
+
+Are defined by 
+\begin{equation*}
+  Y_{lm}(\theta,\phi)=\sqrt{{2l+1\over4\pi}{(l-m)!\over(l+m)!}}\,P_l^m(\cos\theta)\,e^{im\phi}
+\end{equation*}
+where $P_l^m$ are associated Legendre polynomials defined by 
+\begin{equation*}
+  P_l^m(x)=(-1)^m (1-x^2)^{m/2}{\d^m\over\d x^m} P_l(x)
+\end{equation*}
+and $P_l$ are Legendre polynomials defined by the formula 
+\begin{equation*}
+  P_l(x)={1\over2^l l!}{\d^l\over\d x^l}[(x^2-1)^l]
+\end{equation*}
+they also obey the completeness relation 
+\begin{equation}
+  \sum_{l=0}^\infty {2l+1\over2}P_l(x')P_l(x)=\delta(x-x')  \label{Lorto}
+\end{equation}
+The spherical harmonics are ortonormal: 
+\begin{equation}
+  \int Y_{lm}\,Y^*_{l'm'}\,\d\Omega = \int_0^{2\pi}\int_0^{\pi} Y_{lm}(\theta,\phi)\,Y^*_{l'm'}(\theta,\phi)\sin\theta\,\d\theta\,\d\phi = \delta_{mm'}\delta_{ll'}  \label{Yorto}
+\end{equation}
+and complete (both in the $l$-subspace and the whole space): 
+\begin{equation}
+  \sum_{m=-l}^l|Y_{lm}(\theta,\phi)|^2={2l+1\over4\pi}  \label{lcomplete}
+\end{equation}
+\begin{equation}
+  \sum_{l=0}^\infty\sum_{m=-l}^lY_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi') ={1\over\sin\theta}\delta(\theta-\theta')\delta(\phi-\phi')= \delta({\bf\hat r}-{\bf\hat r'})  \label{Ycomplete}
+\end{equation}
+The relation (\ref{lcomplete}) is a special case of an addition theorem for spherical harmonics 
+\begin{equation}
+  \sum_{m=-l}^lY_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')= {4\pi\over 2l+1}P_l(\cos\gamma)  \label{lsum}
+\end{equation}
+where $\gamma$ is the angle between the unit vectors given by ${\bf\hat r}=(\theta,\phi)$ and ${\bf\hat r'}=(\theta',\phi')$: 
+\begin{equation*}
+  \cos\gamma=\cos\theta\cos\theta'+\sin\theta\sin\theta'\cos(\phi-\phi') ={\bf\hat r}\cdot{\bf\hat r'}
+\end{equation*}
+
+\subsection{Dirac Notation}
+
+The Dirac notation allows a very compact and powerful way of writing equations that describe a function expansion into a basis, both discrete (e.g. a fourier series expansion) and continuous (e.g. a fourier transform) and related things. The notation is designed so that it is very easy to remember and it just guides you to write the correct equation.
+
+Let's have a function $f(x)$. We define 
+\begin{eqnarray*}
+\braket{x|f}&\equiv& f(x) \\
+\braket{x'|f}&\equiv& f(x') \\
+\braket{x'|x}&\equiv&\delta(x'-x) \\
+\int\ket{x}\bra{x}\d x&\equiv&\one \\
+\end{eqnarray*}
+ The following equation 
+\begin{equation*}
+  f(x')=\int\delta(x'-x)f(x)\d x
+\end{equation*}
+then becomes 
+\begin{equation*}
+  \braket{x'|f}=\int\braket{x'|x}\braket{x|f}\d x
+\end{equation*}
+and thus we can interpret $\ket{f}$ as a vector, $\ket{x}$ as a basis and $\braket{x|f}$ as the coefficients in the basis expansion: 
+\begin{equation*}
+  \ket{f}=\one\ket{f}=\int\ket{x}\bra{x}\d x\ket{f}= \int\ket{x}\braket{x|f}\d x
+\end{equation*}
+That's all there is to it. Take the above rules as the operational definition of the Dirac notation. It's like with the delta function - written alone it doesn't have any meaning, but there are clear and nonambiguous rules to convert any expression with $\delta$ to an expression which even mathematicians understand (i.e. integrating, applying test functions and using other relations to get rid of all $\delta$ symbols in the expression -- but the result is usually much more complicated than the original formula). It's the same with the ket $\ket{f}$: written alone it doesn't have any meaning, but you can always use the above rules to get an expression that make sense to everyone (i.e. attaching any bra to the left and rewritting all brackets $\braket{a|b}$ with their equivalent expressions) -- but it will be more complex and harder to remember and -- that is important -- less general.
+
+Now, let's look at the spherical harmonics: 
+\begin{equation*}
+  Y_{lm}({\bf\hat r})\equiv\braket{{\bf\hat r}|lm}
+\end{equation*}
+on the unit sphere, we have 
+\begin{equation*}
+  \int\ket{\bf\hat r}\bra{\bf\hat r}\d{\bf\hat r}= \int\ket{\bf\hat r}\bra{\bf\hat r}\d\Omega=\one
+\end{equation*}
+\begin{equation*}
+  \delta({\bf\hat r}-{\bf\hat r'})=\braket{{\bf\hat r}|{\bf\hat r'}}
+\end{equation*}
+thus 
+\begin{equation*}
+  \int_0^{2\pi}\int_0^{\pi} Y_{lm}(\theta,\phi)\,Y^*_{l'm'}(\theta,\phi)\sin\theta\,\d\theta\,\d\phi = \int\braket{l'm'|{\bf\hat r}}\braket{{\bf\hat r}|lm}\d\Omega= \braket{l'm'|lm}
+\end{equation*}
+and from (\ref{Yorto}) we get 
+\begin{equation*}
+  \braket{l'm'|lm}=\delta_{mm'}\delta_{ll'}
+\end{equation*}
+now 
+\begin{equation*}
+  \sum_{lm}Y_{lm}(\theta,\phi)Y_{lm}^*(\theta',\phi')= \sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}
+\end{equation*}
+from (\ref{Ycomplete}) we get 
+\begin{equation*}
+  \sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}= \braket{{\bf\hat r}|{\bf\hat r'}}
+\end{equation*}
+so we have 
+\begin{equation*}
+  \sum_{lm}\ket{lm}\bra{lm}=\one
+\end{equation*}
+so $\ket{lm}$ forms an ortonormal basis. Any function defined on the sphere $f({\bf\hat r})$ can be written using this basis: 
+\begin{equation*}
+  f({\bf\hat r}) =\braket{{\bf\hat r}|f} =\sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|f} =\sum_{lm}Y_{lm}({\bf\hat r})f_{lm}
+\end{equation*}
+where 
+\begin{equation*}
+  f_{lm}=\braket{lm|f}=\int\braket{lm|{\bf\hat r}}\braket{{\bf\hat r}|f}\d\Omega =\int Y_{lm}^*({\bf\hat r}) f({\bf\hat r})\d\Omega
+\end{equation*}
+If we have a function $f({\bf r})$ in 3D, we can write it as a function of $\rho$ and ${\bf\hat r}$ and expand only with respect to the variable ${\bf\hat r}$: 
+\begin{equation*}
+  f({\bf r})=f(\rho{\bf\hat r})\equiv g(\rho,{\bf\hat r})= \sum_{lm}Y_{lm}({\bf\hat r})g_{lm}(\rho)
+\end{equation*}
+In Dirac notation we are doing the following: we decompose the space into the angular and radial part 
+\begin{equation*}
+  \ket{{\bf r}}=\ket{{\bf\hat r}}\otimes\ket{\rho} \equiv\ket{{\bf\hat r}}\ket{\rho}
+\end{equation*}
+and write 
+\begin{equation*}
+  f({\bf r})=\braket{{\bf r}|f}=\bra{{\bf\hat r}}\braket{\rho|f}= \sum_{lm}Y_{lm}({\bf\hat r})\bra{lm}\braket{\rho|f}
+\end{equation*}
+where 
+\begin{equation*}
+  \bra{lm}\braket{\rho|f}= \int\braket{lm|{\bf\hat r}}\bra{{\bf\hat r}}\braket{\rho|f}\d\Omega =\int Y_{lm}^*({\bf\hat r}) f({\bf r})\d\Omega
+\end{equation*}
+Let's calculate $\braket{\rho|\rho'}$
+\begin{equation*}
+  \braket{{\bf r}|{\bf r'}}=\bra{\bf\hat r}\braket{\rho|\rho'}\ket{{\bf\hat r'}} =\braket{{\bf\hat r}|{\bf\hat r'}}\braket{\rho|\rho'}
+\end{equation*}
+so 
+\begin{equation*}
+  \braket{\rho|\rho'} ={\braket{{\bf r}|{\bf r'}}\over\braket{{\bf\hat r}|{\bf\hat r'}}} ={\delta(\rho-\rho')\over\rho^2}
+\end{equation*}
+We must stress that $\ket{lm}$ only acts in the $\ket{{\bf\hat r}}$ space (not the $\ket\rho$ space) which means that 
+\begin{equation*}
+  \braket{{\bf r}|lm} =\bra{\bf\hat r}\braket{\rho|lm} =\braket{{\bf\hat r}|lm}\bra{\rho} =Y_{lm}({\bf\hat r})\bra{\rho}
+\end{equation*}
+and $V\ket{lm}$ leaves $V\ket\rho$ intact. Similarly, 
+\begin{equation*}
+  \sum_{lm} \ket{lm}\bra{lm}=\one
+\end{equation*}
+is a unity in the $\ket{\bf\hat r}$ space only (i.e. on the unit sphere).
+
+Let's rewrite the equation (\ref{lsum}): 
+\begin{equation*}
+  \sum_m\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}= {4\pi\over 2l+1} \braket{{\bf\hat r}\cdot{\bf\hat r'}|P_l}
+\end{equation*}
+Using the completeness relation (\ref{Lorto}): 
+\begin{equation*}
+  \sum_l {2l+1\over2}\braket{x'|P_l}\braket{P_l|x}=\braket{x'|x}
+\end{equation*}
+\begin{equation*}
+  \sum_l \ket{P_l}{2l+1\over2}\bra{P_l}=\one
+\end{equation*}
+we can now derive a very important formula true for every function $f({\bf\hat r}\cdot{\bf\hat r'})$:
+
+
+\begin{equation*}
+  f({\bf\hat r}\cdot{\bf\hat r'})=\braket{{\bf\hat r}\cdot{\bf\hat r'}|f}= \sum_l \braket{{\bf\hat r}\cdot{\bf\hat r'}|P_l}{2l+1\over2}\braket{P_l|f}= \sum_{lm}\braket{{\bf\hat r}|lm}\braket{lm|{\bf\hat r'}}{(2l+1)^2\over8\pi} \braket{P_l|f}=
+\end{equation*}
+\begin{equation*}
+  =\sum_{lm}\braket{{\bf\hat r}|lm}f_l \braket{lm|{\bf\hat r'}}
+\end{equation*}
+where 
+\begin{equation*}
+  f_l={(2l+1)^2\over8\pi}\braket{P_l|f} ={(2l+1)^2\over8\pi}\int_{-1}^1 \braket{P_l|x}\braket{x|f}\d x ={(2l+1)^2\over8\pi}\int_{-1}^1 P_l(x)f(x)\d x
+\end{equation*}
+or written explicitly 
+\begin{equation}
+  f({\bf\hat r}\cdot{\bf\hat r'})= \sum_{l=0}^\infty\sum_{m=-l}^l Y_{lm}({\bf\hat r}) f_l Y_{lm}^*({\bf\hat r'})  \label{fylm}
+\end{equation}
+
+\vfill
+\end{document}
