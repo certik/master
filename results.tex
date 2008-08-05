@@ -486,6 +486,19 @@ n      exact         FEM      error
 Solution saved to mesh.vtk
 \end{lstlisting}
 
+\subsection{2D: nonsymmetric potential I}
+
+In this example we use a potential from two nuclei positioned at $(-5, 0)$ and
+$(5, 0)$. This is a nonsymmetric problem, thus one cannot use the usual
+way to reduce the Schr\"odinger equation to radial and angular
+parts. A general partial differential equations solver (in our case FEM) has to
+be used.
+
+\subsection{2D: nonsymmetric potential II}
+
+In this example we use a potential from three nuclei positioned at $(-5, 0)$,
+$(5, 0)$ and $(0, 5)$.
+
 \section{Density Functional Theory, Spherically Symmetric Solution}
 
 \subsection{Pb: LDA}
