@@ -1,3 +1,531 @@
 \section{Solution of the Schr\"odinger Equation}
 
+\subsection{2D: Mesh}
+
+We create a mesh:
+
+\begin{lstlisting}
+$ ./schroedinger.py --mesh --2d
+Dimension: 2
+Info    : 'gmsh -2 tmp/mesh.geo -format mesh' started on Sat Jul 19 02:04:41 2008
+Info    : Reading 'tmp/mesh.geo'
+Info    : Read 'tmp/mesh.geo'
+Info    : Meshing 1D...
+Info    : Meshing curve 1 (Line)
+Info    : Meshing curve 2 (Line)
+Info    : Meshing curve 3 (Line)
+Info    : Meshing curve 4 (Line)
+Info    : Mesh 1D complete (0.028002 s)
+Info    : Mesh
+Info    : Meshing 2D...
+Info    : Meshing surface 6 (Plane, MeshAdapt+Delaunay)
+Info    : Mesh 2D complete (3.65223 s)
+Info    : Mesh
+Info    : 8100 vertices 16198 elements
+Info    : Writing 'tmp/mesh.mesh'
+Info    : Wrote 'tmp/mesh.mesh'
+Mesh written to tmp/mesh.vtk
+\end{lstlisting}
+
+\subsection{2D: Potential Well}
+
+This is also sometimes called particle in the box.
+
+\begin{lstlisting}
+$ ./schroedinger.py --well
+Dimension: 2
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.37 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.10 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 0.11 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.02 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.00 s
+sfepy: matrix shape: (8072, 8072)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.02 s
+sfepy: matrix structural nonzeros: 56442 (8.66e-04% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.00 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.04 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.02 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 10
+sfepy: ...done in 3.10 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.42 s
+a=100.000000
+Energies:
+n      exact         FEM      error
+0:  0.00098696   0.00100813   2.14%
+1:  0.00246740   0.00255738   3.65%
+2:  0.00246740   0.00256454   3.94%
+3:  0.00394784   0.00421025   6.65%
+4:  0.00493480   0.00524481   6.28%
+5:  0.00493480   0.00525660   6.52%
+6:  0.00641524   0.00705958  10.04%
+7:  0.00641524   0.00706794  10.17%
+8:  0.00838916   0.00916761   9.28%
+9:  0.00838916   0.00920827   9.76%
+Solution saved to mesh.vtk
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+$ ./schroedinger.py --oscillator
+Dimension: 2
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.36 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.10 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 0.08 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.01 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.00 s
+sfepy: matrix shape: (8072, 8072)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.02 s
+sfepy: matrix structural nonzeros: 56442 (8.66e-04% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.00 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.03 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.02 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 16
+sfepy: ...done in 7.38 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.36 s
+a=100.000000
+Energies:
+n      exact         FEM      error
+0:  1.00000000   1.00081703   0.08%
+1:  2.00000000   2.00158339   0.08%
+2:  2.00000000   2.00175346   0.09%
+3:  3.00000000   3.00302269   0.10%
+4:  3.00000000   3.00334897   0.11%
+5:  3.00000000   3.00346025   0.12%
+6:  4.00000000   4.00498898   0.12%
+7:  4.00000000   4.00571512   0.14%
+8:  4.00000000   4.00606336   0.15%
+9:  4.00000000   4.00631703   0.16%
+10:  5.00000000   5.00743227   0.15%
+11:  5.00000000   5.00868813   0.17%
+12:  5.00000000   5.00947456   0.19%
+13:  5.00000000   5.01031228   0.21%
+14:  5.00000000   5.01042976   0.21%
+15:  6.00000000   6.01161255   0.19%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+hydrogen
+
+$ ./schroedinger.py --hydrogen
+Dimension: 2
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.38 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.08 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 0.10 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.01 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.01 s
+sfepy: matrix shape: (8072, 8072)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.01 s
+sfepy: matrix structural nonzeros: 56442 (8.66e-04% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.01 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.03 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.02 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 10
+sfepy: ...done in 10.35 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 0.43 s
+a=100.000000
+Energies:
+n      exact         FEM      error
+0:  -0.50000000   -0.48444312   3.11%
+1:  -0.05555556   -0.05546226   0.17%
+2:  -0.05555556   -0.05490833   1.17%
+3:  -0.02000000   -0.01987759   0.61%
+4:  -0.02000000   -0.01986552   0.67%
+5:  -0.02000000   -0.01978261   1.09%
+6:  -0.02000000   -0.01974034   1.30%
+7:  -0.02000000   -0.01973349   1.33%
+8:  -0.01020408   -0.00961296   5.79%
+9:  -0.01020408   -0.00959015   6.02%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+Important note: the exact energies are in fact wrong, this was corrected in a211565e85b9. The correct result after the fix is:
+
+$ ./schroedinger.py --hydrogen
+[...]
+Energies:
+n      exact         FEM      error
+0:  -0.50000000   -0.48444312   3.11%
+1:  -0.05555556   -0.05546226   0.17%
+2:  -0.05555556   -0.05490833   1.17%
+3:  -0.05555556   -0.01987759  64.22%
+4:  -0.02000000   -0.01986552   0.67%
+5:  -0.02000000   -0.01978261   1.09%
+6:  -0.02000000   -0.01974034   1.30%
+7:  -0.02000000   -0.01973349   1.33%
+8:  -0.02000000   -0.00961296  51.94%
+9:  -0.01020408   -0.00959015   6.02%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+As you can see, pysparse failed to retrieve the eigenvalue number 3. With a more dense mesh, it works fine for the Boron nucleus with 1 electron:
+
+$ ./schroedinger.py --boron
+[...]
+Energies:
+n      exact         FEM      error
+0:  -12.50000000   -12.65582408   1.25%
+1:  -1.38888889   -1.39403240   0.37%
+2:  -1.38888889   -1.38823512   0.05%
+3:  -1.38888889   -1.38821053   0.05%
+4:  -0.50000000   -0.50042416   0.08%
+5:  -0.50000000   -0.49898923   0.20%
+6:  -0.50000000   -0.49895079   0.21%
+7:  -0.50000000   -0.49809201   0.38%
+8:  -0.50000000   -0.49804906   0.39%
+9:  -0.25510204   -0.25394635   0.45%
+10:  -0.25510204   -0.25329618   0.71%
+11:  -0.25510204   -0.25324683   0.73%
+12:  -0.25510204   -0.25249085   1.02%
+13:  -0.25510204   -0.25242286   1.05%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+3D
+
+Create a 3D mesh (you need tetgen for that -- it is non-free, but you can use it for academic purposes -- if you have a good free 3D mesh generator, please let us know):
+
+$ ./schroedinger.py --mesh
+Dimension: 3
+Info    : 'gmsh -0 database/box.geo -o tmp/x.geo' started on Sat Jul 19 02:08:14 2008
+Info    : Reading 'database/box.geo'
+Info    : Read 'database/box.geo'
+Info    : Writing 'tmp/x.geo'
+Info    : Wrote 'tmp/x.geo'
+General geometry information:
+  points: 8
+  lines: 12
+  surfaces: 6
+  volumes: 1
+Physical entities:
+  surfaces (boundary conditions):
+  volumes (regions):
+    1: volume numbers [1]
+Generating mesh using /usr/bin/tetgen -pQAq1.000000 -a0.030000 tmp/t.poly
+sfepy: reading mesh (tmp/t.1.node)...
+       nodes: 100% |############################################| Time: 00:00:00
+       elements: 100% |#########################################| Time: 00:00:01
+sfepy: ...done in 1.39 s
+Mesh written to tmp/mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+well
+
+$ ./schroedinger.py --well
+Dimension: 3
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.24 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.89 s
+sfepy: setting up domain faces...
+sfepy: ...done in 0.66 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 1.01 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.15 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.01 s
+sfepy: matrix shape: (7964, 7964)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.09 s
+sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.00 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.01 s
+sfepy: ...done in 0.20 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.01 s
+sfepy: ...done in 0.08 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 20
+sfepy: ...done in 5.47 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.13 s
+a=10.000000
+Energies:
+n      exact         FEM      error
+0:  0.14804407   0.14922535   0.80%
+1:  0.29608813   0.30079010   1.59%
+2:  0.29608813   0.30082698   1.60%
+3:  0.29608813   0.30084093   1.61%
+4:  0.44413220   0.45473187   2.39%
+5:  0.44413220   0.45482735   2.41%
+6:  0.44413220   0.45489304   2.42%
+7:  0.54282824   0.55869467   2.92%
+8:  0.54282824   0.55871268   2.93%
+9:  0.54282824   0.55889291   2.96%
+10:  0.59217626   0.61113461   3.20%
+11:  0.69087231   0.71656267   3.72%
+12:  0.69087231   0.71661781   3.73%
+13:  0.69087231   0.71678728   3.75%
+14:  0.69087231   0.71695827   3.78%
+15:  0.69087231   0.71706618   3.79%
+16:  0.69087231   0.71729282   3.82%
+17:  0.83891637   0.87708704   4.55%
+18:  0.83891637   0.87715932   4.56%
+19:  0.83891637   0.87797932   4.66%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+oscillator
+
+$ ./schroedinger.py --oscillator
+Dimension: 3
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.31 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.96 s
+sfepy: setting up domain faces...
+sfepy: ...done in 0.73 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 1.19 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.18 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.00 s
+sfepy: matrix shape: (7964, 7964)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.12 s
+sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.00 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.24 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.10 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 20
+sfepy: ...done in 3.96 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.33 s
+a=10.000000
+Energies:
+n      exact         FEM      error
+0:  1.50000000   1.60246586   6.83%
+1:  2.50000000   2.66350384   6.54%
+2:  2.50000000   2.66592179   6.64%
+3:  2.50000000   2.66745129   6.70%
+4:  3.50000000   3.73764474   6.79%
+5:  3.50000000   3.74251455   6.93%
+6:  3.50000000   3.74545592   7.01%
+7:  3.50000000   3.74824003   7.09%
+8:  3.50000000   3.75739243   7.35%
+9:  3.50000000   3.78188467   8.05%
+10:  4.50000000   4.84098311   7.58%
+11:  4.50000000   4.84411120   7.65%
+12:  4.50000000   4.84695596   7.71%
+13:  4.50000000   4.85068992   7.79%
+14:  4.50000000   4.85439463   7.88%
+15:  4.50000000   4.86152828   8.03%
+16:  4.50000000   4.86513080   8.11%
+17:  4.50000000   4.91355134   9.19%
+18:  4.50000000   4.91666221   9.26%
+19:  4.50000000   4.92487984   9.44%
+Solution saved to mesh.vtk
+
+\end{lstlisting}
+
+\subsection{2D: Oscillator}
+
+\begin{lstlisting}
+hydrogen
+
+$ ./schroedinger.py --hydrogen
+Dimension: 3
+sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.18 s
+sfepy: setting up domain edges...
+sfepy: ...done in 0.83 s
+sfepy: setting up domain faces...
+sfepy: ...done in 0.67 s
+sfepy: creating regions...
+sfepy:     leaf Omega region_1000
+sfepy:     leaf Surface region_2
+sfepy: ...done in 0.98 s
+sfepy: equation "rhs":
+sfepy: dw_mass_scalar.i1.Omega( v, Psi )
+sfepy: equation "lhs":
+sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
+                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+sfepy: describing geometries...
+sfepy: ...done in 0.15 s
+sfepy: setting up dof connectivities...
+sfepy: ...done in 0.00 s
+sfepy: matrix shape: (7964, 7964)
+sfepy: assembling matrix graph...
+sfepy: ...done in 0.09 s
+sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
+sfepy: updating materials...
+sfepy:     m
+sfepy:     matV
+sfepy: ...done in 0.00 s
+sfepy: assembling lhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.19 s
+sfepy: assembling rhs...
+sfepy:   setting up dof connectivities...
+sfepy:   ...done in 0.00 s
+sfepy: ...done in 0.08 s
+computing resonance frequencies...
+sfepy: loading...
+sfepy: ...done
+sfepy: solving...
+sfepy:   number of converged eigenvalues: 5
+sfepy: ...done in 1.11 s
+sfepy: reading mesh (tmp/mesh.vtk)...
+sfepy: ...done in 1.31 s
+a=10.000000
+Energies:
+n      exact         FEM      error
+0:  -0.50000000   -0.13468961  73.06%
+1:  -0.12500000   0.13909268  211.27%
+2:  -0.12500000   0.13934116  211.47%
+3:  -0.12500000   0.13939501  211.52%
+4:  -0.12500000   0.26835117  314.68%
+Solution saved to mesh.vtk
+\end{lstlisting}
+
 \section{Density Functional Theory, Spherically Symmetric Solution}
