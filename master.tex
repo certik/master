@@ -11,6 +11,8 @@
 \usepackage{graphicx} % nezbytné pro standardní vkládání obrázků do dokumentu
 
 \usepackage[left=4cm]{geometry} % nastavení dané velikosti okrajů
+\usepackage{amsmath}
+\usepackage{braket}
 
 %\newindex{default}{idx}{ind}{Rejstřík} % zavádí rejstřík v případě použití balíku index
 
@@ -121,9 +123,11 @@ e-mail vedoucího: vackar@fzu.cz\\
 
 \newpage
 
+\input macros.tex
+
 \chapter{Survey of the Current State}
 
-\section{Quantum Mechanics}
+\input theory.tex
 
 \chapter{Motivation, Tasks}
 
