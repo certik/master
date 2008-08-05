@@ -581,3 +581,65 @@ This is agrees with the NIST reference calculation to all decimal digits.
 This is agrees within $12\%$ to the NIST reference calculation, the difference
 being caused probably by a different exchange and correlation potential
 approximation in our code in NIST.
+
+\subsection{B: LDA}
+
+\begin{lstlisting}
+1:  |F(x)|=467.33470427
+2:  |F(x)|=39.46088238
+3:  |F(x)|=5.59717305
+4:  |F(x)|=3.09300726
+5:  |F(x)|=2.04909614
+6:  |F(x)|=0.09754169
+7:  |F(x)|=0.06773803
+8:  |F(x)|=0.04587578
+9:  |F(x)|=0.00592044
+10:  |F(x)|=0.00382678
+11:  |F(x)|=0.00232014
+12:  |F(x)|=0.00005561
+13:  |F(x)|=0.00002714
+14:  |F(x)|=0.00001809
+15:  |F(x)|=0.00000042
+16:  |F(x)|=0.00000023
+17:  |F(x)|=0.00000014
+18:  |F(x)|=0.00000001
+19:  |F(x)|=0.00000000
+20:  |F(x)|=0.00000000
+1s( 2) j=l+1/2: -6.564347081
+2s( 2) j=l+1/2: -0.3447010093
+2p( 1) j=l+1/2: -0.1366031499
+\end{lstlisting}
+
+Agrees with NIST to all decimal places.
+
+\subsection{B: RLDA}
+
+\begin{lstlisting}
+0: |F(x)|=485.06815695
+1: |F(x)|=103.13739852
+2: |F(x)|=34.94893789
+3: |F(x)|=18.15071235
+4: |F(x)|=1.19766447
+5: |F(x)|=0.10974802
+6: |F(x)|=0.07628667
+7: |F(x)|=0.02450426
+8: |F(x)|=0.00430650
+9: |F(x)|=0.00193614
+10: |F(x)|=0.00042938
+11: |F(x)|=0.00010306
+12: |F(x)|=0.00002872
+13: |F(x)|=0.00001073
+14: |F(x)|=0.00000217
+15: |F(x)|=0.00000090
+16: |F(x)|=0.00000028
+17: |F(x)|=0.00000015
+18: |F(x)|=0.00000002
+19: |F(x)|=0.00000001
+1s( 2) j=l+1/2: -6.56282977
+2s( 2) j=l+1/2: -0.3447247582
+2p( 1) j=l-1/2: -0.1366103284
+\end{lstlisting}
+
+Agrees with NIST to 3 decimal places after the decimal dot, the difference also
+probably causes by a different exchange and correlation potential
+approximation.
