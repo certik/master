@@ -808,3 +808,186 @@ And we get the usual form of the Schrödinger equation for the vector potential 
 \begin{equation*}
   i{\partial\over\partial t}\varphi=\left(-{(\nabla+ie{\bf A})^2\over2 m} +V \right)\varphi\,.
 \end{equation*}
+
+\section{Radial Schrödinger and Dirac Equations}
+
+For general treatment, together with derivation of all the different forms of
+radial Dirac equations used in the literature, see \cite{bachelor-thesis}. Here we just summarize the results.
+
+\subsection{Radial Schrödinger Equation}
+
+We have a spherically symmetric potential energy 
+\begin{equation*}
+  V({\bf x})=V(r)\,.
+\end{equation*}
+State with a given square of an angular momentum (eigenvalue $l(l+1)$) and its $z$ component (eigenvalue $m$) is described by the wave function 
+\begin{equation}
+  \psi_{nlm}({\bf x})=R_{nl}(r)\,Y_{lm}\left({\bf x}\over r\right)\,,  \label{psi}
+\end{equation}
+where $R_{nl}(r)$ obeys the equation \cite{formanek} (eq. 2.400) 
+\begin{equation}
+  R_{nl}''+{2\over r}R_{nl}'+{2M\over\hbar^2}(E-V)R_{nl}- {l(l+1)\over r^2}R_{nl}=0\,.  \label{radial}
+\end{equation}
+This is called the radial Schrödinger equation which we want to solve numerically.
+
+\subsection{Numerical integration for a given }
+
+Equation (\ref{radial}) is the linear ordinary differential equation of the second order, so the general solution is a linear combination of two independent solutions. Normally, the $2$ constants are determined from initial and/or boundary conditions. In our case, however, we don't have any other condition besides being interested in solutions that we can integrate on the interval $(0,\infty)$ (and which are normalizable), more exactly we want $R\in L^2$ and $\int_0^\infty r^2R^2\,\d r=1$.
+
+It can be easily shown by a direct substitution, that there are only two asymptotic behaviors near the origin: $r^l$ and $r^{-l-1}$. We are interested in quadratic integrable solutions only, so we are left with $r^l$ and only one integration constant, which we calculate from a normalization. This determines the solution uniquely.
+
+All the integration algorithms needs to evaluate $R''$, which is a problem at the origin, where all the terms in the equation are infinite, although their sum is finite. We thus start to integrate the equation at some small $r_0$ (for example $r_0=10^{-10}\rm\,a.u.$), where all the terms in the equation are finite. If we find the initial conditions $R(r_0)$ and $R'(r_0)$, the solution is then fully determined.
+
+If $r_0$ is sufficiently small, we can set $R(r_0)=r_0^l$ and $R'(r_0)=lr_0^{l-1}$. In the case $l=0$ we need to set $R(r_0)=1$ and $R'(r_0)=-{1\over a}$, where $a$ is the Bohr radius, see the next section for more details.
+
+So when somebody gives us $l$ and $E$, we are now able to compute the solution up to the the multiplicative constant that is later determined from a normalization. As was already mentioned, we used the fourth-order Runge-Kutta method that proved very suitable for this problem.
+
+\subsection{Asymptotic behavior}
+
+The asymptotic behavior is important for the integration routine to find the correct solution for a given $E$. It is well known, that the first term of the Taylor series of the solution is $r^l$, independent of the potential \cite{formanek} (eq. 2.408). This is enough information to find the correct solution for $l>0$ because the only thing we need to know is the value of the wave function and its derivative near the origin, which is effectively $r_0^l$ and $lr_0^{l-1}$ for some small $r_0$. The problem is with $l=0$, where the derivative cannot be calculated just from $l$ and $r_0$.
+
+The asymptotic behavior for $l=0$ depends on the potential $V$, so we need to take into account it's properties. We assume $V$ to be of a form: 
+\begin{equation*}
+  V=-{Z\over r}+v_0 + v_1r + O(r^2)\,,
+\end{equation*}
+It can be shown, that the solution is then 
+\begin{equation*}
+  R=a_0(1-{r\over a}+O(r^2))\,,
+\end{equation*}
+where $a={\hbar^2\over ZM}$ is the Bohr radius and $a_0$ is a normalization constant. So the initial condition for the integration for $l=0$ is $R(r_0)=1$ and $R'(r_0)=-{1\over a}$.
+
+\subsection{Dirac Equation}
+
+The Dirac equation for one particle is \cite{strange,zabloudil}: 
+\begin{equation}
+  H\psi=W\psi\,,  \label{diraceq}
+\end{equation}
+\begin{equation*}
+  H=c\balpha\cdot{\bf p}+\beta mc^2+V(r)\hbox{\dsrom1}\,,
+\end{equation*}
+where $\psi$ is a four component vector: 
+\begin{equation*}
+  \psi=\left(\matrix{\psi_1\psi_2\psi_3\psi_4}\right) =\col{\psi_A}{\psi_B}\,,\qquad \psi_A=\col{\psi_1}{\psi_2}\!,\,\psi_B=\col{\psi_3}{\psi_4}
+\end{equation*}
+and $\balpha$, $\beta$ are $4\times4$ matrices: 
+\begin{equation*}
+  \balpha=\mat{0}{\bsigma}{\bsigma}{0}\,,
+\end{equation*}
+\begin{equation*}
+  \beta=\mat{\hbox{\dsrom1}}{0}{0}{-\hbox{\dsrom1}}\,,
+\end{equation*}
+where the Pauli matrices $\bsigma=(\sigma_x,\sigma_y,\sigma_z)$ and $\hbox{\dsrom1}$ form a basis of all $2\times2$ Hermitian matrices. To derive a continuity equation, we multiply (\ref{diraceq}) by $\psi^*$ and subtract the conjugate transpose of (\ref{diraceq}) multiplied by $\psi$: 
+\begin{equation*}
+  \p{}{t}(\psi^*\psi)=-\nabla\cdot(c\psi^*\balpha\psi)\,,
+\end{equation*}
+so we identify the probability and current densities as 
+\begin{equation*}
+  \rho=\psi^*\psi=\psi_1^*\psi_1+\psi_2^*\psi_2+\psi_3^*\psi_3+\psi_4^*\psi_4\,, \qquad {\bf j}=c\psi^*\balpha\psi\,.
+\end{equation*}
+The normalization of a four-component wave function is then 
+\begin{equation}
+  \int \rho \,\d^3x= \int \psi^*\psi \,\d^3x= \int \psi_1^*\psi_1+\psi_2^*\psi_2+\psi_3^*\psi_3+\psi_4^*\psi_4 \,\d^3x= 1\,.  \label{norm}
+\end{equation}
+The probability density $\rho(x,y,z)$ is the physical quantity we are interested in, and all the four-component wavefunctions and other formalism is just a way of calculating it. This $\rho$ is also the thing we should compare with the Schrödinger equation.
+
+\subsection{Radial Dirac equation}
+
+We and search for a basis in the form of spin angular functions: 
+\begin{equation}
+  \psi_A=g\chi^{j_3}_{\kappa}\,,  \label{psia}
+\end{equation}
+\begin{equation}
+  \psi_B=if\chi^{j_3}_{-\kappa}\,.  \label{psib}
+\end{equation}
+Substituting all of these into (\ref{diraceq}) and some more well-known manipulations one gets: 
+\begin{equation}
+  \hbar c \col{-\p{f}{r}+{\kappa-1\over r}f} {\p{g}{r}+{\kappa+1\over r}g}= \col{(W-V-mc^2)g}{(W-V+mc^2)f}\,.  \label{radialdirac}
+\end{equation}
+This is the radial Dirac equation. As we shall see in the next section, the equation for $g$ is (with the exception of a few relativistic corrections) identical to the radial Schrödinger equation. And $f$ vanishes in the limit $c\to\infty$. For this reason $f$ is called the small (fein, minor) component and $g$ the large (groß, major) component.
+
+The probability density is 
+\begin{equation*}
+  \rho=\psi^*\psi=\psi^*_A\psi_A+\psi^*_B\psi_B= f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa}\,,
+\end{equation*}
+so from the normalization condition (\ref{norm}) we get 
+\begin{equation*}
+  \int \rho \,\d^3x= \int f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa} \,\d^3x= \int (f^2\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa}+ g^2\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa})\,r^2\,\d r\d\Omega=
+\end{equation*}
+\begin{equation*}
+  =\int_0^\infty f^2r^2\,\d r\int\chi^{j_3*}_{-\kappa}\chi^{j_3}_{-\kappa} \,\d\Omega+ \int_0^\infty g^2r^2\,\d r\int\chi^{j_3*}_{\kappa}\chi^{j_3}_{\kappa} \,\d\Omega= \int_0^\infty r^2(f^2+g^2)\,\d r=1\,,
+\end{equation*}
+where we used the normalization of spin-angular functions. Also it can be seen, that the radial probability density is 
+\begin{equation}
+  \rho(r)=r^2(f^2+g^2)  \label{radialrho}
+\end{equation}
+(i.e., the probability to find the electron between $r_1$ and $r_2$ is $\int_{r_1}^{r_2}r^2(f^2+g^2)\,\d r$). The result of integrating the radial Dirac equation are the two functions $f$ and $g$, but the physically relevant quantity is the radial probability density (\ref{radialrho}). In the nonrelativistic case, the density is given by 
+\begin{equation*}
+  \rho(r)=r^2R^2\,,
+\end{equation*}
+so the correspondence between the Schrödinger and Dirac equation is $R^2=f^2+g^2$.
+
+For numerical stability and robustness, we are not solving the equations in the form (\ref{radialdirac}), but a sligthly rearranged ones. Let's use Hartree atomic units ($m=\hbar=1$) and define $E=W-mc^2=W-c^2$, so that $E$ doesn't contain the electron rest mass energy. Let's make the substitution \cite{donald:apw} 
+\begin{equation*}
+  P_\kappa=rg_\kappa\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa=rf_\kappa
+\end{equation*}
+and plug all of this into (\ref{radialdirac}). After a little manipulation we get: 
+\begin{equation*}
+  {\d P_\kappa\over\d r}=-{\kappa\over r}P_\kappa+\left[{E-V\over c}+2c\right]Q_k\,,
+\end{equation*}
+\begin{equation}
+  {\d Q_\kappa\over\d r}={\kappa\over r}Q_\kappa-{1\over c}(E-V)P_k\,,  \label{radialdirac2}
+\end{equation}
+which can be found in \cite{zabloudil} (eq. 8.12 and 8.13), where they have one $c$ hidden in $Q_\kappa=crf_\kappa$ and use Rydberg atomic units, so they have $1$ instead of $2$ in the square bracket. It can be found in \cite{bachelet} as well, they use Hartree atomic units, but have a different notation $G_\kappa\equiv P_\kappa$ and $F_\kappa\equiv Q_\kappa$, also they made a substitution $c={1\over\alpha}$.
+
+\subsection{Asymptotic behavior}
+
+We calculate the functions $f_\kappa$ and $g_\kappa$ in a similar way as we calculated $R$ for the Schrödinger equation, thus we need the asymptotic behavior at the origin. The potential can always be treated as $V=1/r+\cdots$ and in this case it can be shown \cite{zabloudil}, that the asymptotic is 
+\begin{equation*}
+  P_\kappa = r g_\kappa=r^{\beta}\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa = r f_\kappa=r^{\beta-1}{\beta+\kappa\over{E-V\over c}+2c}\,,
+\end{equation*}
+where 
+\begin{equation}
+  \beta=\sqrt{\kappa^2-\left(Z\over c\right)^2}\,,  \label{diracasymptotic}
+\end{equation}
+or, if we write it explicitly, for $j=l+\half$
+\begin{equation*}
+  \beta^+=\sqrt{(-l-1)^2-\left(Z\over c\right)^2}
+\end{equation*}
+and $j=l-\half$
+\begin{equation*}
+  \beta^-=\sqrt{l^2-\left(Z\over c\right)^2}\,.
+\end{equation*}
+In the semirelativistic case (which is an approximation --- we neglect the spin-orbit coupling term) we choose 
+\begin{equation*}
+  \beta=\sqrt{\half(|\beta^+|^2+|\beta^-|^2)}= \sqrt{l^2+l+\half-\left(Z\over c\right)^2}\,.
+\end{equation*}
+It should be noted that in the literature we can find other types of aymptotic behaviour for the semirelativistic case, its just a question of the used approximation. One can hardly say that some of them are correct and another is not since the semirelativistic (sometimes denoted as scalar-relativstic) approximation itself is not correct, it's just an approximation.
+
+It follows from (\ref{diracasymptotic}) that for $j=l+\half$ the radial Dirac equation completely becomes the radial Schrödinger equation in the limit $c\to\infty$ (and gives exactly the same solutions): 
+\begin{equation*}
+  P_\kappa = r g_\kappa \to r^{l+1}\,,
+\end{equation*}
+\begin{equation*}
+  Q_\kappa = r f_\kappa \to 0\,.
+\end{equation*}
+For $j=l-\half$ however, we get a wrong asymptotic: we get a radial Schrödinger equation for $l$, but the asymptotic for $l-1$.
+
+\subsection{Eigenproblem}
+
+In the previous sections, we learned how to calculate the solution of both the radial Schrödinger and Dirac equations for a given $E$. For most of the energies, however, the solution for $r\to\infty$ exponentially diverges to $\pm\infty$. Only for the energies equal to eigenvalues, the solution tends exponentially to zero for $r\to\infty$. The spectrum for bounded states is discrete, so we label the energies by $n$, starting from $1$.
+
+We want to find the eigenvalue and eigenfunction for a given $n$ and $l$ (and a spin in the relativistic case). The algorithm is the same for both nonrelativistic and relativistic case and is based on two facts, first that the number of nodes (ie. the number of intersections with the $x$ axis, not counting the one at the origin and in the infinity) of $R_{nl}$ and $g_\kappa$ is $n-l-1$ and second that the solution must tend to zero at infinity.
+
+We calculate the solution for some (random) energy $E_0$, using the procedure described above. Then we count the number of nodes (for diverging solutions, we don't count the last one) and check, if the solution is approaching the zero from top or bottom in the infinity. From the number of nodes and the direction it is approaching the zero it can be determined whether the energy $E_0$ is below or above the eigenvalue $E$ belonging to a given $n$ and $l$. The rest is simple, we find two energies, one below $E$, one above $E$ and by bisecting the interval we calculate $E$ with any precision we want.
+
+There are a few technical numerical problems that are unimportant from the theoretical point of view, but that need to be solved if one attempts to actually implement this algorithm. One of them is that when the algorithm (described in the previous paragraph) finishes, because the energy interval is sufficiently small, it doesn't mean the solution is near zero for the biggest $r$ of our grid. Remember, the solution goes exponentially to $\pm\infty$ for every $E$ except the eigenvalues and because we never find the exact eigenvalue, the solution will (at some point) diverge from zero.
+
+Possible solution that we have employed is as follows: when the algorithm finishes we find the last minimum (which is always near zero) and trim the solution behind it (set it to zero).
+
+The second rather technical problem is how to choose the initial interval of energies so that the eigenvalue lies inside the interval. We use some default values that work for atomic calculations, while allowing the user to override it if needed.
