@@ -1,5 +1,27 @@
 \section{Formulation of the Schr\"odinger Equation for Finite Element Method}
 
+Our ultimate goal is to be able to calculate large electron structure problems
+using density functional theory, pseudopotentials and finite element method.
+That's a very difficult problem, that people only very recently started to
+tackle \cite{ortiz}, \cite{paske}.
+
+In order to get there, we need to decompose the whole problem into smaller
+tasks, build robust solvers for smaller tasks and then use them like a child
+assembly game. The two most important steps are the following.
+
+One ingredient is a working density functional theory solver. This will be
+described in a next section and results presented in the Result's section.
+
+Another ingredient is a robust finite element solver for a one particle
+Schr\"odinger equation. We wrote a very general solver that works both in 2D
+and 3D and can solve the eigenproblem for any potential accurately and
+reliably. We calculated many well known solution in 2D and 3D (for spherically
+symmetric problems) and checked with analytical solution to be sure the solver
+works well. We then also calculated a couple nonsymmetric problems in 2D to
+show the usefulness of our solver -- those are unique results that are quite
+difficult to get using other means -- our solver solves symmetric and
+nonsymmetric problems with ease.
+
 \subsection{Weak Formulation}
 
 One particle Schrödinger equation is 
