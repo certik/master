@@ -15,6 +15,13 @@
 \usepackage{braket}
 \usepackage{verbatim}
 \usepackage{listings}
+\usepackage{url}
+\usepackage[numbers]{natbib}
+
+\input macros.tex
+
+\def\cite#1{\citep{#1}}
+
 
 %\newindex{default}{idx}{ind}{Rejstřík} % zavádí rejstřík v případě použití balíku index
 
@@ -125,8 +132,6 @@ e-mail vedoucího: vackar@fzu.cz\\
 
 \newpage
 
-\input macros.tex
-
 \chapter{Survey of the Current State}
 
 \input theory.tex
@@ -152,7 +157,7 @@ e-mail vedoucího: vackar@fzu.cz\\
 %%% Literatura se řadí abecedně. Úvádí se pouze literatura, na kterou se v textu odkazuje.
 %%% Při odkazu na knihu se vždy uvádějí čísla stránek.
 
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 \bibliography{master}
 
 

@@ -1,4 +1,4 @@
-all:
+all: clean
 	latex master.tex
 	bibtex master
 	latex master.tex
