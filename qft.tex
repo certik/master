@@ -1,0 +1,810 @@
+\section{From Standard Model to Schr\"odinger Equation}
+
+\subsection{Electroweak Standard Model}
+
+Lagrangian with a global $SU(2)\times U(1)$ symmetry: 
+\begin{equation*}
+  \L=i\bar L^{(l)}\gamma_\mu\partial^\mu L^{(l)}+i\bar l_R \gamma_\mu\partial^\mu l_R +\half \partial_\mu\Phi^*\partial^\mu\Phi-m^2\Phi^*\Phi-{1\over4} \lambda(\Phi^*\Phi)^2 -h_e\bar L^{(l)} \Phi e_R - \hbox{h.c.}
+\end{equation*}
+where $l=e,\mu,\tau$ and $a=1,2$, $l_{L,R} = \half (1\mp\gamma_5)l$ and 
+\begin{equation*}
+  L^{(l)} = \left( \begin{array}{c} \nu_{(l)L} \\ l_L \end{array} \right)
+\end{equation*}
+
+Local $SU(2)\times U(1)$ symmetry:
+
+This consists of two things. First changing the partial derivatives to covariant ones: 
+\begin{equation*}
+  \partial^\mu \to D^\mu =\partial^\mu-{i\over2}g\tau_k A_k^\mu - {i\over2}g'YB^\mu
+\end{equation*}
+and second adding the kinetic terms 
+\begin{equation*}
+  -{1\over4}F^a_{\mu\nu}F^{a\mu\nu}-{1\over4}B_{\mu\nu}B^{\mu\nu}
+\end{equation*}
+of the vector gauge particles to the lagrangian. 
+\begin{equation*}
+  F^a_{\mu\nu} = \partial_\mu A^a_\nu-\partial_\nu A^a_\mu+ g\epsilon^{abc}A^b_\mu A^c_\nu
+\end{equation*}
+\begin{equation*}
+  B_{\mu\nu} = \partial_\mu B_\nu-\partial_\nu B_\mu
+\end{equation*}
+
+\begin{equation*}
+  \Phi = e^{{i\over v}\pi^a(x)\tau^a} \left( \begin{array}{c} 0 \\ {1\over\sqrt{2}}(v+H(x)) \end{array} \right)
+\end{equation*}
+This breaks the gauge invariance. The $\partial^\mu\pi^a$ are going to be added to $A^a_\mu$ so we can set $\pi_a = 0$ now. 
+\subsubsection{Higgs Terms}
+
+\begin{equation*}
+  \L_{Higgs}= \half \partial_\mu\Phi^*\partial^\mu\Phi-m^2\Phi^*\Phi-{1\over4} \lambda(\Phi^*\Phi)^2
+\end{equation*}
+Plugging in the covariant derivatives and $\Phi$ in U-gauge (symmetry breaking): 
+\begin{equation*}
+  \L_{Higgs} = {1\over2}\Phi^+(\overleftarrow\partial_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow\partial^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB^\mu)\Phi -\lambda(\Phi^+\Phi-{v^2\over2})^2=
+\end{equation*}
+\begin{equation*}
+  = \Phi^+_U(\overleftarrow\partial_\mu+igA^a_\mu {\tau^a\over 2} + ig'YB_\mu) (\overrightarrow\partial^\mu+igA^{a\mu} {\tau^a\over 2} + ig'YB\mu)\Phi_U -\lambda(\Phi^+_U\Phi_U-{v^2\over2})^2 =
+\end{equation*}
+\begin{equation*}
+  = {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 - \lambda v H^3 - {1\over 4}\lambda H^4 +
+\end{equation*}
+\begin{equation*}
+  +{1\over 8}(v+H)^2 \left(2g^2{A^1_\mu+iA^2_\mu\over\sqrt2}{A^{1\mu}-iA^{2\mu}\over\sqrt2} + (g^2+4Y^2g'^2){gA^3_\mu-2Yg'B_\mu\over\sqrt{g^2+4Y^2g'^2}} {gA^{3\mu}-2Yg'B^\mu\over\sqrt{g^2+4Y^2g'^2}}\right) =
+\end{equation*}
+\begin{equation*}
+  = {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 - \lambda v H^3 - {1\over 4}\lambda H^4 + {1\over 8}(v+H)^2 \left(2g^2W^-_\mu W^{+\mu} + {g^2\over\cos^2\theta_W}Z_\mu Z^\mu\right) =
+\end{equation*}
+\begin{equation*}
+  = {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 +{1\over4}g^2v^2W^-_\mu W^{+\mu}+{g^2v^2\over8\cos^2\theta_W}Z_\mu Z^\mu - \lambda v H^3 - {1\over 4}\lambda H^4 +
+\end{equation*}
+\begin{equation*}
+  +{1\over2}vg^2W_\mu^-W^{+\mu}H +{g^2\over4\cos\theta_W}vZ_\mu Z^\mu H +{1\over4}g^2W_\mu^-W^{+\mu}H^2 +{g^2\over8\cos\theta_W}Z_\mu Z^\mu H^2
+\end{equation*}
+Where we put 
+\begin{equation*}
+  W^{\pm}_\mu = {1\over\sqrt2}(A^1_\mu \mp iA^2_\mu)
+\end{equation*}
+\begin{equation*}
+  Z_\mu = {g\over\sqrt{g^2+4Y^2g'^2}}A^3_\mu- {2Yg'\over\sqrt{g^2+4Y^2g'^2}}B_\mu
+\end{equation*}
+we defined $\theta_W$ by the relation 
+\begin{equation*}
+  \cos\theta_W = {g\over\sqrt{g^2+4Y^2g'^2}}
+\end{equation*}
+so that the expressions simplify a bit, e.g. we now get: 
+\begin{equation*}
+  \sin\theta_W = {2Yg'\over\sqrt{g^2+4Y^2g'^2}}
+\end{equation*}
+\begin{equation*}
+  Z_\mu= \cos\theta_W A^3_\mu - \sin\theta_W B_\mu
+\end{equation*}
+\begin{equation*}
+  g^2+4Y^2g'^2 = {g^2\over\cos^2\theta_W}
+\end{equation*}
+\subsubsection{Yukawa terms}
+
+\begin{equation*}
+  \L_{Yukawa} = -h_e \bar L \Phi e_R - \hbox{h.c.}= -h_e \bar L \Phi_U e_R - \hbox{h.c.}=
+\end{equation*}
+\begin{equation*}
+  =-{1\over\sqrt2}h_e(v+H)(\bar e_L e_R + \bar e_R e_L)= -{1\over\sqrt2}h_e(v+H)\bar ee=
+\end{equation*}
+\begin{equation*}
+  =-{1\over\sqrt2}h_ev\bar ee-{1\over\sqrt2}h_e\bar eeH
+\end{equation*}
+The term $\bar L \Phi e_R$ is $U(1)$ (hypercharge) invariant, so 
+\begin{equation*}
+  -Y_L+Y+Y_R=0
+\end{equation*}
+\subsubsection{Leptonic Terms}
+
+\begin{equation*}
+  \L=i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R \to
+\end{equation*}
+\begin{equation*}
+  \to i\bar L\gamma^\mu(\partial_\mu-igA^a_\mu{\tau^a\over2}-ig'Y_LB_\mu) L +i\bar e_R \gamma^\mu(\partial_\mu-ig'Y_RB_\mu) e_R =
+\end{equation*}
+\begin{equation*}
+  = i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R +g\bar L\gamma^\mu{\tau^a\over2}LA^a_\mu +g'Y_L\bar L\gamma^\mu LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =
+\end{equation*}
+\begin{equation*}
+  = i\bar L\gamma^\mu\partial_\mu L+i\bar e_R \gamma^\mu\partial_\mu e_R +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \hbox{h.c.}) +{1\over2}g\bar L\gamma^\mu\tau^3L A^3_\mu +g'Y_L\bar L\gamma^\mu LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =
+\end{equation*}
+\begin{equation*}
+  = i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \hbox{h.c.}) +{1\over2}g\bar\nu_L\gamma^\mu\nu_LA^3_\mu -{1\over2}g\bar e_L\gamma^\mu e_LA^3_\mu
+\end{equation*}
+\begin{equation*}
+  +g'Y_L\bar\nu_L\gamma^\mu\nu_LB_\mu +g'Y_L\bar e_L\gamma^\mu e_LB_\mu +g'Y_R\bar e_R \gamma^\mu e_R B_\mu =
+\end{equation*}
+\begin{equation*}
+  = i\bar \nu_L\gamma^\mu\partial_\mu \nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \hbox{h.c.})
+\end{equation*}
+\begin{equation*}
+  +\left[ (\half g\sin\theta_W+Y_Lg'\cos\theta_W)\bar\nu_L\gamma^\mu\nu_L +(-\half g\sin\theta_W +Y_Lg'\cos\theta_W)\bar e_L\gamma^\mu e_L +Y_Rg'\cos\theta_W\bar e_R\gamma^\mu e_R \right]A_\mu
+\end{equation*}
+\begin{equation*}
+  +\left[ (\half g\cos\theta_W-Y_Lg'\sin\theta_W)\bar\nu_L\gamma^\mu\nu_L +(-\half g\cos\theta_W -Y_Lg'\sin\theta_W)\bar e_L\gamma^\mu e_L -2Y_Lg'\sin\theta_W\bar e_R\gamma^\mu e_R \right]Z_\mu
+\end{equation*}
+Where we substituted new fields $Z_\mu$ and $A_\mu$ for the old ones $A^3_\mu$ and $B_\mu$ using the relation: 
+\begin{equation*}
+  Z_\mu= \cos\theta_W A^3_\mu - \sin\theta_W B_\mu
+\end{equation*}
+\begin{equation*}
+  A_\mu= \sin\theta_W A^3_\mu + \cos\theta_W B_\mu
+\end{equation*}
+The angle $\theta_W$ must be the same as in the Higgs sector, so that the field $Z_\mu$ is the same. We now need to make the following requirement in order to proceed further: 
+\begin{equation*}
+  Y = -Y_L
+\end{equation*}
+This follows for example by requiring that neutrinos have zero charge, i.e. setting $\half g\sin\theta_W+Y_Lg'\cos\theta_W = 0$ and substituting for $\theta_W$ from the definition (see the Higgs terms), from which one gets $Y=-Y_L$. From $-Y_L+Y+Y_R=0$ we now get 
+\begin{equation*}
+  Y_R = 2Y_L
+\end{equation*}
+it now follows: 
+\begin{equation*}
+  \half g\sin\theta_W+Y_Lg'\cos\theta_W = 0
+\end{equation*}
+\begin{equation*}
+  -\half g\sin\theta_W +Y_Lg'\cos\theta_W = -g\sin\theta_W
+\end{equation*}
+\begin{equation*}
+  Y_Rg'\cos\theta_W = -g\sin\theta_W
+\end{equation*}
+\begin{equation*}
+  \tan\theta_W = -2Y_L {g'\over g}
+\end{equation*}
+and the Lagrangian can be further simplified: 
+\begin{equation*}
+  \L= i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e\gamma^\mu\partial_\mu e +{g\over\sqrt2}(\bar \nu_L\gamma^\mu e_L W^+_\mu + \hbox{h.c.})
+\end{equation*}
+\begin{equation*}
+  -g\sin\theta_W(\bar e_L\gamma^\mu e_L+\bar e_R\gamma^\mu e_R) A_\mu
+\end{equation*}
+\begin{equation*}
+  +{g\over\cos\theta_W}\left[ \half \bar\nu_L\gamma^\mu\nu_L +(-\half + \sin^2\theta_W)\bar e_L\gamma^\mu e_L +\sin^2\theta_W\bar e_R\gamma^\mu e_R \right]Z_\mu=
+\end{equation*}
+\begin{equation*}
+  = i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt2}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \hbox{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu
+\end{equation*}
+\begin{equation*}
+  +{g\over2\cos\theta_W}\left[ \bar\nu\gamma^\mu(1-\gamma_5)\nu +\bar e\gamma^\mu (-\half+2\sin^2\theta_W+\half\gamma_5) e \right]Z_\mu
+\end{equation*}
+Where we used the relations $\bar\nu_L\gamma^\mu e_L=\half\bar\nu\gamma^\mu (1-\gamma_5)e$ and $\bar\nu_R\gamma^\mu e_R=\half\bar\nu\gamma^\mu (1+\gamma_5)e$ .
+\subsubsection{Gauge terms}
+
+\begin{equation*}
+  \L_{Gauge} = -{1\over4}F^a_{\mu\nu}F^{a\mu\nu} -{1\over4}B_{\mu\nu}B^{\mu\nu}=
+\end{equation*}
+\begin{equation*}
+  = -{1\over4}(\partial_\mu A^a_\nu-\partial_\nu A^a_\mu+g\epsilon^{abc} A^b_\mu A^c_\nu)(\partial^\mu A^{a\nu}-\partial^\nu A^{a\mu}+g\epsilon^{ajk} A^{j\mu} A^{k\nu}) -{1\over4}B_{\mu\nu}B^{\mu\nu}=
+\end{equation*}
+\begin{equation*}
+  = -{1\over4}\partial_\mu A^a_\nu\partial^\mu A^{a\nu} -{1\over4}B_{\mu\nu}B^{\mu\nu} -{1\over2}(\partial_\mu A^a_\nu-\partial_\nu A^a_\mu)g\epsilon^{abc} A^{b\mu} A^{c\nu} -{1\over4}g^2\epsilon^{abc}\epsilon^{ajk}A^b_\mu A^c_\nu A^{k\mu} A^{l\nu} =
+\end{equation*}
+\begin{equation*}
+  = -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -g[(\partial_\mu A^1_\nu-\partial_\nu A^1_\mu)A^{2\mu}A^{3\nu}+ \hbox{cycl. perm. (123)}]
+\end{equation*}
+\begin{equation*}
+  -{1\over4}g^2[(A^a_\mu A^{a\mu})(A^b_\nu A^{b\nu})- (A^a_\mu A^a_\nu)(A^{b\mu} A^{b\nu})]=
+\end{equation*}
+\begin{equation*}
+  = -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -g[A^1_\mu A^2_\nu \overleftrightarrow\partial^\mu A^{3\nu}+ \hbox{cycl. perm. (123)}]
+\end{equation*}
+\begin{equation*}
+  -{1\over4}g^2[(A^a_\mu A^{a\mu})(A^b_\nu A^{b\nu})- (A^a_\mu A^a_\nu)(A^{b\mu} A^{b\nu})] =
+\end{equation*}
+\begin{equation*}
+  = -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} -ig(W^0_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu}+ \hbox{cycl. perm. (0-+)})
+\end{equation*}
+\begin{equation*}
+  -g^2[ \half(W^+_\mu W^{-\mu})^2 -\half(W^+_\mu W^{+\mu})(W^-_\nu W^{-\nu}) +(W^0_\mu W^{0\mu})(W^+_\nu W^{-\nu}) -(W^-_\mu W^+_\nu)(W^{0\mu} W^{0\nu})=
+\end{equation*}
+\begin{equation*}
+  = -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} +\L_{WW\gamma}+L_{WWZ}+L_{WW\gamma\gamma}+L_{WWWW}+L_{WWZZ}+L_{WWZ\gamma}
+\end{equation*}
+Where $W^0_\mu = A^3_\mu=\cos\theta_W Z_\mu + \sin\theta_W A_\mu$ and: 
+\begin{equation*}
+  \L_{WW\gamma}=-ig\sin\theta_W(A_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu} + \hbox{cycl. perm. ($A$ $W^-$ $W^+$)})
+\end{equation*}
+\begin{equation*}
+  \L_{WWZ}=-ig\cos\theta_W(Z_\mu W^-_\nu\overleftrightarrow\partial^\mu W^{+\nu}+\hbox{cycl. perm. ($Z$ $W^-$ $W^+$)})
+\end{equation*}
+\begin{equation*}
+  \L_{WW\gamma\gamma}=-g^2\sin^2\theta_W(W^-_\mu W^{+\mu}A_\nu A^\nu- W^-_\mu A^\mu W^+_\nu A^\nu)
+\end{equation*}
+\begin{equation*}
+  \L_{WWWW}=\half g^2(W^-_\mu W^{-\mu}W^+_\nu W^{+\nu} -W^-_\mu W^{+\mu}W^-_\nu W^{+\nu} )
+\end{equation*}
+\begin{equation*}
+  \L_{WWZZ}=-g^2\cos^2\theta_W(W^-_\mu W^{+\mu}Z_\nu Z^\nu -W^-_\mu Z^\mu W^+_\nu Z^\nu )
+\end{equation*}
+\begin{equation*}
+  \L_{WWZ\gamma}=g^2\sin\theta_W\cos\theta_W(-2W^-_\mu W^{+\mu}A_\nu Z^\nu+W^-_\mu Z^\mu W^+_\nu A^\nu+W^-_\mu A^\mu W^+_\nu Z^\nu)
+\end{equation*}
+\subsubsection{GWS Lagrangian}
+
+Plugging everything together we get the GWS Lagrangian: 
+\begin{equation*}
+  \L = {1\over2}\partial_\mu H\partial^\mu H - \lambda v^2 H^2 +{1\over4}g^2v^2W^-_\mu W^{+\mu}+{g^2v^2\over8\cos^2\theta_W}Z_\mu Z^\mu - \lambda v H^3 - {1\over 4}\lambda H^4 +
+\end{equation*}
+\begin{equation*}
+  +{1\over2}vg^2W_\mu^-W^{+\mu}H +{g^2\over4\cos\theta_W}vZ_\mu Z^\mu H +{1\over4}g^2W_\mu^-W^{+\mu}H^2 +{g^2\over8\cos\theta_W}Z_\mu Z^\mu H^2
+\end{equation*}
+\begin{equation*}
+  -{1\over\sqrt2}h_ev\bar ee-{1\over\sqrt2}h_e\bar eeH
+\end{equation*}
+\begin{equation*}
+  -{1\over2}W^-_{\mu\nu}W^{+\mu\nu} -{1\over4}A_{\mu\nu}A^{\mu\nu} -{1\over4}Z_{\mu\nu}Z^{\mu\nu} +\L_{WW\gamma}+L_{WWZ}+L_{WW\gamma\gamma}+L_{WWWW}+L_{WWZZ}+L_{WWZ\gamma}
+\end{equation*}
+\begin{equation*}
+  +i\bar\nu_L\gamma^\mu\partial_\mu\nu_L+i\bar e \gamma^\mu\partial_\mu e +{g\over2\sqrt2}(\bar \nu\gamma^\mu (1-\gamma_5) e W^+_\mu + \hbox{h.c.}) -g\sin\theta_W\bar e\gamma^\mu e A_\mu
+\end{equation*}
+\begin{equation*}
+  +{g\over2\cos\theta_W}\left[ \bar\nu\gamma^\mu(1-\gamma_5)\nu +\bar e\gamma^\mu (-\half+2\sin^2\theta_W+\half\gamma_5) e \right]Z_\mu
+\end{equation*}
+\begin{equation*}
+  + (e, \nu_e, h_e \leftrightarrow \mu, \nu_\mu, h_\mu) + (e, \nu_e, h_e \leftrightarrow \tau, \nu_\tau, h_\tau)
+\end{equation*}
+
+The free parameters are $g$, $\theta_W$, $v$, $\lambda$, $h_e$, $h_\mu$, $h_\tau$.
+
+\subsubsection{Particle Masses}
+
+The particle masses are deduced from the terms 
+\begin{equation*}
+  \L = -{1\over2}m_H^2 H^2 +m_W^2 W^-_\mu W^{+\mu} +{1\over2}m_Z^2 Z_\mu Z^\mu -m_e\bar ee +\cdots
+\end{equation*}
+comparing to the above: 
+\begin{equation*}
+  \L = -\lambda v^2 H^2 +{1\over4}g^2v^2W^-_\mu W^{+\mu} +{g^2v^2\over8\cos^2\theta_W}Z_\mu Z^\mu -{1\over\sqrt2}h_ev\bar ee +\cdots
+\end{equation*}
+we get 
+\begin{equation*}
+  m_W = \half g v
+\end{equation*}
+\begin{equation*}
+  m_Z = {gv\over2\cos\theta_W}={m_W\over\cos\theta_W}
+\end{equation*}
+\begin{equation*}
+  m_H = v\sqrt{2\lambda}
+\end{equation*}
+\begin{equation*}
+  m_e = {1\over\sqrt2}h_ev
+\end{equation*}
+
+\subsubsection{Free Parameters in the Standard Model}
+
+As noted earlier, the free parameters are The free parameters are $g$, $\theta_W$, $v$, $\lambda$,
+
+\subsubsection{Dimensional Analysis}
+
+The evolution operator is dimensionless: 
+\begin{equation*}
+  U(-\infty,\infty) = T\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\d^4 x \L(x) \right)
+\end{equation*}
+So: 
+\begin{equation*}
+  \left[\int_{-\infty}^{\infty}\d^4 x \L(x) \right] = [\hbar] = M^0
+\end{equation*}
+where $M$ is an arbitrary mass scale. Length unit is $M^{-1}$, so then 
+\begin{equation*}
+  [\L(x)] = M^4
+\end{equation*}
+For the particular forms of the Lagrangians above we get: 
+\begin{equation*}
+  [m\bar ee] = [m^2 Z_\mu Z^\mu] = [m^2 H^2] = [i\bar e\gamma^\mu\partial_\mu e] = [\L] = M^4
+\end{equation*}
+so $[\bar ee] = M^3$, $[Z_\mu Z^\mu]=[H^2] = M^2$ and we get 
+\begin{equation*}
+  [e] = [\bar e] = M^{3\over2}
+\end{equation*}
+\begin{equation*}
+  [Z_\mu] = [Z^\mu] = [H] = [\partial_\mu] = [\partial^\mu] = M^1
+\end{equation*}
+
+Example: what is the dimension of $G_\mu$ in $\L = -{G_\mu\over\sqrt2} [\bar \psi_{\nu_\mu}\gamma^\mu (1-\gamma_5) \psi_\mu] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]$? Answer: 
+\begin{equation*}
+  [\L] = [G_\mu \bar\psi\psi\bar\psi\psi]
+\end{equation*}
+\begin{equation*}
+  M^4 = [G_\mu] M^{3\over2}M^{3\over2}M^{3\over2}M^{3\over2}
+\end{equation*}
+\begin{equation*}
+  [G_\mu] = M^{-2}
+\end{equation*}
+
+\subsubsection{Quarks}
+
+
+\begin{equation*}
+  \L_{fermion}+\!\!= \sum_{q=d,s,b}i\bar L_0^{(q)}\gamma^\mu\partial_\mu L_0^{(q)} +\sum_{q=d,u,s,c,b,t}i\bar q_{0R}\gamma^\mu\partial_\mu q_{0R}
+\end{equation*}
+\begin{equation*}
+  \L_{Yukawa}+\!\!= -\sum_{q=d,s,b\atop q'=d,s,b}h_{qq'}i\bar L_0^{(q)}\Phi q_{0R}'+\hbox{h.c.} -\sum_{q=d,s,b\atop q'=u,c,t}\tilde h_{qq'}i\bar L_0^{(q)}\tilde\Phi q_{0R}'+\hbox{h.c.}
+\end{equation*}
+More to be added here...
+
+\subsection{Quantum Field Theory}
+
+\subsubsection{Evolution Operator, S-Matrix Elements}
+
+The evolution operator $U$ is defined by the equations: 
+\begin{equation*}
+  \ket{\phi(t_2)}=U(t_2, t_1)\ket{\phi(t_1)}
+\end{equation*}
+\begin{equation*}
+  i\hbar{\partial U(t, t_1)\over\partial t} = H(t)U(t, t_1)
+\end{equation*}
+\begin{equation*}
+  U(t_1, t_1) = 1
+\end{equation*}
+We are interested in calculating the S matrix elements: 
+\begin{equation*}
+  \braket{f|U(-\infty,\infty)|i}=\braket{f|S|i}=S_{fi}
+\end{equation*}
+so we first calculate $U(-\infty,\infty)$. Integrating the equation for the evolution operator: 
+\begin{equation*}
+  U(t_2, t_1)=U(t_1, t_1)-{i\over\hbar}\int_{t_1}^{t_2} H(t)U(t, t_1)\d t =1-{i\over\hbar}\int_{t_1}^{t_2} H(t)U(t, t_1)\d t
+\end{equation*}
+Now: 
+\begin{equation*}
+  S=U(-\infty,\infty) =1-{i\over\hbar} \int_{-\infty}^{\infty} H(t')U(t', -\infty)\d t'=
+\end{equation*}
+\begin{equation*}
+  =1+\left(-{i\over\hbar}\right)\int_{-\infty}^{\infty} H(t')U(t', -\infty)\d t' +\left(-{i\over\hbar}\right)^2\int_{-\infty}^{\infty} \int_{-\infty}^{t'} H(t')H(t'')U(t'', -\infty)\d t'\d t''=
+\end{equation*}
+\begin{equation*}
+  =\cdots= \sum_{n=0}^\infty \left(-{i\over\hbar}\right)^n {1\over n!} \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\cdots T\{H(t_1)H(t_2)\cdots\}\d t_1\d t_2\cdots=
+\end{equation*}
+\begin{equation*}
+  = T\exp\left(-{i\over\hbar}\int_{-\infty}^{\infty}H(t)\d t \right) = T\exp\left(-{i\over\hbar}\int_{-\infty}^{\infty}\d^4 x \H(x) \right)
+\end{equation*}
+If $\L$ doesn't contain derivatives of the fields, then $\H = -\L$ so: 
+\begin{equation*}
+  U(-\infty,\infty) = T\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\d^4 x \L(x) \right)
+\end{equation*}
+
+Let's write $S=1+iT$ and $\ket{i}=\ket{k_1\cdots k_m}$, $\ket{f}=\ket{p_1\cdots p_n}$. As a first step now, let's investigate a scalar field, e.g. $\L=-{\lambda\over4}\phi^4$ (e.g. a Higgs self interaction term above), we'll look at other fields later: 
+\begin{equation*}
+  \braket{f|S|i}= \braket{f|iT|i}= \braket{p_1\cdots p_n|iT|k_1\cdots k_m}= {1\over\tilde D(k_1)\cdots\tilde D(k_m)} {1\over\tilde D(p_1)\cdots\tilde D(p_n)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1\cdots \d^4 x_m e^{-i(k_1 x_1+\cdots + k_m x_m)} \int\d^4 y_1\cdots \d^4 y_n e^{+i(p_1 y_1+\cdots + p_n y_n)} G(x_1, \cdots, x_m, y_1, \cdots, y_m)
+\end{equation*}
+where 
+\begin{equation*}
+  G(x_1, \cdots, x_n)= \braket{0|T\{\phi(x_1)\cdots\phi(x_n)\}|0} =
+\end{equation*}
+\begin{equation*}
+  {\braket{0|T\{\phi_I(x_1)\cdots\phi_I(x_n)\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\d^4 x \L(x) \right)\}|0} \over \braket{0|T\exp\left({i\over\hbar}\int_{-\infty}^{\infty}\d^4 x \L(x) \right)|0} }
+\end{equation*}
+This is called the LSZ formula. Now we use the Wick contraction, get some terms like $D_{23}D_{34}$ integrate things out, this will give the delta function and $\tilde D(p)$'s and that's it.
+
+Let's see how it goes for $\L=-{\lambda\over4}\phi^4$ for the process $k_1+k_2\to p_1+p_2$: 
+\begin{equation*}
+  \braket{p_1 p_2|S|k_1 k_2} = {\int\d^4 x_1\d^4 x_2 e^{-i(k_1x_1+k_2x_2)} \int\d^4 y_1\d^4 y_2 e^{-i(p_1y_1+p_2y_2)} \over \tilde D(k_1)\tilde D(k_2) \tilde D(p_1)\tilde D(p_2)}
+\end{equation*}
+\begin{equation*}
+  {\braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(y_1)\phi_I(y_2)\exp\left( -{i\lambda\over4\hbar} \int\d^4 x \phi_I^4(x) \right)\}|0} \over \braket{0|T\exp\left(-{i\lambda\over4\hbar}\int\d^4 x \phi_I^4(x) \right)|0} }=
+\end{equation*}
+\begin{equation*}
+  = {\int\d^4 x_1\d^4 x_2 e^{-i(k_1x_1+k_2x_2)} \int\d^4 y_1\d^4 y_2 e^{-i(p_1y_1+p_2y_2)} \over \tilde D(k_1)\tilde D(k_2) \tilde D(p_1)\tilde D(p_2)}
+\end{equation*}
+\begin{equation*}
+  \left[ { \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(y_1)\phi_I(y_2)\}|0} \over \braket{0|T\exp\left(-{i\lambda\over4\hbar}\int\d^4 x \phi_I^4(x) \right)|0} }\right. +
+\end{equation*}
+\begin{equation*}
+  +{ \left(-{i\lambda\over4\hbar}\right)\int\d^4 x \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^4(x)\}|0} \over \braket{0|T\exp\left(-{i\lambda\over4\hbar}\int\d^4 x \phi_I^4(x) \right)|0} } +
+\end{equation*}
+\begin{equation*}
+  \left. +{ \left(-{i\lambda\over4\hbar}\right)^2\int\d^4 x\,\d^4 y \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^4(x)\phi_I^4(y)\}|0} \over \braket{0|T\exp\left(-{i\lambda\over4\hbar}\int\d^4 x \phi_I^4(x) \right)|0} } +\cdots\right]=
+\end{equation*}
+\begin{equation*}
+  = { 1 \over \tilde D(k_1)\tilde D(k_2) \tilde D(p_1)\tilde D(p_2)}
+\end{equation*}
+\begin{equation*}
+  \left[ (2\pi)^4 \delta^{(4)}(p_1+p_2)(2\pi)^4 \delta^{(4)}(k_1+k_2)\tilde D(p_1) \tilde D(k_1)+\right.
+\end{equation*}
+\begin{equation*}
+  (-i\lambda)6(2\pi)^4\delta^{(4)}(p_1+p_2-k_1-k_2)\tilde D(k_1)\tilde D(k_2) \tilde D(p_1)\tilde D(p_2)+
+\end{equation*}
+\begin{equation*}
+  \left. (-i\lambda)(\hbox{disconnected terms with not enough $\tilde D(\cdots)$s})+(-i\lambda)^2(\cdots)+\cdots\right]=
+\end{equation*}
+\begin{equation*}
+  = (2\pi)^4\delta^{(4)}(p_1+p_2-k_1-k_2)\left[6(-i\lambda)+ 3(-i\lambda)^2\int{\d^4 k\over (2\pi)^4}\tilde D(k)\tilde D(p1+p2-k) +(-i\lambda)^3(\cdots)+\cdots\right]
+\end{equation*}
+The denominator cancels with the disconnected terms. We used the Wick contractions (see below for a thorough explanation+derivation): 
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(y_1)\phi_I(y_2)\}|0}= D(x_1-x_2)D(y_1-y_2)+D(x_2-y_1)D(x_1-y_2)+D(x_2-y_2)D(x_1-y_1)
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^4(x)\}|0}= D(x_1-x)D(x_2-x)D(y_1-x)D(y_2-x)+\hbox{disconnected}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^4(x)\phi_I^4(y)\}|0}= D(x_1-x)D(x_2-x)D(y_1-y)D(y_2-y)D(x-y)D(x-y)
+\end{equation*}
+\begin{equation*}
+  +\hbox{disconnected}
+\end{equation*}
+Where the "disconnected" terms are $D(x_1-y_1)D(x_2-y_2)D(x-x)D(x-x)$ and similar. When they are integrated over, they do not generate enough $\tilde D(p_1)$ propagators to cancel the propagators from the LSZ formula, which will cause the terms to vanish.
+
+For the $\L=\phi^3(x)$ theory, one also needs the following contractions: 
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^3(x)\}|0} = 0
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2) \phi_I(y_1)\phi_I(y_2) \phi_I^3(x)\phi_I^3(y)\}|0} = D(x_1-x)D(x_2-x)D(x-y)D(y_1-y)D(y_2-y)
+\end{equation*}
+Thus it is clear that the only difference from the above is the factor $D(x-y)$ which after integrating changes to $\tilde D(p_1+p_2)$ and this ends up in the final result.
+
+One always gets the delta function in the result, so we define the matrix element $\M_{fi}$ by: 
+\begin{equation*}
+  S_{fi} = (2\pi)^4\delta^{(4)}(p_1+p_2+\cdots - k_1 - k_2 - \cdots) i \M_{fi}
+\end{equation*}
+
+\subsubsection{Wick Theorem}
+
+As seen above, we need to be able to calculate 
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\cdots\phi_I(x_n)\}|0}
+\end{equation*}
+The Wick theorem says, that this is equal to all possible contractions of fields (all fields need to be contracted), where a contraction is defined as: 
+\begin{equation*}
+  \braket{0|T\{\phi_I(x)\phi_I(y)\}|0}\equiv D(x-y)= \int {\d^4 p\over (2\pi)^4}\tilde D(p) e^{-ip(x-y)}
+\end{equation*}
+with 
+\begin{equation*}
+  \tilde D(p) = {i\over p^2-m^2+i\epsilon}
+\end{equation*}
+A few lowest possibilities: 
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\}|0}= 0
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\}|0}= D_{12}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\}|0}= 0
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\}|0}= \hbox{disconnected}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I(x)\}|0}= 0
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I^2(x)\}|0}= \hbox{disconnected}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I^3(x)\}|0}= 0
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I^4(x)\}|0}= 4!\,D(x_1-x)D(x_2-x)D(x_3-x)D(x_4-x)+\hbox{disconnected}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I^3(x)\phi_I^3(y)\}|0}=
+\end{equation*}
+\begin{equation*}
+  =D(x_1-x)D(x_2-x)D(x-y)D(x_3-y)D(x_4-y) + \hbox{disconnected}
+\end{equation*}
+\begin{equation*}
+  \braket{0|T\{\phi_I(x_1)\phi_I(x_2)\phi_I(x_3)\phi_I(x_4)\phi_I^4(x)\phi_I^4(y)\}|0}=
+\end{equation*}
+\begin{equation*}
+  =D(x_1-x)D(x_2-x)D(x-y)D(x-y)D(x_3-y)D(x_4-y) + \hbox{disconnected}
+\end{equation*}
+For the last two equations, not all possibilities of the connected graphs are listed (and also the combinatorial factor is omitted).
+
+\subsubsection{Fermions and Vector Bosons}
+
+For fermions: 
+\begin{equation*}
+  \braket{0|T\{\psi_I(x)\bar\psi_I(y)\}|0}\equiv S(x-y)= \int {\d^4 p\over (2\pi)^4}\tilde S(p) e^{-ip(x-y)}
+\end{equation*}
+with 
+\begin{equation*}
+  \tilde S(p) = {i\over \fslash{p} - m +i\epsilon}= {i(\fslash{p}+m)\over p^2-m^2+i\epsilon}
+\end{equation*}
+For vector bosons: 
+\begin{equation*}
+  \braket{0|T\{A_\mu(x)A_\nu(y)\}|0}\equiv D_{\mu\nu}(x-y)= \int {\d^4 p\over (2\pi)^4}\tilde D_{\mu\nu}(p) e^{-ip(x-y)}
+\end{equation*}
+with 
+\begin{equation*}
+  \tilde D_{\mu\nu}(p) = i{-g_{\mu\nu}+{p_\mu p_\nu\over m^2}\over p^2-m^2+i\epsilon}
+\end{equation*}
+For massless bosons: 
+\begin{equation*}
+  \tilde D_{\mu\nu}(p) = i{-g_{\mu\nu}\over p^2+i\epsilon}
+\end{equation*}
+
+\subsubsection{Feynman Rules}
+
+We can deduce a set of rules, so that one doesn't have to repeat the whole calculation each time. For a scalar field we derived the rules above, for fermion and vector boson fields it's more difficult.
+
+\subsubsection{ZZH interaction}
+
+Let's calculate the $\L_{ZZH}=\lambda Z_\mu Z^\mu H$ interaction in the SM, where $\lambda={g^2\over4\cos\theta_W}$. Consider $H(p)\to Z(k)+Z(l)$: 
+\begin{equation*}
+  \braket{f|S|i}= \braket{f|iT|i}= \braket{k l|iT|p}= {\varepsilon_\alpha(k)\varepsilon^\alpha(l)\over\tilde D_{\mu\nu}(k)\tilde D^{\mu\nu}(l)} {1\over\tilde D(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)} \braket{0|T\{Z_\mu(y_1) Z^\mu(y_2) H(x_1)\}|0} =
+\end{equation*}
+\begin{equation*}
+  = {\varepsilon_\alpha(k)\varepsilon^\alpha(l)\over\tilde D_{\mu\nu}(k)\tilde D^{\mu\nu}(l)} {1\over\tilde D(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)}\int\d^4 x i\lambda D_{\alpha\mu}(y_1-x)D^{\alpha\mu}(y_2-x)D(x_1-x) =
+\end{equation*}
+\begin{equation*}
+  =i\lambda(2\pi)^4\delta^{(4)}(p-k-l)\varepsilon_\alpha(k)\varepsilon^\alpha(l)
+\end{equation*}
+where we used the fact, that the only nonzero element of the Green function is 
+\begin{equation*}
+  \int\d^4 x \braket{0|T\{Z_\alpha(y_1) Z^\alpha(y_2) H(x_1)Z_\mu(x)Z^\mu(x) H(x)\}|0}
+\end{equation*}
+
+\subsubsection{eeH interaction}
+
+Let's calculate the $\L_{eeH}=-\lambda \bar ee H$ interaction in the SM, where $\lambda={h_e\over\sqrt2}$. Consider $H(p)\to e^-(k)+e^+(l)$: 
+\begin{equation*}
+  \braket{f|S|i}= \braket{f|iT|i}= \braket{k l|iT|p}= {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {1\over\tilde D(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)} \braket{0|T\{\bar e(y_1) e(y_2) H(x_1)\}|0} =
+\end{equation*}
+\begin{equation*}
+  = {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {1\over\tilde D(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)}\int\d^4 x (-i\lambda) S(y_1-x)S(y_2-x)D(x_1-x) =
+\end{equation*}
+\begin{equation*}
+  =(-i\lambda)(2\pi)^4\delta^{(4)}(p-k-l)\bar u(k) v(l)
+\end{equation*}
+where we used the fact, that the only nonzero element of the Green function is 
+\begin{equation*}
+  \int\d^4 x \braket{0|T\{\bar e(y_1) e(y_2) H(x_1)\bar e(x)e(x) H(x)\}|0}
+\end{equation*}
+
+\subsubsection{ee gamma interaction}
+
+Let's calculate the $\L_{ee\gamma}=-\lambda \bar e\gamma^\mu e A_\mu$ interaction in the SM, where $\lambda=g\sin\theta_W$. Consider $\gamma(p)\to e^-(k)+e^+(l)$: 
+\begin{equation*}
+  \braket{f|S|i}= \braket{f|iT|i}= \braket{k l|iT|p}= {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {\varepsilon_\mu(p)\over\tilde D_{\alpha\beta}(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)} \braket{0|T\{\bar e(y_1) e(y_2) A^\mu(x_1)\}|0} =
+\end{equation*}
+\begin{equation*}
+  = {\bar u(k) v(l)\over\tilde S(k)\tilde S(l)} {\varepsilon_\mu(p)\over\tilde D_{\alpha\beta}(p)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1 e^{-i p x_1} \int\d^4 y_1 \d^4 y_2 e^{+i(k y_1+l y_2)}\int\d^4 x (-i\lambda) S(y_2-x) \gamma^\mu S(y_1-x) D^\alpha_\mu(x_1-x) =
+\end{equation*}
+\begin{equation*}
+  =(2\pi)^4\delta^{(4)}(p-k-l)\bar u(k)(-i\lambda)\gamma^\mu v(l)\varepsilon_\mu(p)
+\end{equation*}
+where we used the fact, that the only nonzero element of the Green function is 
+\begin{equation*}
+  \int\d^4 x \braket{0|T\{\bar e(y_1) e(y_2) A^\alpha(x_1)\bar e(x)\gamma^\mu e(x) A_\mu(x)\}|0} =
+\end{equation*}
+\begin{equation*}
+  =\pm S(y_2-x) \gamma^\mu S(y_1-x) D^\alpha_\mu(x_1-x)
+\end{equation*}
+
+\subsubsection{eeee interaction}
+
+Let's calculate the $\L_{ee\gamma}=-\lambda \bar e\gamma^\mu e A_\mu$ interaction in the SM, where $\lambda=g\sin\theta_W$. Consider $e^-(p_1)+e^+(p_2)\to\gamma(q)\to e^-(k_1)+e^+(k_2)$: 
+\begin{equation*}
+  \braket{f|S|i}= \braket{f|iT|i}= \braket{k_1 k_2|iT|p_1p_2}= {\bar u(k_1) v(k_2)\over\tilde S(k_1)\tilde S(k_2)} {\bar v(p_2) u(p_1)\over\tilde S(p_2)\tilde S(p_1)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1\d^4 x_2 e^{-i (p_1x_1 + p_2x_2)} \int\d^4 y_1\d^4 y_2 e^{+i (k_1y_1 + k_2y_2)} \braket{0|T\{\bar e(y_1) e(y_2) \bar e(x_1) e(x_2)\}|0} =
+\end{equation*}
+\begin{equation*}
+  = {\bar u(k_1) v(k_2)\over\tilde S(k_1)\tilde S(k_2)} {\bar v(p_2) u(p_1)\over\tilde S(p_2)\tilde S(p_1)}
+\end{equation*}
+\begin{equation*}
+  \int\d^4 x_1\d^4 x_2 e^{-i (p_1x_1 + p_2x_2)} \int\d^4 y_1\d^4 y_2 e^{+i (k_1y_1 + k_2y_2)} \int\d^4 x \int\d^4 y
+\end{equation*}
+\begin{equation*}
+  (-i\lambda)^2 S(x_1-x)\gamma^\mu S(x_2-x) D_{\mu\nu}(x-y)S(y_1-y)\gamma^\nu S(y_2-y) =
+\end{equation*}
+\begin{equation*}
+  =(2\pi)^4\delta^{(4)}(p_1+p_2-k_1-k_2)\bar v(p_2)(-i\lambda)\gamma^\mu u(p_1)\tilde D_{\mu\nu}(q=p_1+p_2=k_1+k_2) \bar u(k_1)(-i\lambda)\gamma^\nu v(k_2)
+\end{equation*}
+where we used the fact, that the only nonzero element of the Green function is 
+\begin{equation*}
+  \int\d^4 x \int\d^4 y \braket{0|T\{\bar e(y_1) e(y_2) \bar e(x_1) e(x_2) \bar e(x)\gamma^\mu e(x) A_\mu(x) \bar e(y)\gamma^\nu e(y) A_\nu(y) \}|0} =
+\end{equation*}
+\begin{equation*}
+  =\pm S(x_1-x) \gamma^\mu S(x_2-x)D_{\mu\nu}(x-y)S(y_1-y)\gamma^\nu S(y_2-y)
+\end{equation*}
+
+\subsection{Low Energy Theories}
+
+\subsubsection{Fermi-type theory}
+
+This is a low energy ($m_W^2 \gg m_\mu m_e$) model for the EW interactions, that can be derived for example from the muon decay: 
+\begin{equation*}
+  \mu^- \to e^- +\nu_\mu + \bar \nu_e
+\end{equation*}
+From the SM the relevant Lagrangian is 
+\begin{equation*}
+  \L = {g\over2\sqrt2}(\bar e \gamma^\mu (1-\gamma_5) \nu_e W^-_\mu) + {g\over2\sqrt2}(\bar \mu \gamma^\mu (1-\gamma_5) \nu_\mu W^-_\mu)
+\end{equation*}
+and one gets the diagram $\mu^- +\bar\nu_\mu+ \to e^- + \bar \nu_e$ and the corresponding matrix element: 
+\begin{equation*}
+  iM = -i{g^2\over8}[\bar u\gamma_\mu (1-\gamma_5) u] {-g^{\mu\nu}+{q^\mu q^\nu\over m_W^2}\over q^2 - m_W^2} [\bar u\gamma_\nu (1-\gamma_5) v]
+\end{equation*}
+which when the momentum transfer $q$ is much less than $m_w$ becomes 
+\begin{equation*}
+  iM = -i{g^2\over8m_W^2}[\bar u\gamma^\mu (1-\gamma_5) u] [\bar u\gamma_\mu (1-\gamma_5) v]
+\end{equation*}
+but this element can be derived directly from the Lagrangian: 
+\begin{equation*}
+  \L = -{G_\mu\over\sqrt2} [\bar \psi_{\nu_\mu}\gamma^\mu (1-\gamma_5) \psi_\mu] [\bar \psi_e\gamma^\mu (1-\gamma_5) \psi_{\nu_e}]
+\end{equation*}
+with 
+\begin{equation*}
+  {G_\mu\over\sqrt2} = {g^2\over8m_W^2}
+\end{equation*}
+This is the universal V-A theory Lagrangian (after adding the h.c. term).
+
+\subsection{Quantum Electrodynamics}
+
+The QED Lagrangian density is 
+\begin{equation*}
+  \L=\bar\psi(ic\gamma^\mu D_\mu-mc^2)\psi-{1\over4}F_{\mu\nu}F^{\mu\nu}
+\end{equation*}
+where 
+\begin{equation*}
+  \psi=\left(\matrix{\psi_1\psi_2\psi_3\psi_4}\right)
+\end{equation*}
+and 
+\begin{equation*}
+  D_\mu=\partial_\mu+ieA_\mu
+\end{equation*}
+is the gauge covariant derivative and ($e$ is the elementary charge, which is $1$ in atomic units) 
+\begin{equation*}
+  F_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu
+\end{equation*}
+is the electromagnetic field tensor. It's astonishing, that this simple Lagrangian can account for all phenomena from macroscopic scales down to something like $10^{-13}\rm\,cm$. So of course Feynman, Schwinger and Tomonaga received the 1965 Nobel Prize in Physics for such a fantastic achievement.
+
+Plugging this Lagrangian into the Euler-Lagrange equation of motion for a field, we get: 
+\begin{equation*}
+  (ic\gamma^\mu D_\mu-mc^2)\psi=0
+\end{equation*}
+\begin{equation*}
+  \partial_\nu F^{\nu\mu}=-ec\bar\psi\gamma^\mu\psi
+\end{equation*}
+The first equation is the Dirac equation in the electromagnetic field and the second equation is a set of Maxwell equations ($\partial_\nu F^{\nu\mu}=-ej^\mu$) with a source $j^\mu=c\bar\psi\gamma^\mu\psi$, which is a 4-current comming from the Dirac equation.
+
+The fields $\psi$ and $A^\mu$ are quantized. The first approximation is that we take $\psi$ as a wavefunction, that is, it is a classical 4-component field. It can be shown that this corresponds to taking three orders in the perturbation theory.
+
+The first component $A_0$ of the 4-potential is the electric potential, and because this is the potential that (as we show in a moment) is in the Schrödinger equation, we denote it by $V$: 
+\begin{equation*}
+  A_\mu=\left({V\over ec},A_1,A_2,A_3\right)
+\end{equation*}
+So in the non-relativistic limit, the $V\over e$ corresponds to the electric potential. We multiply the Dirac equation by $\gamma^0$ from left to get: 
+\begin{equation*}
+  0=\gamma^0(ic\gamma^\mu D_\mu-mc^2)\psi= \gamma^0(ic\gamma^0(\partial_0+i{V\over c})+ic\gamma^i (\partial_i+ieA_i)-mc^2)\psi=
+\end{equation*}
+\begin{equation*}
+  = (ic\partial_0+ic\gamma^0\gamma^i\partial_i-\gamma^0mc^2-V -ce\gamma^0\gamma^iA_i)\psi
+\end{equation*}
+and we make the following substitutions (it's just a formalism, nothing more): $\beta=\gamma^0$, $\alpha^i=\gamma^0\gamma^i$, $p_j=-i\partial_j$, $\partial_0={1\over c}{\partial\over\partial t}$ to get 
+\begin{equation*}
+  (i{\partial\over\partial t}-c\alpha^i p_i-\beta mc^2-V-ce\alpha^iA_i)\psi=0\,.
+\end{equation*}
+This, in most solid state physics texts, is usually written as 
+\begin{equation*}
+  i{\partial\psi\over\partial t}=H\psi\,,
+\end{equation*}
+where the Hamiltonian is given by 
+\begin{equation*}
+  H=c\alpha^i(p_i+eA_i)+\beta mc^2+V\,.
+\end{equation*}
+
+The right hand side of the Maxwell equations is the 4-current, so it's given by: 
+\begin{equation*}
+  j^\mu=c\bar\psi\gamma^\mu\psi
+\end{equation*}
+Now we make the substitution $\psi=e^{-imc^2t}\varphi$, which states, that we separate the largest oscillations of the wavefunction and we get 
+\begin{equation*}
+  j^0=c\bar\psi\gamma^0\psi=c\psi^\dagger\psi=c\varphi^\dagger\varphi
+\end{equation*}
+\begin{equation*}
+  j^i=c\bar\psi\gamma^i\psi=c\psi^\dagger\alpha^i\psi=c\varphi^\dagger\alpha^i\varphi
+\end{equation*}
+The Dirac equation implies the Klein-Gordon equation: 
+\begin{equation*}
+  (-ic\gamma^\mu D_\mu-mc^2)(ic\gamma^\nu D_\nu-mc^2)\psi= (c^2\gamma^\mu\gamma^\nu D_\mu D_\mu+m^2c^4)\psi=
+\end{equation*}
+\begin{equation*}
+  =(c^2D^\mu D_\mu-ic^2[\gamma^\mu,\gamma^\nu]D_\mu D_\nu+m^2c^4)\psi=0
+\end{equation*}
+Note however, the $\psi$ in the true Klein-Gordon equation is just a scalar, but here we get a 4-component spinor. Now: 
+\begin{equation*}
+  D_\mu D_\nu = (\partial_\mu+ieA_\mu)(\partial_\nu+ieA_\nu)= \partial_\mu\partial_\nu+ie(A_\mu\partial_\nu+A_\nu\partial_\mu+ (\partial_\mu A_\nu))-e^2A_\mu A_\nu
+\end{equation*}
+\begin{equation*}
+  [D_\mu, D_\nu] = D_\mu D_\nu-D_\nu D_\mu=ie(\partial_\mu A_\nu)- ie(\partial_\nu A_\mu)
+\end{equation*}
+We rewrite $D^\mu D_\mu$: 
+\begin{equation*}
+  D^\mu D_\mu=g^{\mu\nu}D_\mu D_\nu= \partial^\mu\partial_\mu+ie((\partial^\mu A_\mu)+2A^\mu\partial_\mu) -e^2A^\mu A_\mu=
+\end{equation*}
+\begin{equation*}
+  =\partial^\mu\partial_\mu+ ie((\partial^0 A_0)+2A^0\partial_0+(\partial^i A_i)+2A^i\partial_i) -e^2(A^0A_0+A^i A_i)=
+\end{equation*}
+\begin{equation*}
+  =\partial^\mu\partial_\mu +i{1\over c^2}{\partial V\over\partial t}+ 2i{V\over c^2}{\partial\over\partial t} +ie(\partial^i A_i)+2ieA^i\partial_i -{V^2\over c^2}-e^2A^iA_i
+\end{equation*}
+
+We use the identity ${\partial\over\partial t}\left(e^{-imc^2t}f(t)\right)= e^{-imc^2t}(-imc^2+{\partial\over\partial t})f(t)$ to get:
+
+
+\begin{equation*}
+  L=c^2\partial^\mu\psi^*\partial_\mu\psi-m^2c^4\psi^*\psi= {\partial\over\partial t}\psi^*{\partial\over\partial t}\psi -c^2\partial^i\psi^*\partial_i\psi-m^2c^4\psi^*\psi=
+\end{equation*}
+\begin{equation*}
+  =(imc^2+{\partial\over\partial t})\varphi^* (-imc^2+{\partial\over\partial t})\varphi -c^2\partial^i\varphi^*\partial_i\varphi-m^2c^4\varphi^*\varphi=
+\end{equation*}
+\begin{equation*}
+  =2mc^2\left[{1\over2}i(\varphi^*{\partial\varphi\over\partial t}- \varphi{\partial\varphi^*\over\partial t})- {1\over2m}\partial^i\varphi^*\partial_i\varphi +{1\over2mc^2}{\partial\varphi^*\over\partial t} {\partial\varphi\over\partial t}\right]
+\end{equation*}
+The constant factor $2mc^2$ in front of the Lagrangian is of course irrelevant, so we drop it and then we take the limit $c\to\infty$ (neglecting the last term) and we get 
+\begin{equation*}
+  L={1\over2}i(\varphi^*{\partial\varphi\over\partial t}- \varphi{\partial\varphi^*\over\partial t})- {1\over2m}\partial^i\varphi^*\partial_i\varphi
+\end{equation*}
+After integration by parts we arrive at 
+\begin{equation*}
+  L=i\varphi^*{\partial\varphi\over\partial t} -{1\over 2m}\partial^i\varphi^*\partial_i \varphi
+\end{equation*}
+The nonrelativistic limit can also be applied directly to the Klein-Gordon equation: 
+\begin{equation*}
+  0=(c^2D^\mu D_\mu+m^2c^4)\psi=
+\end{equation*}
+\begin{equation*}
+  =\left( c^2\partial^\mu\partial_\mu +i{\partial V\over\partial t} +2iV{\partial\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2 -e^2c^2A^iA_i +m^2c^4 \right)e^{-imc^2t}\varphi=
+\end{equation*}
+\begin{equation*}
+  =\left( {\partial^2\over\partial t^2} -c^2\nabla^2 +2iV{\partial\over\partial t} +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2 -e^2c^2A^iA_i +m^2c^4 \right)e^{-imc^2t}\varphi=
+\end{equation*}
+\begin{equation*}
+  =e^{-imc^2t}\left( (-imc^2+{\partial\over\partial t})^2 -c^2\nabla^2 +2iV(-imc^2+{\partial\over\partial t}) +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -e^2c^2A^iA_i +m^2c^4 \right)\varphi=
+\end{equation*}
+\begin{equation*}
+  =e^{-imc^2t}\left( -2imc^2{\partial\over\partial t}+{\partial^2\over\partial t^2} -c^2\nabla^2 +2Vmc^2 +2iV{\partial\over\partial t} +i{\partial V\over\partial t} +iec^2(\partial^i A_i) +2iec^2A^i\partial_i -V^2+ \right.
+\end{equation*}
+\begin{equation*}
+  \left. -e^2c^2A^iA_i \right)\varphi=
+\end{equation*}
+\begin{equation*}
+  = -2mc^2 e^{-imc^2 t} \left(i{\partial\over\partial t}+{\nabla^2\over2m}-V -{1\over2mc^2}{\partial^2\over\partial t^2}-{i\over2mc^2}{\partial V\over\partial t}+{V^2\over2mc^2}-{iV\over mc^2}{\partial\over\partial t}+\right.
+\end{equation*}
+\begin{equation*}
+  \left.-{ie\over2m}\partial^i A_i-{ie\over m}A^i\partial_i+{e^2\over2m}A^iA_i\right)\varphi
+\end{equation*}
+Taking the limit $c\to\infty$ we again recover the Schrödinger equation: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left(-{\nabla^2\over2 m}+V +{ie\over2m}\partial^i A_i +{ie\over m}A^i\partial_i -{e^2\over2m}A^iA_i \right)\varphi\,,
+\end{equation*}
+we rewrite the right hand side a little bit: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left({1\over2 m} (\partial^i\partial_i +ie\partial^i A_i +2ieA^i\partial_i -e^2A^iA_i ) +V \right)\varphi\,,
+\end{equation*}
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left({1\over2 m} (\partial^i+ieA^i)(\partial_i+ieA_i) +V \right)\varphi\,,
+\end{equation*}
+And we get the usual form of the Schrödinger equation for the vector potential ${\bf A}=(A_1, A_2, A_3)$: 
+\begin{equation*}
+  i{\partial\over\partial t}\varphi=\left(-{(\nabla+ie{\bf A})^2\over2 m} +V \right)\varphi\,.
+\end{equation*}
