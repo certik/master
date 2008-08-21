@@ -1,6 +1,7 @@
 \section{Radial Schrödinger and Dirac Equations}
 
-For general treatment, together with derivation of all the different forms of
+For the general treatment, together with derivation of all the different forms
+of
 radial Dirac equations used in the literature, see the author's bachelor thesis
 \cite{bachelor-thesis}. Here we just summarize the results.
 
@@ -20,7 +21,7 @@ where $R_{nl}(r)$ obeys the equation \cite{formanek} (eq. 2.400)
 \end{equation}
 This is called the radial Schrödinger equation which we want to solve numerically.
 
-\subsection{Numerical integration for a given }
+\subsection{Numerical integration for a given energy}
 
 Equation (\ref{radial}) is the linear ordinary differential equation of the second order, so the general solution is a linear combination of two independent solutions. Normally, the $2$ constants are determined from initial and/or boundary conditions. In our case, however, we don't have any other condition besides being interested in solutions that we can integrate on the interval $(0,\infty)$ (and which are normalizable), more exactly we want $R\in L^2$ and $\int_0^\infty r^2R^2\,\d r=1$.
 
@@ -57,7 +58,14 @@ The Dirac equation for one particle is \cite{strange,zabloudil}:
 \end{equation*}
 where $\psi$ is a four component vector: 
 \begin{equation*}
-  \psi=\left(\matrix{\psi_1\psi_2\psi_3\psi_4}\right) =\col{\psi_A}{\psi_B}\,,\qquad \psi_A=\col{\psi_1}{\psi_2}\!,\,\psi_B=\col{\psi_3}{\psi_4}
+  \psi=\left(
+\begin{array}{c}
+\psi_1\\
+\psi_2\\
+\psi_3\\
+\psi_4\\
+\end{array}
+\right) =\col{\psi_A}{\psi_B}\,,\qquad \psi_A=\col{\psi_1}{\psi_2}\!,\,\psi_B=\col{\psi_3}{\psi_4}
 \end{equation*}
 and $\balpha$, $\beta$ are $4\times4$ matrices: 
 \begin{equation*}
