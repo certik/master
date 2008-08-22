@@ -5,4 +5,4 @@ wajig install texlive texlive-lang-czechslovak texlive-formats-extra texlive-gen
 
 $ make
 
-this will create a "master.pdf" in this directory.
+this will create a "master.ps" in this directory.
