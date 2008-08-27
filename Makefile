@@ -5,4 +5,4 @@ all: clean
 	pdflatex master.tex
 
 clean:
-	rm -rf master.aux master.bbl master.blg master.dvi master.log master.ps master.toc
+	rm -rf master.aux master.bbl master.blg master.dvi master.log master.ps master.toc master.pdf
