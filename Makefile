@@ -1,9 +1,8 @@
 all: clean
-	latex master.tex
+	pdflatex master.tex
 	bibtex master
-	latex master.tex
-	latex master.tex
-	dvips master.dvi
+	pdflatex master.tex
+	pdflatex master.tex
 
 clean:
 	rm -rf master.aux master.bbl master.blg master.dvi master.log master.ps master.toc
