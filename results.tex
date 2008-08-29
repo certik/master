@@ -300,6 +300,16 @@ Mesh written to tmp/mesh.vtk
 
 \subsection{3D: Potential Well}
 
+$$V(x)=\begin{cases}0,&\text{inside the box}\quad a\times a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution:
+$$E_{n_1n_2n_3}={\pi^2\over2a^2}\left(n_1^2 + n_2^2 + n_3^2\right)$$
+where $n_i = 1, 2, 3, \dots$ are independent quantum numbers.
+We chose $a=1$, i.e.: $E_{111}=14.804$, $E_{211}=E_{121}=E_{112}=29.608$,
+$E_{122}=E_{212}=E_{221}=44.413$,
+$E_{311}=E_{131}=E_{113}=54.282$
+$E_{222}=59.217$, $E_{123}=E_{\hbox{perm.}}=69.087$.
+
 \begin{lstlisting}
 $ ./schroedinger.py --well
 Dimension: 3
@@ -371,8 +381,20 @@ n      exact         FEM      error
 18:  0.83891637   0.87715932   4.56%
 19:  0.83891637   0.87797932   4.66%
 Solution saved to mesh.vtk
-
 \end{lstlisting}
+
+As you can see above, we got ($a=1$, 24702 nodes):
+
+\begin{tabular}{ c | c c c c c c }
+E      & 1 & 2-4 & 5-7 & 8-10 & 11 & 12- \\
+\hline
+theory & 14.804 & 29.608 & 44.413 & 54.282 & 59.217 & 69.087 \\
+FEM    & 14.861 & 29.833 & 44.919 & 55.035 & 60.123 & 70.305 \\
+       &        & 29.834 & 44.920 & 55.042 &        & 70.310 \\
+       &        & 29.836 & 44.925 & 55.047 &        & $\cdots$ \\
+\end{tabular}
+
+So we go the correct energies and correct degeneracies.
 
 \subsection{3D: Linear Harmonic Oscillator}
 
