@@ -398,6 +398,19 @@ So we go the correct energies and correct degeneracies.
 
 \subsection{3D: Linear Harmonic Oscillator}
 
+$$V(r)=\begin{cases}\half\omega^2r^2,&\text{inside the box}\quad a\times a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution in the limit $a\to\infty$:
+$$E_{nl}=\left(2n+l+{3\over2}\right)\omega$$
+where $n, l = 0, 1, 2, \dots$.
+Degeneracy is $2l+1$, so:
+$E_{00} = {3\over2}$,
+triple $E_{01} = {5\over2}$,
+$E_{10} = {7\over2}$,
+quintuple $E_{02} = {7\over2}$,
+triple $E_{11} = {9\over2}$,
+quintuple $E_{12} = {11\over2}$:
+
 \begin{lstlisting}
 $ ./schroedinger.py --oscillator
 Dimension: 3
@@ -471,7 +484,32 @@ n      exact         FEM      error
 Solution saved to mesh.vtk
 \end{lstlisting}
 
+Numerical solution ($a=15$, $\omega=1$, 290620 nodes):
+
+\begin{tabular}{ c | c c c c }
+E      & 1 & 2-4 & 5-10 & 11- \\
+\hline
+theory & 1.5 & 2.5 & 3.5 & 4.5 \\
+FEM    & 1.522 & 2.535 & 3.554 & 4.578 \\
+       &        & 2.536 & 3.555 & 4.579 \\
+       &        & 2.536 & 3.555 & 4.579 \\
+       &        &       & 3.555 &  $\cdots$ \\
+       &        &       & 3.556 &   \\
+       &        &       & 3.556 &   \\
+\end{tabular}
+
 \subsection{3D: Hydrogen Atom}
+
+$$V(r)=\begin{cases}-{1\over r},&\text{inside the box}\quad a\times a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution in the limit $a\to\infty$:
+$$E_n=-{1\over2n^2}$$
+where $n=1, 2, 3, \dots$.
+Degeneracy is $n^2$, so:
+$E_1 = -{1\over2}=-0.5$,
+$E_2 = -{1\over8}=-0.125$,
+$E_3 = -{1\over18}=-0.055$,
+$E_4 = -{1\over32}=-0.031$.
 
 \begin{lstlisting}
 $ ./schroedinger.py --hydrogen
@@ -530,6 +568,17 @@ n      exact         FEM      error
 4:  -0.12500000   0.26835117  314.68%
 Solution saved to mesh.vtk
 \end{lstlisting}
+
+As you can see above, our mesh is not sufficient to get precise results, so we
+used a refined mesh with $a=15$ and 160000 nodes and we got more precise
+results:
+
+\begin{tabular}{ c | c c c c }
+E      & 1 & 2-5 & 6-14 & 15- \\
+\hline
+theory & -0.5 & -0.125 & -0.055 & -0.031 \\
+FEM    & -0.481 & -0.118 & -0.006 & $\cdots$ \\
+\end{tabular}
 
 \subsection{2D: nonsymmetric potential I}
 
