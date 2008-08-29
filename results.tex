@@ -38,18 +38,17 @@ triangular mesh in 2D.
 See the fig. \ref{fig:mesh2d} and \ref{fig:mesh2d2} for a visualization of the
 mesh in the paraview\cite{paraview} program.
 
+\def\fig#1#2#3{%
 \begin{figure}[htp]
 \centering
-%\includegraphics[width=12cm]{images/mesh1.png}
-\includegraphics[width=12cm]{images/mesh1-r.pdf}
-\caption{2D mesh, the red square is zoomed in the fig. \ref{fig:mesh2d2}}\label{fig:mesh2d}
+\includegraphics[width=12cm]{#1}
+\caption{#3}\label{#2}
 \end{figure}
+}
 
-\begin{figure}[htp]
-\centering
-\includegraphics[width=12cm]{images/mesh4.png}
-\caption{Zoomed in 2D mesh}\label{fig:mesh2d2}
-\end{figure}
+\fig{images/mesh1-r.pdf}{fig:mesh2d}{2D mesh, the red square is zoomed in the fig.  \ref{fig:mesh2d2}}
+
+\fig{images/mesh4.png}{fig:mesh2d2}{Zoomed in 2D mesh}
 
 \subsection{2D: Potential Well}
 
