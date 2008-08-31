@@ -150,49 +150,7 @@ a surface}
 \begin{lstlisting}
 $ ./schroedinger.py --oscillator
 Dimension: 2
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 0.36 s
-sfepy: setting up domain edges...
-sfepy: ...done in 0.10 s
-sfepy: creating regions...
-sfepy:     leaf Omega region_1000
-sfepy:     leaf Surface region_2
-sfepy: ...done in 0.08 s
-sfepy: equation "rhs":
-sfepy: dw_mass_scalar.i1.Omega( v, Psi )
-sfepy: equation "lhs":
-sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
-sfepy: describing geometries...
-sfepy: ...done in 0.01 s
-sfepy: setting up dof connectivities...
-sfepy: ...done in 0.00 s
-sfepy: matrix shape: (8072, 8072)
-sfepy: assembling matrix graph...
-sfepy: ...done in 0.02 s
-sfepy: matrix structural nonzeros: 56442 (8.66e-04% fill)
-sfepy: updating materials...
-sfepy:     m
-sfepy:     matV
-sfepy: ...done in 0.00 s
-sfepy: assembling lhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.03 s
-sfepy: assembling rhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.02 s
-computing resonance frequencies...
-sfepy: loading...
-sfepy: ...done
-sfepy: solving...
-sfepy:   number of converged eigenvalues: 16
-sfepy: ...done in 7.38 s
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 0.36 s
-a=100.000000
+[...]
 Energies:
 n      exact         FEM      error
 0:  1.00000000   1.00081703   0.08%
@@ -257,49 +215,7 @@ in 3D, see the figs \ref{fig:osc2d-8warp} and \ref{fig:osc2d-10warp}.
 \begin{lstlisting}
 $ ./schroedinger.py --hydrogen
 Dimension: 2
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 0.38 s
-sfepy: setting up domain edges...
-sfepy: ...done in 0.08 s
-sfepy: creating regions...
-sfepy:     leaf Omega region_1000
-sfepy:     leaf Surface region_2
-sfepy: ...done in 0.10 s
-sfepy: equation "rhs":
-sfepy: dw_mass_scalar.i1.Omega( v, Psi )
-sfepy: equation "lhs":
-sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
-sfepy: describing geometries...
-sfepy: ...done in 0.01 s
-sfepy: setting up dof connectivities...
-sfepy: ...done in 0.01 s
-sfepy: matrix shape: (8072, 8072)
-sfepy: assembling matrix graph...
-sfepy: ...done in 0.01 s
-sfepy: matrix structural nonzeros: 56442 (8.66e-04% fill)
-sfepy: updating materials...
-sfepy:     m
-sfepy:     matV
-sfepy: ...done in 0.01 s
-sfepy: assembling lhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.03 s
-sfepy: assembling rhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.02 s
-computing resonance frequencies...
-sfepy: loading...
-sfepy: ...done
-sfepy: solving...
-sfepy:   number of converged eigenvalues: 10
-sfepy: ...done in 10.35 s
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 0.43 s
-a=100.000000
+[...]
 Energies:
 n      exact         FEM      error
 0:  -0.50000000   -0.48444312   3.11%
@@ -387,51 +303,7 @@ $E_{222}=59.217$, $E_{123}=E_{\hbox{perm.}}=69.087$.
 \begin{lstlisting}
 $ ./schroedinger.py --well
 Dimension: 3
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.24 s
-sfepy: setting up domain edges...
-sfepy: ...done in 0.89 s
-sfepy: setting up domain faces...
-sfepy: ...done in 0.66 s
-sfepy: creating regions...
-sfepy:     leaf Omega region_1000
-sfepy:     leaf Surface region_2
-sfepy: ...done in 1.01 s
-sfepy: equation "rhs":
-sfepy: dw_mass_scalar.i1.Omega( v, Psi )
-sfepy: equation "lhs":
-sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
-sfepy: describing geometries...
-sfepy: ...done in 0.15 s
-sfepy: setting up dof connectivities...
-sfepy: ...done in 0.01 s
-sfepy: matrix shape: (7964, 7964)
-sfepy: assembling matrix graph...
-sfepy: ...done in 0.09 s
-sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
-sfepy: updating materials...
-sfepy:     m
-sfepy:     matV
-sfepy: ...done in 0.00 s
-sfepy: assembling lhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.01 s
-sfepy: ...done in 0.20 s
-sfepy: assembling rhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.01 s
-sfepy: ...done in 0.08 s
-computing resonance frequencies...
-sfepy: loading...
-sfepy: ...done
-sfepy: solving...
-sfepy:   number of converged eigenvalues: 20
-sfepy: ...done in 5.47 s
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.13 s
-a=10.000000
+[...]
 Energies:
 n      exact         FEM      error
 0:  0.14804407   0.14922535   0.80%
@@ -498,51 +370,7 @@ quintuple $E_{12} = {11\over2}$:
 \begin{lstlisting}
 $ ./schroedinger.py --oscillator
 Dimension: 3
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.31 s
-sfepy: setting up domain edges...
-sfepy: ...done in 0.96 s
-sfepy: setting up domain faces...
-sfepy: ...done in 0.73 s
-sfepy: creating regions...
-sfepy:     leaf Omega region_1000
-sfepy:     leaf Surface region_2
-sfepy: ...done in 1.19 s
-sfepy: equation "rhs":
-sfepy: dw_mass_scalar.i1.Omega( v, Psi )
-sfepy: equation "lhs":
-sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
-sfepy: describing geometries...
-sfepy: ...done in 0.18 s
-sfepy: setting up dof connectivities...
-sfepy: ...done in 0.00 s
-sfepy: matrix shape: (7964, 7964)
-sfepy: assembling matrix graph...
-sfepy: ...done in 0.12 s
-sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
-sfepy: updating materials...
-sfepy:     m
-sfepy:     matV
-sfepy: ...done in 0.00 s
-sfepy: assembling lhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.24 s
-sfepy: assembling rhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.10 s
-computing resonance frequencies...
-sfepy: loading...
-sfepy: ...done
-sfepy: solving...
-sfepy:   number of converged eigenvalues: 20
-sfepy: ...done in 3.96 s
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.33 s
-a=10.000000
+[...]
 Energies:
 n      exact         FEM      error
 0:  1.50000000   1.60246586   6.83%
@@ -613,58 +441,14 @@ $E_4 = -{1\over32}=-0.031$.
 \begin{lstlisting}
 $ ./schroedinger.py --hydrogen
 Dimension: 3
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.18 s
-sfepy: setting up domain edges...
-sfepy: ...done in 0.83 s
-sfepy: setting up domain faces...
-sfepy: ...done in 0.67 s
-sfepy: creating regions...
-sfepy:     leaf Omega region_1000
-sfepy:     leaf Surface region_2
-sfepy: ...done in 0.98 s
-sfepy: equation "rhs":
-sfepy: dw_mass_scalar.i1.Omega( v, Psi )
-sfepy: equation "lhs":
-sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
-sfepy: describing geometries...
-sfepy: ...done in 0.15 s
-sfepy: setting up dof connectivities...
-sfepy: ...done in 0.00 s
-sfepy: matrix shape: (7964, 7964)
-sfepy: assembling matrix graph...
-sfepy: ...done in 0.09 s
-sfepy: matrix structural nonzeros: 117024 (1.85e-03% fill)
-sfepy: updating materials...
-sfepy:     m
-sfepy:     matV
-sfepy: ...done in 0.00 s
-sfepy: assembling lhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.19 s
-sfepy: assembling rhs...
-sfepy:   setting up dof connectivities...
-sfepy:   ...done in 0.00 s
-sfepy: ...done in 0.08 s
-computing resonance frequencies...
-sfepy: loading...
-sfepy: ...done
-sfepy: solving...
-sfepy:   number of converged eigenvalues: 5
-sfepy: ...done in 1.11 s
-sfepy: reading mesh (tmp/mesh.vtk)...
-sfepy: ...done in 1.31 s
-a=10.000000
+[...]
 Energies:
-n      exact         FEM      error
-0:  -0.50000000   -0.13468961  73.06%
-1:  -0.12500000   0.13909268  211.27%
-2:  -0.12500000   0.13934116  211.47%
-3:  -0.12500000   0.13939501  211.52%
-4:  -0.12500000   0.26835117  314.68%
+n      exact         FEM
+0:  -0.50000000   -0.13468961
+1:  -0.12500000   0.13909268
+2:  -0.12500000   0.13934116
+3:  -0.12500000   0.13939501
+4:  -0.12500000   0.26835117
 Solution saved to mesh.vtk
 \end{lstlisting}
 
