@@ -454,7 +454,11 @@ functional theory self-consistency cycle code and also that all the parts of
 the program are working correctly. We also need some referential data to
 compare with. We use \cite{nist}, that contains both relativistic and
 non-relativistic Kohn-Sham eigenvalues for every atom. See the section 3.1 for
-thorough introduction and derivation of all needed equations.
+thorough introduction and derivation of all needed equations, so let's just
+briefly recapitulate: the potential for atoms is spherically symmetric, so the
+Kohn-Sham equations effectivaly become radial Schr\"odinger or Dirac
+equations, that is solved on a radial grid using the methods described in the
+section 3.1.
 
 \subsection{Pb: LDA}
 
@@ -498,6 +502,10 @@ electrons. Here is a result of our program:
 6s( 2) j=l+1/2: -0.3571868295
 6p( 2) j=l+1/2: -0.1418313263
 \end{lstlisting}
+
+The $|F(x)|$ shows the norm of the residual in the non-linear iteration (see
+the section 3.2.6 for more details) and the rest of the output are individual
+Kohn-Sham energies.
 
 The NIST reference calculation\cite{nist} has precision of 6 decimal places and
 the above calculation agrees with it to every decimal digit.
@@ -564,6 +572,8 @@ correlation potential proposed by MacDonald and Vosko, see the equation
 
 \subsection{B: LDA}
 
+We calculate nonrelativistic Boron.
+
 \begin{lstlisting}
 1:  |F(x)|=467.33470427
 2:  |F(x)|=39.46088238
@@ -590,9 +600,11 @@ correlation potential proposed by MacDonald and Vosko, see the equation
 2p( 1) j=l+1/2: -0.1366031499
 \end{lstlisting}
 
-Agrees with NIST to all decimal places.
+Agrees with NIST\cite{nist} to all decimal places.
 
 \subsection{B: RLDA}
+
+Finally we calculate a relativistic Boron.
 
 \begin{lstlisting}
 0: |F(x)|=485.06815695
@@ -620,6 +632,6 @@ Agrees with NIST to all decimal places.
 2p( 1) j=l-1/2: -0.1366103284
 \end{lstlisting}
 
-Agrees with NIST to 3 decimal places after the decimal dot, the difference also
-probably causes by a different exchange and correlation potential
-approximation.
+Agrees with NIST\cite{nist} to 3 decimal places after the decimal dot, the
+difference also probably causes by a different exchange and correlation
+potential approximation, see the comments at the relativistic lead above.
