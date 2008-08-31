@@ -13,7 +13,8 @@ We create a mesh:
 \begin{lstlisting}
 $ ./schroedinger.py --mesh --2d
 Dimension: 2
-Info    : 'gmsh -2 tmp/mesh.geo -format mesh' started on Sat Jul 19 02:04:41 2008
+Info    : 'gmsh -2 tmp/mesh.geo -format mesh'
+   started on Sat Jul 19 02:04:41 2008
 Info    : Reading 'tmp/mesh.geo'
 Info    : Read 'tmp/mesh.geo'
 Info    : Meshing 1D...
@@ -60,7 +61,8 @@ PySparse\cite{geus} to solve the generalized eigenproblem.
 \begin{lstlisting}
 $ ./schroedinger.py --well
 Dimension: 2
-sfepy: left over: ['tau', 'n_eigs', 'mesh', 'quadr', 'dim', 'base_approx']
+sfepy: left over: ['tau', 'n_eigs', 'mesh',
+    'quadr', 'dim', 'base_approx']
 sfepy: reading mesh (tmp/mesh.vtk)...
 sfepy: ...done in 0.37 s
 sfepy: setting up domain edges...
@@ -73,7 +75,7 @@ sfepy: equation "rhs":
 sfepy: dw_mass_scalar.i1.Omega( v, Psi )
 sfepy: equation "lhs":
 sfepy:   dw_laplace.i1.Omega( m.val, v, Psi )
-                   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
+   + dw_mass_scalar_variable.i1.Omega( matV.V, v, Psi )
 sfepy: describing geometries...
 sfepy: ...done in 0.02 s
 sfepy: setting up dof connectivities...
@@ -262,25 +264,7 @@ In 3D, we generate tetrahedra:
 \begin{lstlisting}
 $ ./schroedinger.py --mesh
 Dimension: 3
-Info    : 'gmsh -0 database/box.geo -o tmp/x.geo' started on Sat Jul 19 02:08:14 2008
-Info    : Reading 'database/box.geo'
-Info    : Read 'database/box.geo'
-Info    : Writing 'tmp/x.geo'
-Info    : Wrote 'tmp/x.geo'
-General geometry information:
-  points: 8
-  lines: 12
-  surfaces: 6
-  volumes: 1
-Physical entities:
-  surfaces (boundary conditions):
-  volumes (regions):
-    1: volume numbers [1]
-Generating mesh using /usr/bin/tetgen -pQAq1.000000 -a0.030000 tmp/t.poly
-sfepy: reading mesh (tmp/t.1.node)...
-       nodes: 100% |############################################| Time: 00:00:00
-       elements: 100% |#########################################| Time: 00:00:01
-sfepy: ...done in 1.39 s
+[...]
 Mesh written to tmp/mesh.vtk
 \end{lstlisting}
 
@@ -482,6 +466,8 @@ eigenvalue 0}
 \fig{images/nonsym23.png}{}{2D nonsymmetric potential I: eigenvalue 3}
 
 \fig{images/nonsym24.png}{}{2D nonsymmetric potential I: eigenvalue 4}
+% this is needed, otherwise latex cries on the fig below.
+\clearpage
 
 \fig{images/nonsym25.png}{}{2D nonsymmetric potential I: eigenvalue 5}
 
@@ -526,6 +512,8 @@ plot}
 plot}
 
 \fig{images/nonsym35.png}{}{2D nonsymmetric potential II: eigenvalue 5}
+% this is needed, otherwise latex cries on the fig below.
+\clearpage
 
 \fig{images/nonsym353.png}{}{2D nonsymmetric potential II: eigenvalue 5, surface
 plot}
