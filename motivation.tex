@@ -89,9 +89,18 @@ The surface integrals are computed similarly.
 \section{Density Functional Theory Formulation for Spherically Symmetric
 Problems}
 
-The Kohn-Sham equations (\ref{KSeq}) for spherically symmetric potential reduce
-to radial Schr\"odinger (or Dirac) equations, which we integrate using the
-methods described in the section 1.2.
+One of the approaches to calculate large electronic structure problems is
+density functional theory, which allows us to calculate a ground state charge
+density, from which one can calculate a lot of interesting physical properties
+of the system.
+
+See the section 3.1 for thorough derivation of all equations in DFT and
+explanation how everything works. It is useful to note here, that for
+spherically symmetric problems (for example atoms), all that is needed is
+to have a radial Schr\"odinger or Dirac solver and that's exactly what we did
+to test the DFT self-consistency cycle, poisson equation, exchange and
+correlation potential and other things, see the section 3.1 for theory and
+section 4.2 for results of calculations for Boron and Lead.
 
 \section{Pseudopotentials}
 
