@@ -64,8 +64,24 @@ mesh in the paraview\cite{paraview} program.
 
 This is also sometimes called particle in the box.
 
+$$V(x)=\begin{cases}0,&\text{inside the square}\quad a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution:
+$$E_{n_1n_2}={\pi^2\over2a^2}\left(n_1^2 + n_2^2\right)$$
+where $n_i = 1, 2, 3, \dots$ are independent quantum numbers.
+For example for $a=1$ we get:
+$E_{11}=2$,
+$E_{12}=E_{21}=5$,
+$E_{22}=8$,
+$E_{13}=E_{31}=10$,
+$E_{23}=E_{32}=13$,
+$E_{14}=E_{41}=17$,
+$E_{22}=18$,
+$E_{24}=E_{42}=20$, \dots.
+
 Our program constructs the element matrices as described before and then calls
 PySparse\cite{geus} to solve the generalized eigenproblem.
+
 
 \begin{lstlisting}
 $ ./schroedinger.py --well
@@ -243,7 +259,8 @@ $$V(x)=\begin{cases}0,&\text{inside the box}\quad a\times a\times a \\
 Analytic solution:
 $$E_{n_1n_2n_3}={\pi^2\over2a^2}\left(n_1^2 + n_2^2 + n_3^2\right)$$
 where $n_i = 1, 2, 3, \dots$ are independent quantum numbers.
-We chose $a=1$, i.e.: $E_{111}=14.804$, $E_{211}=E_{121}=E_{112}=29.608$,
+For example for $a=1$ we get:
+$E_{111}=14.804$, $E_{211}=E_{121}=E_{112}=29.608$,
 $E_{122}=E_{212}=E_{221}=44.413$,
 $E_{311}=E_{131}=E_{113}=54.282$
 $E_{222}=59.217$, $E_{123}=E_{\hbox{perm.}}=69.087$.
