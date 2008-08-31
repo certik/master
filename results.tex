@@ -448,7 +448,18 @@ eigenvectors 0, 4 and 5, plot in 2D on the left, surface plot on the right}
 
 \section{Density Functional Theory, Spherically Symmetric Solution}
 
+In this section we show solutions for the relativistic and non-relativistic
+atoms, in particular Lead and Boron. This is necessary to test the density
+functional theory self-consistency cycle code and also that all the parts of
+the program are working correctly. We also need some referential data to
+compare with. We use \cite{nist}, that contains both relativistic and
+non-relativistic Kohn-Sham eigenvalues for every atom. See the section 3.1 for
+thorough introduction and derivation of all needed equations.
+
 \subsection{Pb: LDA}
+
+For nonrelativistic Lead, we need to solve the Schr\"odinger equation for 82
+electrons. Here is a result of our program:
 
 \begin{lstlisting}
 0: |F(x)|=32381.03274296
@@ -488,9 +499,16 @@ eigenvectors 0, 4 and 5, plot in 2D on the left, surface plot on the right}
 6p( 2) j=l+1/2: -0.1418313263
 \end{lstlisting}
 
-This is agrees with the NIST reference calculation to all decimal digits.
+The NIST reference calculation\cite{nist} has precision of 6 decimal places and
+the above calculation agrees with it to every decimal digit.
+This shows, that our implementation of the density functional theory cycle,
+poisson equation, LDA and other things is correct.
 
 \subsection{Pb: RLDA}
+
+For a relativistic Lead we need to solve a radial Dirac equation in the
+framework of DFT, together with a relativistic exchange and correlation
+potential.
 
 \begin{lstlisting}
 0: |F(x)|=41056.67822797
@@ -538,9 +556,11 @@ This is agrees with the NIST reference calculation to all decimal digits.
 6p( 2) j=l-1/2: -0.1549640727
 \end{lstlisting}
 
-This is agrees within $12\%$ to the NIST reference calculation, the difference
-being caused probably by a different exchange and correlation potential
-approximation in our code in NIST.
+This is agrees within $12\%$ to the NIST reference calculation\cite{nist}, the
+difference being caused probably by a different exchange and correlation
+potential approximation in our code and NIST. We are using the exchange and
+correlation potential proposed by MacDonald and Vosko, see the equation
+(\ref{RLDA}) and the discussion leading to it.
 
 \subsection{B: LDA}
 

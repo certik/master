@@ -542,9 +542,11 @@ We also need to calculate these derivatives:
   {\d \epsilon_x^{LD}\over\d n}={\epsilon_x^{LD}\over 3n}
 \end{equation*}
 So 
-\begin{equation*}
-  V_x^{RLD}=\epsilon_x^{LD}R+n{\d \epsilon_x^{LD}R\over\d n}= {4\over3}\epsilon_x^{LD}R+{1\over3}\epsilon_x^{LD}{\d R\over\d\beta}\beta
-\end{equation*}
+\begin{equation}
+  V_x^{RLD}=\epsilon_x^{LD}R+n{\d \epsilon_x^{LD}R\over\d n}=
+  {4\over3}\epsilon_x^{LD}R+{1\over3}\epsilon_x^{LD}{\d R\over\d\beta}\beta
+  \label{RLDA}
+\end{equation}
 For $c\to\infty$ we get $\beta\to0$, $R\to1$ and $V_x^{RLD}\to {4\over3}\epsilon_x^{LD}=V_x^{LD}$ as expected, because 
 \begin{equation*}
   \lim_{\beta\to0}{\beta\sqrt{1+\beta^2}-\ln(\beta+\sqrt{1+\beta^2})\over \beta^2} = 0
