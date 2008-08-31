@@ -54,6 +54,9 @@ mesh in the paraview\cite{paraview} program.
 
 This is also sometimes called particle in the box.
 
+Our program constructs the element matrices as described before and then calls
+PySparse\cite{geus} to solve the generalized eigenproblem.
+
 \begin{lstlisting}
 $ ./schroedinger.py --well
 Dimension: 2
