@@ -47,6 +47,15 @@ mesh in the paraview\cite{paraview} program.
 \end{figure}
 }
 
+\def\fign#1#2#3{%
+\begin{figure}[htp]
+\centering
+\includegraphics[width=12cm]{#1}
+\caption{#3}\label{#2}
+%\thispagestyle{empty}
+\end{figure}
+}
+
 \fig{images/mesh1-r.pdf}{fig:mesh2d}{2D mesh, the red square is zoomed in the fig.  \ref{fig:mesh2d2}}
 
 \fig{images/mesh4.png}{fig:mesh2d2}{Zoomed in 2D mesh}
@@ -416,13 +425,12 @@ eigenvectors 0 to 10}
 \subsection{2D: nonsymmetric potential II}
 
 In this example we use a potential from three nuclei positioned at $(-5, 0)$,
-$(5, 0)$ and $(0, 5)$. See the fig \ref{fig:nonsym3} --
-\ref{fig:nonsym-last}.
+$(5, 0)$ and $(0, 5)$. See the figs \ref{fig:nonsym3a} and \ref{fig:nonsym3b}.
 
-\fig{images/nonsym3a.png}{fig:nonsym3}{2D nonsymmetric potential II:
+\fign{images/nonsym3a.png}{fig:nonsym3a}{2D nonsymmetric potential II:
 eigenvectors 0 to 4, plot in 2d on the left, surface plot on the right}
 
-\fig{images/nonsym3b.png}{fig:nonsym3}{2D nonsymmetric potential II:
+\fign{images/nonsym3b.png}{fig:nonsym3b}{2D nonsymmetric potential II:
 eigenvectors 5 to 9, plot in 2d on the left, surface plot on the right}
 
 \subsection{2D: nonsymmetric potential III}
