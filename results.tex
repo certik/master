@@ -158,6 +158,17 @@ right, top to bottom.
 
 \subsection{2D: Linear Harmonic Oscillator}
 
+$$V(r)=\begin{cases}\half\omega^2r^2,&\text{inside the square}\quad a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution in the limit $a\to\infty$:
+$$E_{n_1n_2}=\left(n_1+n_2+1\right)\omega$$
+where $n_1, n_2 = 0, 1, 2, \dots$, so:
+$E_{00} = 1$,
+$E_{01} = E_{10} = 2$,
+$E_{11} = E_{20} = E_{02} = 3$,
+$E_{12} = E_{21} = E_{30} = E_{03} = 4$,
+$E_{22} = E_{13} = E_{31} = E_{40} = E_{04} = 5$,
+
 \begin{lstlisting}
 $ ./schroedinger.py --oscillator
 Dimension: 2
