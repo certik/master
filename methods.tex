@@ -1,1 +1,75 @@
 \section{Finite Element Method}
+
+Finite element method (FEM) is a general method for solving partial
+differential equations. Below we explain how to apply it to the Schr\"odinger
+equation.
+
+\subsection{Weak Formulation of the Schr\"odinger Equation}
+
+One particle Schrödinger equation is
+\begin{equation*}
+  \left(-{\hbar^2\over2m}\nabla^2 + V\right)\psi=E\psi\,.
+\end{equation*}
+We multiply both sides by a test function $v$
+\begin{equation*}
+  -\left({\hbar^2\over2m}\nabla^2\psi\right)v=(E-V)\psi v\,,
+\end{equation*}
+and integrate over the whole volume we are interested in
+\begin{equation}
+  \int-\left({\hbar^2\over2m}\nabla^2\psi\right)v\,\d V=\int(E-V)\psi v\,\d V\,,  \label{1}
+\end{equation}
+and using the vector identity
+\begin{equation*}
+  -\left(\nabla^2\psi\right)v=\nabla \psi\cdot \nabla v - \nabla\cdot\left((\nabla \psi)v\right),
+\end{equation*}
+we rewrite the left hand side of (\ref{1})
+\begin{equation*}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d V+\int{\hbar^2\over2m}\nabla\cdot\left((\nabla \psi)v\right)\,\d V\,,
+\end{equation*}
+now we apply Gauss Theorem
+\begin{equation*}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V=\int(E-V)\psi v\,\d V+\oint{\hbar^2\over2m}(\nabla \psi)v\cdot{\bf n}\,\d S\,,
+\end{equation*}
+and rewriting $\nabla\psi\cdot{\bf n}\equiv{\d\psi\over\d n}$
+\begin{equation}
+  \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V+ \int vV\psi\,\d V = \int E\psi v\,\d V + \oint{\hbar^2\over2m}{\d\psi\over\d n}v\,\d S\,,  \label{w}
+\end{equation}
+which is the weak formulation. The problem reads: find a function $\psi$ such that (\ref{w}) holds for every $v$.
+
+\subsection{Finite Elements}
+
+We choose a basis $\phi_i$ and substitute $\phi_i$ for $v$ and expand $\psi=\sum q_j\phi_j$
+\begin{equation}
+  \left(\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V+ \int\phi_iV\phi_j\,\d V\right)q_j = \left(\int E\phi_j\phi_i\,\d V\right)q_j +\oint{\hbar^2\over2m}{\d\psi\over\d n}\phi_i\,\d S\,,  \label{fem}
+\end{equation}
+which can be written in a matrix form
+\begin{equation*}
+  \left(K_{ij}+V_{ij}\right)q_j=EM_{ij}q_j+F_i\,,
+\end{equation*}
+where
+\begin{eqnarray*}
+V_{ij}&=&\int\phi_iV\phi_j\,\d V\,, \\
+M_{ij}&=&\int\phi_i\phi_j\,\d V\,, \\
+K_{ij}&=&{\hbar^2\over2m}\int\nabla\phi_i\cdot\nabla\phi_j\,\d V\,, \\
+F_i&=&{\hbar^2\over2m}\oint{\d\psi\over\d n}\phi_i\,\d S\,. \\
+\end{eqnarray*}
+ Usually we set $F_i=0$.
+
+We decompose the domain into elements and compute the integrals as the sum over elements. For example:
+\begin{equation*}
+  K_{ij}=\sum_{E\in elements} K_{ij}^E
+\end{equation*}
+where $K_{ij}^E$ is the integral over one element only
+\begin{equation*}
+  K_{ij}^{E}=\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V^{E}\approx \sum_{q=0}^{N_q-1}{\hbar^2\over2m}\,\nabla\phi_i(x_q)\cdot\nabla\phi_j(x_q)\, w_q|\det J(\hat x_q)|\,.
+\end{equation*}
+The integral is computed numerically using a Gauss integration: $x_q$ are Gauss points (there are $N_q$ of them), $w_q$ is the weight of each point, and the Jacobian $|\det J(\hat x_q)|$ is there because we are actually computing the integral on the reference element instead in the real space.
+The surface integrals are computed similarly.
+
+Finite elements programs usually have an assembly phase, where they need to
+assemble all the global matrices, in our case:
+\begin{equation*}
+  \left(K_{ij}+V_{ij}\right)q_j=EM_{ij}q_j+F_i\,,
+\end{equation*}
+and then a solve phase, in our case this amounts to solve a large sparse
+generalized eigenvalue problem.
