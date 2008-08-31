@@ -1,17 +1,21 @@
-In the thesis, we reviewed all the theory that we needed for electonic structure
-calculations, in particular density functional theory, radial Dirac and
-Schr\"odinger equations, pseudopotentials and finite elements.
+In this thesis, we introduce the ingredients that are necessary for the new
+method for electronic structure calculations of non-periodic systems that
+should be based on density functional theory, ab-initio pseudopotentials and
+finite element method. We reviewed all the theory that we need, in particular
+density functional theory, radial Dirac and Schr\"odinger equations, Kohn-Sham
+equations, pseudopotentials and their separable form, and finite elements.
 
-We then showed thorough examples of results that we can calculate with our
-program, for one electron Schr\"odinger equation in 2D and 3D, for symmetric
-and nonsymmetric potentials using finite elements and a density functional
-theory program for radial Dirac and Schr\"odinger equations.
+We then show thorough examples of results of testing some of the ingredients
+--- i.e. the pieces of the code dedicated to solve the partial tasks --- that
+we can calculate within the code developed so far: one electron Schr\"odinger
+equation solved by finite elements in 2D and 3D, for symmetric and nonsymmetric
+potentials, and a selfconsistency engine within density functional theory for
+radial Dirac and Schr\"odinger equations.
 
-All of this are the essential ingredients for reaching our ultimate goal of
-doing density functional theory calculations with finite elements and we show
-that this approach seems to be viable -- all of the ingredients are there and
-working.
+All of that are the essential ingredients for our ultimate goal mentioned above
+and we show that this approach seems to be viable -- all of the ingredients are
+there and working.
 
 In the future work, what needs to be done is to take our DFT self-consistency
-cycle from the radial Dirac (or Schr\"odinger) equations and use our finite
-element solver to solve the Kohn-Shams equations.
+engine tested on the radial Dirac / Schr\"odinger problem and apply our finite
+element solver for Kohn-Shams equations with separable pseudopotentials.
