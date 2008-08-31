@@ -417,15 +417,19 @@ In this example we use a potential from two nuclei positioned at $(-5, 0)$ and
 $(5, 0)$. This is a nonsymmetric problem, thus one cannot use the usual
 way to reduce the Schr\"odinger equation to radial and angular
 parts. A general partial differential equations solver (in our case FEM) has to
-be used. See the figs \ref{fig:nonsym2}.
+be used. See the fig \ref{fig:nonsym2} for the output of the lowest 10
+eigenvectors.
 
 \fig{images/nonsym2.png}{fig:nonsym2}{2D nonsymmetric potential I:
-eigenvectors 0 to 10}
+eigenvectors 0 to 9}
 
 \subsection{2D: nonsymmetric potential II}
 
 In this example we use a potential from three nuclei positioned at $(-5, 0)$,
-$(5, 0)$ and $(0, 5)$. See the figs \ref{fig:nonsym3a} and \ref{fig:nonsym3b}.
+$(5, 0)$ and $(0, 5)$. This is a similar problem to the previous example, but
+this time we plotted the solution using colors in a 2D plane (fig.
+\ref{fig:nonsym3a}) and also as a 3D surface (fig \ref{fig:nonsym3b}), so that
+the reader can get a better feeling about the solutions.
 
 \fign{images/nonsym3a.png}{fig:nonsym3a}{2D nonsymmetric potential II:
 eigenvectors 0 to 4, plot in 2d on the left, surface plot on the right}
@@ -435,8 +439,9 @@ eigenvectors 5 to 9, plot in 2d on the left, surface plot on the right}
 
 \subsection{2D: nonsymmetric potential III}
 
-Finally we calculate the Schr\"odinger equation for 20 atom nuclei in a circle.
-See the fig \ref{fig:nonsym4}.
+Finally we calculate the Schr\"odinger equation for 20 atom nuclei uniformly
+positioned on a circle. We plotted several eigenvectors, again in 2D and as a
+3D surface for better imagination, see the fig \ref{fig:nonsym4}.
 
 \fig{images/nonsym4.png}{fig:nonsym4}{2D nonsymmetric potential III:
 eigenvectors 0, 4 and 5, plot in 2D on the left, surface plot on the right}
