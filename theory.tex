@@ -620,9 +620,9 @@ so
 where $0<\alpha\le1$ is the mixing parameter, working value is somewhere around $\alpha=0.1$ to $\alpha=0.3$. Unfortunately, this procedure is slow and also we do not explore all the possible densities with this mixing, which means that we don't get the correct density with any accuracy, because we get stuck at a "stiff" situation for which continued iteration does not improve the distance $|\R(\x_M)|$ between input and output densities. On the other hand it's very easy to implement and it works in most cases, although slowly.
 
 Surprisingly very good method is this: 
-\begin{equation*}
-  \J_M^{-1}=-{\rm diag}(\beta_1,\beta_2,\beta_3,\dots)
-\end{equation*}
+\begin{equation}
+  \J_M^{-1}=-{\rm diag}(\beta_1,\beta_2,\beta_3,\dots)\label{exciting}
+\end{equation}
 start with $\beta_1=\beta_2=\beta_3=\cdots=\alpha$ and at every iteration adjust the parameters $\beta_i$ according to this very simple algorithm: if $R_i(\x_{M-1})R_i(\x_M)>0$ then increase $\beta_i$ by $\alpha$ (if $\beta_i>\alpha_{max}$, set $\beta_i=\alpha_{max}$) otherwise set $\beta_i=\alpha$. In my tests it behaves almost as well as the second Broyden method.
 
 More sophisticated approach is the Broyden update, which updates the $\J$ successively at every iteration. The \textbf{first Broyden method} is using this formula: 

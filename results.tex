@@ -502,9 +502,11 @@ electrons. Here is a result of our program:
 6p( 2) j=l+1/2: -0.1418313263
 \end{lstlisting}
 
-The $|F(x)|$ shows the norm of the residual in the non-linear iteration (see
-the section 3.2.6 for more details) and the rest of the output are individual
-Kohn-Sham energies.
+The $|F(x)|$ shows the norm of the residual in the non-linear iteration, in
+this particular case (and all the other examples below), we use the mixing
+scheme described by the equation (\ref{exciting}) with $\alpha=0.3$ and
+$\alpha_{max}=1.0$ (see the section 3.2.6 for
+more details). The rest of the output are individual Kohn-Sham energies.
 
 The NIST reference calculation\cite{nist} has precision of 6 decimal places and
 the above calculation agrees with it to every decimal digit.
