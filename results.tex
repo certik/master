@@ -205,6 +205,17 @@ in 3D, see the fig \ref{fig:osc2dwarp}.
 
 \subsection{2D: Hydrogen Atom}
 
+$$V(r)=\begin{cases}-{Z^2\over r},&\text{inside the square}\quad a\times a \\
+\infty, & \text{outside}\end{cases}$$
+Analytic solution in the limit $a\to\infty$:
+$$E_n=-{Z^2\over8(n-{1\over2})^2}$$
+where $n=1, 2, 3, \dots$.
+For $Z=1$:
+$E_1 = -{1\over2}=-0.5$,
+$E_2 = -{1\over18}=-0.055$,
+$E_3 = -{1\over50}=-0.020$.
+$E_4 = -{1\over98}=-0.010$.
+
 \begin{lstlisting}
 $ ./schroedinger.py --hydrogen
 Dimension: 2
@@ -403,12 +414,12 @@ plane and contour}
 
 \subsection{3D: Hydrogen Atom}
 
-$$V(r)=\begin{cases}-{1\over r},&\text{inside the box}\quad a\times a\times a \\
+$$V(r)=\begin{cases}-{Z^2\over r},&\text{inside the box}\quad a\times a\times a \\
 \infty, & \text{outside}\end{cases}$$
 Analytic solution in the limit $a\to\infty$:
-$$E_n=-{1\over2n^2}$$
+$$E_n=-{Z^2\over2n^2}$$
 where $n=1, 2, 3, \dots$.
-Degeneracy is $n^2$, so:
+Degeneracy is $n^2$, so for $Z=1$:
 $E_1 = -{1\over2}=-0.5$,
 $E_2 = -{1\over8}=-0.125$,
 $E_3 = -{1\over18}=-0.055$,
