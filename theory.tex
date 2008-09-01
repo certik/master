@@ -127,7 +127,7 @@ where we used the normalization of spin-angular functions. Also it can be seen, 
 \end{equation*}
 so the correspondence between the Schrödinger and Dirac equation is $R^2=f^2+g^2$.
 
-For numerical stability and robustness, we are not solving the equations in the form (\ref{radialdirac}), but a sligthly rearranged ones. Let's use Hartree atomic units ($m=\hbar=1$) and define $E=W-mc^2=W-c^2$, so that $E$ doesn't contain the electron rest mass energy. Let's make the substitution \cite{donald:apw} 
+For numerical stability and robustness, we are not solving the equations in the form (\ref{radialdirac}), but a slightly rearranged ones. Let's use Hartree atomic units ($m=\hbar=1$) and define $E=W-mc^2=W-c^2$, so that $E$ doesn't contain the electron rest mass energy. Let's make the substitution \cite{donald:apw} 
 \begin{equation*}
   P_\kappa=rg_\kappa\,,
 \end{equation*}
@@ -168,7 +168,7 @@ In the semirelativistic case (which is an approximation --- we neglect the spin-
 \begin{equation*}
   \beta=\sqrt{\half(|\beta^+|^2+|\beta^-|^2)}= \sqrt{l^2+l+\half-\left(Z\over c\right)^2}\,.
 \end{equation*}
-It should be noted that in the literature we can find other types of aymptotic behaviour for the semirelativistic case, its just a question of the used approximation. One can hardly say that some of them are correct and another is not since the semirelativistic (sometimes denoted as scalar-relativstic) approximation itself is not correct, it's just an approximation.
+It should be noted that in the literature we can find other types of asymptotic behavior for the semirelativistic case, it's just a question of the used approximation. One can hardly say that some of them are correct and another is not since the semirelativistic (sometimes denoted as scalar-relativstic) approximation itself is not correct, it's just an approximation.
 
 It follows from (\ref{diracasymptotic}) that for $j=l+\half$ the radial Dirac equation completely becomes the radial Schrödinger equation in the limit $c\to\infty$ (and gives exactly the same solutions): 
 \begin{equation*}
@@ -337,7 +337,7 @@ and for $n\neq n_0$ we have (from the Ritz principle)
 \begin{equation*}
   E_0<E_{v_0}[n]
 \end{equation*}
-and one has to minimise the functional $E_{v_0}[n]$: 
+and one has to minimize the functional $E_{v_0}[n]$: 
 \begin{equation}
   E_0=\min_n E_{v_0}[n]  \label{Emin}
 \end{equation}
@@ -347,7 +347,7 @@ The term
 \end{equation*}
 in (\ref{Efunct}) is universal in the sense that it doesn't depend on $\hat V_0$. It can be proven \cite{DFT}, that $F[n]$ is a functional of $n$ for degenerated ground states too, so (\ref{Emin}) stays true as well.
 
-The ground state densities in (\ref{Efunct}) and (\ref{Emin}) are called \textbf{pure-state v-representable} because they are the densities of (possible degenerate) ground state of the Hamiltonian with some local potential $v({\bf r})$. One may ask a question if all possible functions are v-representable (this is called the v-representability problem). The question is relevant, because we need to know which functions to take into account in the minimisation proccess (\ref{Emin}). Even though not every function is v-representable \cite{DFT}, every density defined on a grid (finite of infinite) which is strictly positive, normalized and consistent with the Pauli principle is ensemble v-representable. Ensemble v-representation is just a simple generalization of the above, for details see \cite{DFT}. In plain words, we are fine.
+The ground state densities in (\ref{Efunct}) and (\ref{Emin}) are called \textbf{pure-state v-representable} because they are the densities of (possible degenerate) ground state of the Hamiltonian with some local potential $v({\bf r})$. One may ask a question if all possible functions are v-representable (this is called the v-representability problem). The question is relevant, because we need to know which functions to take into account in the minimization process (\ref{Emin}). Even though not every function is v-representable \cite{DFT}, every density defined on a grid (finite of infinite) which is strictly positive, normalized and consistent with the Pauli principle is ensemble v-representable. Ensemble v-representation is just a simple generalization of the above, for details see \cite{DFT}. In plain words, we are fine.
 
 The functional $E_{v_0}[n]$ in (\ref{Emin}) depends on the particle number $N$, so in order to get $n$, we need to solve the variational formulation 
 \begin{equation*}
@@ -454,7 +454,7 @@ which yield the orbitals $\psi_i$ that reproduce the density $n({\bf r})$ of the
 \begin{equation}
   n({\bf r})\equiv n_s({\bf r})=\sum_i^N|\psi_i({\bf r})|^2  \label{KSdensity}
 \end{equation}
-The sum is taken over the lowest $N$ energies. Some of the $\psi_i$ can be degenerated, but it doesn't matter - the index $i$ counts every eigenfunction including all the degenerated. In plain words, the trick is in realising, that the ground state energy can be found by minimising the energy functional (\ref{Efunct}) and in rewriting this functional into the form (\ref{Efunctxc}), which shows that the interacting system can be treated as a noninteracting one with a special potential.
+The sum is taken over the lowest $N$ energies. Some of the $\psi_i$ can be degenerated, but it doesn't matter - the index $i$ counts every eigenfunction including all the degenerated. In plain words, the trick is in realizing, that the ground state energy can be found by minimizing the energy functional (\ref{Efunct}) and in rewriting this functional into the form (\ref{Efunctxc}), which shows that the interacting system can be treated as a noninteracting one with a special potential.
 
 \subsection{The XC Term}
 
@@ -520,7 +520,7 @@ The xc potential is then computed from (\ref{Vxcld}):
   -{A\over6}{c(y-y_0)-by_0y\over (y-y_0)Y(y)}
 \end{equation*}
 
-Some people also use Perdew and Zunger formulas, but they give essentially the same results. The LDA, although very simple, is suprisingly successful. More sophisticated approximations exist, for example the generalized gradient approximation (GGA), which sometimes gives better results than the LDA, but is not perfect either. Other options include orbital-dependent (implicit) density functionals or a linear response type functionals, but this topic is still evolving. The conclusion is, that the LDA is a good approximation to start with, and only when we are not satisfied, we will have to try some more accurate and modern approximation.
+Some people also use Perdew and Zunger formulas, but they give essentially the same results. The LDA, although very simple, is surprisingly successful. More sophisticated approximations exist, for example the generalized gradient approximation (GGA), which sometimes gives better results than the LDA, but is not perfect either. Other options include orbital-dependent (implicit) density functionals or a linear response type functionals, but this topic is still evolving. The conclusion is, that the LDA is a good approximation to start with, and only when we are not satisfied, we will have to try some more accurate and modern approximation.
 
 RLDA: Relativistic corrections to the energy-density functional were proposed by MacDonald and Vosko and basically are just a change in $\epsilon_x^{LD}(n)\rightarrow\epsilon_x^{LD}(n)R$: 
 \begin{equation*}
@@ -640,7 +640,7 @@ starting with the linear mixing:
 \begin{equation*}
   \J_0^{-1}=-\alpha\one
 \end{equation*}
-It is impossible to store the whole dense matrix of the inverse Jacobian, but fortunately it is not necessary, realising that the (\ref{Bupdate}) has a very simple structure \cite{srivastava}: 
+It is impossible to store the whole dense matrix of the inverse Jacobian, but fortunately it is not necessary, realizing that the (\ref{Bupdate}) has a very simple structure \cite{srivastava}: 
 \begin{equation*}
   \J_{M+1}^{-1}=\J_M^{-1}+{\bf u}{\bf v}^T
 \end{equation*}
@@ -698,7 +698,7 @@ and we need to sum over the lowest 82 eigenvalues in (\ref{KSdensity}). One opti
 
 \subsection{Introduction}
 
-Literature about pseudopotentials is unfortunately scattered among many arcticles, so this section gives a review and should save the reader from a lot of troubles.
+Literature about pseudopotentials is unfortunately scattered among many articles, so this section gives a review and should save the reader from a lot of troubles.
 
 \subsection{Hermitian Operators in Spherical Symmetry}
 
@@ -964,9 +964,9 @@ which is useful when computing integrals of this type
 \end{equation*}
 because the integral on the left hand side actually represents $N^2$ integrals, where $N$ is the number of basis vectors $\ket{\phi_i}$. The sum on the right hand side however only represents $K\cdot N$ integrals, where $K$ is the number of terms taken into account in (\ref{Vlsep}). Of course taking only finite number of terms in (\ref{Vlsep}) is only an approximation to $\hat V_l$. In our case, we don't need these 1D integrals (which can be easily computed directly, because $V_l$ is local and the basis functions $\phi_i$ are nonzero only around a node in the mesh, which means that the matrix $V_{ij}$ is sparse), but 3D integrals, where angular parts of $V$ are nonlocal and radial part is local (so the matrix $V_{ij}$ is dense), so the above procedure is the only way how to proceed, because we decompose the matrix $V_{ij}$ into the sum of matrices in the form $p_ip_j^*$, which can easily be handled and solved.
 
-The scheme for the separation described above works for any functions $R_{nl}(\rho)$. Because of the form of the expansion (\ref{Vlsep}) however, we will use $R_{nl}$ from one atomic calculation. We need to approximate $V_l$ by as few terms as possible, so imagine how the $V_l(\rho)$ acts on the lowest radial function in the $l$ subspace, which is $\ket{R_{l+1;l}}$ and we see that all the terms in (\ref{Vlsep}) except the first one $V_l\ket{\bar R_{l+1;l}}\bra{\bar R_{l+1;l}}V_l$ give zero, because they are orthogonal to $\ket{R_{l+1;l}}$. For the function $\ket{R_{l+2;l}}$ all the terms except the first two are zero, because $\braket{\bar R_{nl}|V_0|R_{l+2;l}}\neq0$ only for $n=l+1$ or $n=l+2$ (because the vectors $\ket{R_{l+1;l}}$ and $\ket{R_{l+2;l}}$ span the same subspace as $\ket{\bar R_{l+1;l}}$ and $\ket{\bar R_{l+2;l}}$ and using (\ref{orthog})) For functions, which are a little different from all $\ket{R_{nl}}$ ($n>l$), we won't genereally get precise results taking any (finite) number of terms in (\ref{Vlsep}), but the higher terms should give smaller and smaller corrections.
+The scheme for the separation described above works for any functions $R_{nl}(\rho)$. Because of the form of the expansion (\ref{Vlsep}) however, we will use $R_{nl}$ from one atomic calculation. We need to approximate $V_l$ by as few terms as possible, so imagine how the $V_l(\rho)$ acts on the lowest radial function in the $l$ subspace, which is $\ket{R_{l+1;l}}$ and we see that all the terms in (\ref{Vlsep}) except the first one $V_l\ket{\bar R_{l+1;l}}\bra{\bar R_{l+1;l}}V_l$ give zero, because they are orthogonal to $\ket{R_{l+1;l}}$. For the function $\ket{R_{l+2;l}}$ all the terms except the first two are zero, because $\braket{\bar R_{nl}|V_0|R_{l+2;l}}\neq0$ only for $n=l+1$ or $n=l+2$ (because the vectors $\ket{R_{l+1;l}}$ and $\ket{R_{l+2;l}}$ span the same subspace as $\ket{\bar R_{l+1;l}}$ and $\ket{\bar R_{l+2;l}}$ and using (\ref{orthog})) For functions, which are a little different from all $\ket{R_{nl}}$ ($n>l$), we won't generally get precise results taking any (finite) number of terms in (\ref{Vlsep}), but the higher terms should give smaller and smaller corrections.
 
-So, to sum it up: We take all the $V_l$ in (\ref{Vsep}) as we did in (\ref{semi}). Theoretically we should take $\bar R_{nl}$ for all $n=l+1,\,\, l+2,\,\,l+3,\dots$, but practically it suffices to only take several $\bar R_{nl}$ for a given $l$ from one atomic calculaction.
+So, to sum it up: We take all the $V_l$ in (\ref{Vsep}) as we did in (\ref{semi}). Theoretically we should take $\bar R_{nl}$ for all $n=l+1,\,\, l+2,\,\,l+3,\dots$, but practically it suffices to only take several $\bar R_{nl}$ for a given $l$ from one atomic calculation.
 
 Let's give an example: we are calculating 14 electrons, so we will only take into account the lowest 14 eigenvalues in the Kohn sham equations, which are $\ket{\phi_1}$ up to $\ket{\phi_{14}}$. The lowest radial functions in each $l$ subspace are $\ket{\phi_i}$ for $i=1,3,4,5,10,11,12,13,14$ and on these 9 functions we get a precise result with only one term in the expansion (\ref{Vlsep}). For the other 5 functions ($i=2,6,7,8,9$) we will have to take into account more terms. Let's look in more detail at the case $l=0$ (i.e. $i=1,2,6$). Then 
 \begin{equation*}
