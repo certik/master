@@ -40,7 +40,7 @@ See the fig. \ref{fig:mesh2d} and \ref{fig:mesh2d2} for a visualization of the
 mesh in the paraview\cite{paraview} program.
 
 \def\fig#1#2#3{%
-\begin{figure}[htp]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=13.5cm]{#1}
 \caption{#3}\label{#2}
@@ -48,7 +48,7 @@ mesh in the paraview\cite{paraview} program.
 }
 
 \def\fign#1#2#3{%
-\begin{figure}[htp]
+\begin{figure}[p]
 \centering
 \includegraphics[width=12cm]{#1}
 \caption{#3}\label{#2}
@@ -112,6 +112,8 @@ right, top to bottom.
 
 %\fig{images/well6warp.png}{fig:well2d-6warp}{2D well: eigenvalue 6, plotted as
 %a surface}
+
+\vfill\eject
 
 \subsection{2D: Linear Harmonic Oscillator}
 
@@ -299,6 +301,8 @@ plane and contours}
 \fig{images/well3d10c.png}{fig:well3d10c}{3D potential well: eigenvector 10, cut
 plane and contours}
 
+\vfill\eject
+
 \subsection{3D: Linear Harmonic Oscillator}
 
 $$V(r)=\begin{cases}\half\omega^2r^2,&\text{inside the box}\quad a\times a\times a \\
@@ -372,6 +376,8 @@ countour}
 \fig{images/osc3d10.png}{fig:osc3d10}{3D oscillator: eigenvector 10, cut
 plane and contour}
 
+\vfill\eject
+
 \subsection{3D: Hydrogen Atom}
 
 $$V(r)=\begin{cases}-{Z^2\over r},&\text{inside the box}\quad a\times a\times a \\
@@ -436,6 +442,8 @@ eigenvectors 0 to 4, plot in 2d on the left, surface plot on the right}
 \fign{images/nonsym3b.png}{fig:nonsym3b}{2D nonsymmetric potential II:
 eigenvectors 5 to 9, plot in 2d on the left, surface plot on the right}
 
+\vfill\eject
+
 \subsection{2D: nonsymmetric potential III}
 
 Finally we calculate the Schr\"odinger equation for 20 atom nuclei uniformly
@@ -444,6 +452,8 @@ positioned on a circle. We plotted several eigenvectors, again in 2D and as a
 
 \fig{images/nonsym4.png}{fig:nonsym4}{2D nonsymmetric potential III:
 eigenvectors 0, 4 and 5, plot in 2D on the left, surface plot on the right}
+
+\vfill\eject
 
 \section{Density Functional Theory, Spherically Symmetric Solution}
 
