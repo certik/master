@@ -7,18 +7,20 @@ equation.
 \subsection{Weak Formulation of the Schr\"odinger Equation}
 
 One particle Schrödinger equation is
-\begin{equation*}
-  \left(-{\hbar^2\over2m}\nabla^2 + V\right)\psi=E\psi\,.
-\end{equation*}
+\begin{equation}
+  \left(-{\hbar^2\over2m}\nabla^2 + V\right)\psi=E\psi\,.\label{schPDE}
+\end{equation}
 We multiply both sides by a test function $v$
 \begin{equation*}
   -\left({\hbar^2\over2m}\nabla^2\psi\right)v=(E-V)\psi v\,,
 \end{equation*}
-and integrate over the whole volume we are interested in
+and integrate over the whole volume $\Omega$ we are interested in
 \begin{equation}
   \int-\left({\hbar^2\over2m}\nabla^2\psi\right)v\,\d V=\int(E-V)\psi v\,\d V\,,  \label{1}
 \end{equation}
-and using the vector identity
+the usual treatment in the finite element method is to apply the first Green's
+identity, but it is useful to do things explicitely to better understand what
+is going on, so we apply the following vector identity
 \begin{equation*}
   -\left(\nabla^2\psi\right)v=\nabla \psi\cdot \nabla v - \nabla\cdot\left((\nabla \psi)v\right),
 \end{equation*}
@@ -34,11 +36,19 @@ and rewriting $\nabla\psi\cdot{\bf n}\equiv{\d\psi\over\d n}$
 \begin{equation}
   \int{\hbar^2\over2m}\nabla\psi\cdot\nabla v\,\d V+ \int vV\psi\,\d V = \int E\psi v\,\d V + \oint{\hbar^2\over2m}{\d\psi\over\d n}v\,\d S\,,  \label{w}
 \end{equation}
-which is the weak formulation. The problem reads: find a function $\psi$ such that (\ref{w}) holds for every $v$.
+\def\S{S}
+which is the weak formulation of (\ref{schPDE}). The problem reads: find a
+function $\psi\in\S$ such that (\ref{w}) holds for every $v\in\S$. Where $\S$
+is a subspace of $H^1(\Omega)$, the exact form of $\S$
+depends on the boundary conditions we choose.
+$H^1(\Omega)$ are all functions from $L^2$ whose derivatives are
+also from $L^2$, where $L^2$ are square integrable functions.
 
 \subsection{Finite Elements}
 
-We choose a basis $\phi_i$ and substitute $\phi_i$ for $v$ and expand $\psi=\sum q_j\phi_j$
+We choose a basis $\phi_i$ (see below for more detailed specification of the
+function space this basis lives in) and substitute $\phi_i$ for $v$ and expand
+$\psi=\sum q_j\phi_j$
 \begin{equation}
   \left(\int{\hbar^2\over2m}\nabla\phi_j\cdot\nabla\phi_i\,\d V+ \int\phi_iV\phi_j\,\d V\right)q_j = \left(\int E\phi_j\phi_i\,\d V\right)q_j +\oint{\hbar^2\over2m}{\d\psi\over\d n}\phi_i\,\d S\,,  \label{fem}
 \end{equation}
@@ -65,6 +75,13 @@ where $K_{ij}^E$ is the integral over one element only
 \end{equation*}
 The integral is computed numerically using a Gauss integration: $x_q$ are Gauss points (there are $N_q$ of them), $w_q$ is the weight of each point, and the Jacobian $|\det J(\hat x_q)|$ is there because we are actually computing the integral on the reference element instead in the real space.
 The surface integrals are computed similarly.
+
+The decomposition into elements is done using a so called finite element mesh
+and the type of the mesh and the basis (e.g. linear, quadratic
+polynomials, higher order polynomials) establishes the function space $\S$ from
+the weak formulation (\ref{w}). In our case, we have a Dirichlet boundary
+condition that fixes the function value of all eigenvectors to 0 at the
+boundary.
 
 Finite elements programs usually have an assembly phase, where they need to
 assemble all the global matrices, in our case:
