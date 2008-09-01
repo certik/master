@@ -582,11 +582,11 @@ potential.
 Most of the states above agree with the NIST reference calculation\cite{nist}
 to one decimal place after the floating point (for example the 6p state differs
 by 0.02 Hartees, the 1p state by 0.04 Hartrees), the difference probably being
-caused either by a different radial grid (we used a hyperbolic grid with 10000
-points), or by a different implementation of the exchange and correlation
-potential approximation (both our code and NIST uses the potential proposed by
-MacDonald and Vosko). In particular, we implemented the equation (\ref{RLDA}),
-see also the discussion leading to it.
+caused by a different implementation of the exchange and correlation
+potential approximation
+(in spite of the fact that both our code and NIST uses the XC potential
+proposed by MacDonald and Vosko). In particular, we implemented the equation
+(\ref{RLDA}), see also the discussion leading to it.
 
 However, if you compare for example the energies of the 1s state in
 the relativistic (-3209.51946 Hartrees) an non relativistic calculation
