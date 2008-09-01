@@ -31,7 +31,10 @@ All the integration algorithms needs to evaluate $R''$, which is a problem at th
 
 If $r_0$ is sufficiently small, we can set $R(r_0)=r_0^l$ and $R'(r_0)=lr_0^{l-1}$. In the case $l=0$ we need to set $R(r_0)=1$ and $R'(r_0)=-{1\over a}$, where $a$ is the Bohr radius, see the next section for more details.
 
-So when somebody gives us $l$ and $E$, we are now able to compute the solution up to the the multiplicative constant that is later determined from a normalization. As was already mentioned, we used the fourth-order Runge-Kutta method that proved very suitable for this problem.
+So when somebody gives us $l$ and $E$, we are now able to compute the solution
+up to the the multiplicative constant that is later determined from a
+normalization. We used the fourth-order Runge-Kutta
+method that proved very suitable for this problem.
 
 \subsection{Asymptotic behavior}
 
@@ -90,7 +93,7 @@ The probability density $\rho(x,y,z)$ is the physical quantity we are interested
 
 \subsection{Radial Dirac equation}
 
-We and search for a basis in the form of spin angular functions: 
+We search for a basis in the form of spin angular functions: 
 \begin{equation}
   \psi_A=g\chi^{j_3}_{\kappa}\,,  \label{psia}
 \end{equation}
@@ -101,7 +104,7 @@ Substituting all of these into (\ref{diraceq}) and some more well-known manipula
 \begin{equation}
   \hbar c \col{-\p{f}{r}+{\kappa-1\over r}f} {\p{g}{r}+{\kappa+1\over r}g}= \col{(W-V-mc^2)g}{(W-V+mc^2)f}\,.  \label{radialdirac}
 \end{equation}
-This is the radial Dirac equation. As we shall see in the next section, the equation for $g$ is (with the exception of a few relativistic corrections) identical to the radial Schrödinger equation. And $f$ vanishes in the limit $c\to\infty$. For this reason $f$ is called the small (fein, minor) component and $g$ the large (groß, major) component.
+This is the radial Dirac equation. As we shall see in the next section, the equation for $g$ is (with the exception of a few relativistic corrections) identical to the radial Schrödinger equation and $f$ vanishes in the limit $c\to\infty$. For this reason $f$ is called the small (fein, minor) component and $g$ the large (groß, major) component.
 
 The probability density is 
 \begin{equation*}
@@ -405,7 +408,7 @@ Now we want to express the energy in (\ref{Emanybody}) using $T_s$ and $E_H$ for
 \begin{equation*}
   \nabla^2 V_H=n({\bf r})
 \end{equation*}
-or uquivalently 
+or equivalently 
 \begin{equation*}
   E_H[n]=\half\int\int {n({\bf r})n({\bf r'})\over|{\bf r}-{\bf r'}|} \d^3r\d^3r'
 \end{equation*}
